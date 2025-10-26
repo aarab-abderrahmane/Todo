@@ -11,6 +11,8 @@ import {
   ContextMenuTrigger,
 } from "./ui/context-menu"
 import DropdownMenuLabo from "./DropDownMenuLabo"
+import { toast } from "sonner"
+
 
 
 
@@ -31,11 +33,28 @@ export  function TodoList() {
       : setActiveSparkles(false);
   };
 
+  const [buttons, setButtons] = useState(()=>{
+
+      const saved = localStorage.getItem("buttonsState");
+      return saved && saved !== "null" && saved !== "undefined" 
+        ? JSON.parse(saved)
+        :
+          {
+          buttonDelete: { active: false, color: 'bg-[var(--color-primary-light)]' },
+          buttonEdit: { active: false, color: 'bg-[var(--color-primary-light)]' },
+        }
+        
+
+  });
+
+  useEffect(()=>{
+      localStorage.setItem('buttonsState',JSON.stringify(buttons))
+  },[buttons])
 
 
   const [todos, setTodos] = useState(() => {
     const saved = localStorage.getItem("todos");
-    return saved || saved == "null"
+    return saved && saved !== "null" && saved !== "undefined"
       ? JSON.parse(saved)
       : [
           { id: 0, content: "example todo1", modeEdit: false, check: true },
@@ -58,6 +77,8 @@ export  function TodoList() {
           check: false,
         },
       ]);
+
+      toast.success("Event has been created")
     }
   };
 
@@ -77,20 +98,6 @@ export  function TodoList() {
       todos.map((td) => (td.id === list_id ? { ...td, modeEdit: true } : td))
     );
 
-  // const UpdateContent = (e, list_id) =>
-  //   setTodos(
-  //     todos.map((td) => {
-  //       console.log(e.target.value);
-  //       if (td.id === list_id) {
-  //         if (typeof td.oldcontent === "undefined") {
-  //           return { ...td, oldcontent: td.content, content: e.target.value };
-  //         }
-  //         return { ...td, content: e.target.value };
-  //       }
-
-  //       return td;
-  //     })
-  //   );
 
   const handleSave = (id, newValue) => {
     console.log(newValue);
@@ -173,7 +180,7 @@ export  function TodoList() {
 
 
   return (
-    <todosContext.Provider  value={{todos,handleAdd,handleCheck,handleEdit,handleSave}}>
+    <todosContext.Provider  value={{todos,handleAdd,setButtons,buttons,handleCheck,handleEdit,handleSave,hanldeDelete}}>
 
     <div className="flex flex-col gap-6  w-[90vw]  md:w-[50vw]    max-w-[550px] h-[90vh]  max-h-[850px]">
       {/* <!-- Input --> */}
@@ -225,11 +232,12 @@ export  function TodoList() {
     </div>
 
 
-                  <div className="fixed top-4 right-4 z-[50] m-2 ">
+    <div className="fixed top-4 right-4 z-[50] m-2 ">
 
-                      <DropdownMenuLabo/>
-                
-                  </div>
+        <DropdownMenuLabo/>
+  
+    </div>
+
     </todosContext.Provider>
 
   );
