@@ -176,21 +176,12 @@ The project uses Tailwind's utility classes. You can extend the configuration in
 
 ## 📝 License
 
-This project is open source and available under the [MIT License](LICENSE).
+This project is open source and available under the [GPL License](https://github.com/aarab-abderrahmane/Todo?tab=GPL-3.0-1-ov-file).
 
 ## 👨‍💻 Author
 
-Built with ❤️ using React and Vite
+Built with ❤️ aarab abderrahmane using React and Vite
 
-## 🤝 Contributing
-
-Contributions, issues, and feature requests are welcome!
-
-1. Fork the project
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
 
 ## 📞 Support
 
