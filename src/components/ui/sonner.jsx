@@ -16,12 +16,12 @@ const Toaster = ({
   return (
     <Sonner
       theme={theme}
-      richColors // ← Add this line
+      richColors 
       className="toaster group "
       icons={{
-        success: <CircleCheckIcon className="size-4" />,
+        success: <CircleCheckIcon className="size-4 text-[var(--color-text)]" />,
         info: <InfoIcon className="size-4" />,
-        warning: <TriangleAlertIcon className="size-4" />,
+        warning: <TriangleAlertIcon className="size-4  text-black" />,
         error: <OctagonXIcon className="size-4" />,
         loading: <Loader2Icon className="size-4 animate-spin" />,
       }}

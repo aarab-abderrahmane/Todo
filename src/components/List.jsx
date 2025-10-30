@@ -19,9 +19,9 @@ const List = ({id,content,modeEdit,check})=>{
         if(todoContent.trim().length<4){
             setTodoContent(content)
         }
+
         handleSave(id,todoContent)
 
-        
 
     }
 

@@ -12,14 +12,38 @@ import {
 import { Input } from "./ui/input"
 import { Label } from "./ui/label"
 import { Button } from "./ui/button"
+import { Spinner } from "./ui/spinner"
 
+import { useEffect , useRef, useState } from "react"
 
 export function AlertConfrim({showConfirm, setshowConfirm,confirmDelete}) {
+
+  const [loading, setLoading] = useState(false);
+  const timerRef = useRef(null);
+
+  function handleDeleteClick() {
+
+    setLoading(true);
+    timerRef.current = setTimeout(() => {
+      confirmDelete()
+      setLoading(false);
+      timerRef.current = null;
+    }, 3000);
+  }
+  
+  useEffect(() => {
+    return () => {
+      // cleanup timer on unmount
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, []);
+
+
   return (
     <Dialog  open={showConfirm} onOpenChange={setshowConfirm} >
       <form>
 
-        <DialogContent className="max-w-[85vw] max-w-[450px]  flex flex-col overflow-x-hidden">
+        <DialogContent className="max-w-[85vw] max-w-[450px] bg-white/70  flex flex-col overflow-x-hidden">
           <DialogHeader>
             <DialogTitle>Clear Everything ⚠️</DialogTitle>
             <DialogDescription>
@@ -31,7 +55,16 @@ export function AlertConfrim({showConfirm, setshowConfirm,confirmDelete}) {
             <DialogClose asChild>
               <Button variant="outline">Cancel</Button>
             </DialogClose>
-            <Button type="submit" className="bg-red-700 text-white border-red-950 " onClick={confirmDelete}>Confirm</Button>
+
+            {loading?(
+                  <Button disabled className="bg-red-700 text-white border-red-800 border-2 " >
+                    <Spinner />
+                    Deleting...
+                  </Button>
+            ):(
+                <Button type="submit"  className="bg-red-700 text-white border-red-800 border-2 " onClick={handleDeleteClick}>Confirm</Button>
+            )}
+
           </DialogFooter>
         </DialogContent>
       </form>

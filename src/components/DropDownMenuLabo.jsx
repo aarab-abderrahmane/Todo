@@ -29,7 +29,8 @@ import {AlertConfrim} from './AlertConfirm';
 import {Preferences} from './Preferences'
 
 import { Kbd, KbdGroup } from "./ui/kbd"
-import{useEffect} from 'react'
+import{useEffect,useRef} from 'react'
+import { Spinner } from "./ui/spinner"
 
 
 
@@ -37,6 +38,8 @@ export default function DropdownMenuLabo() {
   
   const[showPreferences , setShowPreferences] = useState(false)
   const [showConfirm , setshowConfirm] = useState(false)
+  const [loading, setLoading] = useState(false);
+  const timerRef = useRef(null);
 
   function resetStorage() {
     localStorage.setItem("todos", JSON.stringify([]));
@@ -54,13 +57,38 @@ export default function DropdownMenuLabo() {
 
   ]`
 
+  function handleDownloadClick() {
+
+    setLoading(true);
+    timerRef.current = setTimeout(() => {
+      downloadTodos()
+      setLoading(false);
+      timerRef.current = null;
+    }, 3000);
+  }
+
+  useEffect(() => {
+    return () => {
+      // cleanup timer on unmount
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, []);
+
   function downloadTodos(){
+
+    setLoading(true)
+    setTimeout(() => {
+      setLoading(false);
+    }, 7000); 
+
+
     if(!todos || todos.length<1){
         alert('No todos found in localStorage!')
         return 
     }
 
     try{
+
 
         const jsonString = JSON.stringify(todos, null, 2);
 
@@ -81,6 +109,7 @@ export default function DropdownMenuLabo() {
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
+
 
     }catch(error){
         console.error(error)
@@ -142,6 +171,23 @@ export default function DropdownMenuLabo() {
               Reset
             </DropdownMenuItem>
 
+
+            <DropdownMenuSeparator  className='font-bold h-[1px] bg-[var(--color-text)]' />
+
+             <DropdownMenuItem className="text-red-500 p-3 font-bold  flex justify-center gap-6  " >
+
+                <a href='https://github.com/aarab-abderrahmane' target="_blank" >
+                 <img className="size-6 " src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg" />
+
+                </a>
+
+                            
+                <a href='https://www.linkedin.com/in/aarab-abderrahmane-2b9509336/' target="_blank" >
+
+                <img className="size-6" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linkedin/linkedin-original.svg" />
+                </a>
+            </DropdownMenuItem>
+
           </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -185,11 +231,20 @@ export default function DropdownMenuLabo() {
 
             <DialogFooter className=" w-full flex flex-col md:flex-row">
               <DialogClose asChild>
-                <Button variant="danger">Cancel</Button>
+                <Button variant="outline" size="lg">Cancel</Button>
               </DialogClose>
-              <Button type="submit" variant="secondary" onClick={downloadTodos}>
-                Download JSON
-              </Button>
+
+                  {loading ? (
+                        <Button variant="secondary" disabled size="lg">
+                          <Spinner />
+                          <span className="ml-2">Please wait...</span>
+                        </Button>
+                      ) : (
+                        <Button variant="secondary" size="lg"  onClick={handleDownloadClick}>
+                          Download JSON
+                        </Button> 
+                  )}
+
             </DialogFooter>
           </DialogContent>
         </form>

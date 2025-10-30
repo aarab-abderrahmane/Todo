@@ -235,10 +235,10 @@ body.default-cursor .cursor-pointer {
     -webkit-backdrop-filter: blur(20px) !important;
   backdrop-filter: blur(20px) !important;    /* backdrop-blur-lg */
 }
-[data-sonner-toast][data-type="success"] {
-  background: #645d7eb8 !important;
-  color: white !important;
-  border: none !important;
+[data-sonner-toast][data-type="success"]{
+  background: var(--color-button) !important;
+  color: var(--color-text) !important;
+  border: 2px var(--color-text) solid !important;
 }
 
 [data-sonner-toast][data-type="info"] {
@@ -249,10 +249,10 @@ body.default-cursor .cursor-pointer {
 }
 
 [data-sonner-toast][data-type="warning"] {
-  background: linear-gradient(135deg, #f59e0b, #d97706) !important;
-  color: white !important;
-  border: none !important;
-  box-shadow: 0 4px 14px 0 rgba(245, 158, 11, 0.3) !important;
+  background: rgb(255, 244, 44) !important;
+  color: rgb(0, 0, 0) !important;
+  border: 2px solid black !important;
+
 }
 
 [data-sonner-toast][data-type="error"] {

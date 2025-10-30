@@ -297,11 +297,12 @@ export function Preferences({ showPreferences, setShowPreferences }) {
 
           <DialogFooter className="">
             <DialogClose asChild>
-              <Button variant="default">Back</Button>
+              <Button variant="outline" size="default">Back</Button>
             </DialogClose>
             <Button
               type="submit"
               variant="danger"
+              size="default"
               onClick={() => {
                 setShowPreferences(false);
               }}

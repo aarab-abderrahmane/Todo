@@ -33,20 +33,6 @@ export  function TodoList() {
       : setActiveSparkles(false);
   };
 
-  // const [buttons, setButtons] = useState(()=>{
-
-  //     const saved = localStorage.getItem("buttonsState");
-  //     return saved && saved !== "null" && saved !== "undefined" 
-  //       ? JSON.parse(saved)
-  //       :
-          
-        
-
-  // });
-
-  // useEffect(()=>{
-  //     localStorage.setItem('buttonsState',JSON.stringify(buttons))
-  // },[buttons])
 
 
   const [todos, setTodos] = useState(() => {
@@ -75,7 +61,7 @@ export  function TodoList() {
         },
       ]);
 
-      toast.success("Event has been created")
+      toast.success("Todo has been created")
     }
   };
 
@@ -170,6 +156,8 @@ export  function TodoList() {
   const hanldeDelete = (id)=>{
 
       setTodos(todos.filter(td=>td.id!== id))
+      toast.warning("Todo has been deleted")
+
 
   }
 

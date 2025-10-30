@@ -2,7 +2,7 @@ import {TodoList}  from "./components/TodoList"
 import {useState,createContext,useEffect} from 'react'
 import * as React from "react"
 import { SmoothCursor } from "./components/ui/smooth-cursor"
-import LiveClock from "./components/LiveClock"
+import LiveCalendar from "./components/LiveCalendar"
 import { Calendar } from "./components/ui/calendar";
 import LiveClockDetailed from './components/LiveClockDetailed'
 import { ToastContext } from "./ToastContext"
@@ -169,7 +169,7 @@ function App() {
                     style={{ padding: "2px" }}
                     >
 
-                      <LiveClock/>
+                      <LiveCalendar/>
 
                       <div className="overflow-y-scroll w-full md:w-[55%] m-5  lg:h-[45vh] lg:max-h-[400px]">
                       <Calendar
