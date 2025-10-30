@@ -23,9 +23,14 @@ import { MoreHorizontalIcon } from "lucide-react";
 import { useState, useContext } from "react"; // Add useContext
 import { todosContext } from "./TodoList"; // Import the context
 
-import CodeBlockDemo from "./CodeBlockDemo";
+// import CodeBlockDemo from "./CodeBlockDemo";
+import { CodeBlock } from "./ui/codeblock";
 import {AlertConfrim} from './AlertConfirm';
 import {Preferences} from './Preferences'
+
+import { Kbd, KbdGroup } from "./ui/kbd"
+import{useEffect} from 'react'
+
 
 
 export default function DropdownMenuLabo() {
@@ -85,6 +90,17 @@ export default function DropdownMenuLabo() {
 
   const [openDialog, setOpenDialog] = useState(false);
 
+  useEffect(()=>{
+        const handler = (e) => {
+          if (e.ctrlKey && e.key.toLowerCase() === 'b') {
+            e.preventDefault()
+            setShowPreferences((prev) => !prev)
+          }
+        }
+
+         window.addEventListener('keydown', handler)
+         return () => window.removeEventListener('keydown', handler)
+  },[])
 
 
   return (
@@ -100,16 +116,30 @@ export default function DropdownMenuLabo() {
           <DropdownMenuGroup className="">
             <DropdownMenuSeparator className='h-[2px] bg-[var(--color-text)]'/>
 
-            <DropdownMenuItem className="text-red-500 p-3 font-bold focus:bg-red-200  " onSelect={()=>setshowConfirm(true)}>
-              Reset
+            <DropdownMenuItem className="p-3 flex justify-between" onSelect={()=>setShowPreferences(true)}>
+            <div >
+                <i class="bi bi-transparency text-xl font-black me-2"></i>         
+                 Preferences
+            </div>
+
+            <KbdGroup>
+              <Kbd>Ctrl</Kbd>
+              <span>+</span>
+              <Kbd>B</Kbd>
+            </KbdGroup>
+
             </DropdownMenuItem>
+
             <DropdownMenuSeparator className='font-bold h-[1px] bg-[var(--color-text)]'/>
             <DropdownMenuItem className="p-3" disabled={todos.length>0 ? false : true} onSelect={()=>setOpenDialog(true)}>
+             <i class="bi bi-box-arrow-in-up text-xl font-black"></i>
               Export
             </DropdownMenuItem>
             <DropdownMenuSeparator  className='font-bold h-[1px] bg-[var(--color-text)]' />
-            <DropdownMenuItem className="p-3" onSelect={()=>setShowPreferences(true)}>
-              Preferences
+
+            <DropdownMenuItem className="text-red-500 p-3 font-bold focus:bg-red-200  " onSelect={()=>setshowConfirm(true)}>
+              <i class="bi bi-arrow-repeat text-xl font-black !important   " ></i>
+              Reset
             </DropdownMenuItem>
 
           </DropdownMenuGroup>
@@ -121,6 +151,8 @@ export default function DropdownMenuLabo() {
 
       <AlertConfrim showConfirm={showConfirm} setshowConfirm={setshowConfirm} confirmDelete={resetStorage}  />
 
+
+
       <Dialog open={openDialog} onOpenChange={setOpenDialog} >
         <form>
           <DialogContent className=" backdrop-blur-md border-2 bg-white/60 rounded-3xl max-w-[80vw]  md:max-w-[500px] lg:max-w-[600px] xl:max-w-[800px] flex flex-col overflow-x-hidden">
@@ -131,10 +163,21 @@ export default function DropdownMenuLabo() {
               </DialogDescription>
             </DialogHeader>
 
+
+              
             <div>
-                <div >
+                {/* <div >
                 <CodeBlockDemo code={Code} language="json"  />
-                </div>
+                </div> */}
+                <CodeBlock
+                  language="typescript"
+                  filename="todos.json"
+                  tabs={[
+                    { name: 'todos.json', code: Code, language: 'json' }
+                  ]}
+                  // breadcrumb={['src', 'components']}
+                  // breadcrumb={['todos.json']}
+                />
             </div>
 
 
