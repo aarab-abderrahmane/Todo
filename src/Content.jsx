@@ -32,7 +32,7 @@ function RouterHandler() {
     if (hasVisited && location.pathname === '/') {
       navigate('/todos');
     }
-  }, [navigate]);
+  }, [navigate,location.pathname]);
 
   return null; // no UI
 }
