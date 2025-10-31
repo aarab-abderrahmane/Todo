@@ -8,7 +8,6 @@ import LiveClockDetailed from './components/LiveClockDetailed'
 import { ToastContext } from "./ToastContext"
 import { Toaster } from "./components/ui/sonner"
 
-import './index.css'
 
 
 export  const PreferencesContext = createContext({})
@@ -23,9 +22,10 @@ function App() {
       return saved && saved!==null && saved!==undefined 
       ? JSON.parse(saved) 
       :  {   
+            hasVisited:false , 
             general:{hideTexts:false,opacityTexts:100},
             cursorType:"smooth",
-            theme_name:"default",
+            theme_name:"blue",
             themes: {
               red: {
                 "--color-background": "#dc9090",

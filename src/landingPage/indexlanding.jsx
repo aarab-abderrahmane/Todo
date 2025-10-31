@@ -10,7 +10,7 @@ import GitHubButton from './button.jsx'
 
 import { BackgroundLines } from "../components/ui/background-lines";
 
-import {Link} from 'react-router'
+import {Link, useNavigate} from 'react-router'
 
 function Index() {
   const heroRef = useRef(null);
@@ -39,6 +39,15 @@ function Index() {
     }
   };
 
+
+  const navigate = useNavigate()
+
+  function handleStart(){
+      localStorage.setItem('hasVisited',true)
+      navigate('/todos')
+
+  }
+
   return (
     
     <div className='relative bg-gray-100 '>
@@ -48,7 +57,7 @@ function Index() {
         className=" absolute z-10 min-h-screen  relative overflow-x-hidden pb-10"
         ref={heroRef}
       >
-        {/* <svg
+       <svg
           width="681"
           className="absolute -right-12 -top-12 h-96 w-96"
           height="769"
@@ -132,7 +141,7 @@ function Index() {
               />
             </filter>
           </defs>
-        </svg> */}
+        </svg> 
 
         <section className="max-w-screen-xl mx-auto ">
           <div className="w-full  overflow-hidden">
@@ -223,10 +232,11 @@ function Index() {
             <TimelineContent animationNum={4} timelineRef={heroRef}>
                 <div className="w-full flex justify-center">
 
-                <Link to='./todos'>
-                <GitHubButton/>
-                </Link>
-                
+                <div onClick={handleStart} >
+                <GitHubButton />
+                </div>
+
+
                 </div>
             </TimelineContent>
                 {/*
