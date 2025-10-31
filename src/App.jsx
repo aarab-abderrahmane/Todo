@@ -8,6 +8,8 @@ import LiveClockDetailed from './components/LiveClockDetailed'
 import { ToastContext } from "./ToastContext"
 import { Toaster } from "./components/ui/sonner"
 
+import './index.css'
+
 
 export  const PreferencesContext = createContext({})
 

@@ -36,6 +36,7 @@
     "react-code-block": "^1.1.3",
     "react-day-picker": "^9.11.1",
     "react-dom": "^19.2.0",
+    "react-router": "^7.9.5",
     "react-syntax-highlighter": "^16.1.0",
     "react-use": "^17.6.0",
     "sonner": "^2.0.7",

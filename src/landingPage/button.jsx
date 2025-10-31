@@ -25,9 +25,8 @@ import { Liquid } from '../components/uilayouts/liquid-gradient';
 const GitHubButton = () => {
   const [isHovered, setIsHovered] = useState(false);
   return (
-    <div className="flex justify-center ">
+    <div className="flex justify-center  ">
       <a
-        href="https://github.com/ui-layouts/uilayouts"
         target="_blank"
         className="relative inline-block w-48 h-[3.4em] mx-auto group dark:bg-black bg-white dark:border-white border-black border-2 rounded-3xl">
         <div className="absolute w-[112.81%] h-[128.57%] top-[8.57%] left-1/2 -translate-x-1/2 filter blur-[19px] opacity-70">
@@ -54,7 +53,7 @@ const GitHubButton = () => {
           type="button"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}>
-          <span className="flex items-center justify-center px-2 gap-1 rounded-3xl group-hover:text-yellow-400 text-white text-xl font-semibold tracking-wide whitespace-nowrap">
+          <span className="flex items-center justify-center px-2 gap-1 rounded-3xl group-hover:text-yellow-400 text-white text-xl font-semibold tracking-wide whitespace-nowrap cursor-pointer">
             Get Started
             <i class="bi bi-arrow-right-short text-xl  inline-block group-hover:fill-yellow-400 fill-white  shrink-0" ></i>
 
