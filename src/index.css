@@ -7,7 +7,7 @@
 :root {
   --color-primary: #460c0c;
   --color-background:#C6C7DC;
-  
+
   --color-secondary: #e0e1f1;
   --color-text: #645D7E;
   --color-placeholder : #645D7E;
@@ -151,7 +151,13 @@ body{
   --color-sidebar-accent: var(--sidebar-accent);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);}
+  --color-sidebar-ring: var(--sidebar-ring);
+  --animate-shiny-text: shiny-text 8s infinite;
+  @keyframes shiny-text {
+  0%, 90%, 100% {
+    background-position: calc(-100% - var(--shiny-width)) 0;}
+  30%, 60% {
+    background-position: calc(100% + var(--shiny-width)) 0;}}}
 
 .dark {
   --background: oklch(0.145 0 0);
@@ -192,14 +198,12 @@ body{
   body {
     @apply bg-background text-foreground;}}
 
-
 #root,body{
   width: 100vw;
   min-height: 100vh;
   display: flex;
   align-items: center;
 }
-
 
 *{
   box-sizing: border-box;
@@ -211,12 +215,10 @@ body.default-cursor *{
   cursor: auto !important;
 }
 
-
 /* for smooth cursor : */
 body.smooth-cursor  *{
   cursor: none !important;
 }
-
 
 body.default-cursor button,
 /* body.default-cursor div, */
@@ -225,8 +227,6 @@ body.default-cursor [role="button"],
 body.default-cursor .cursor-pointer {
   cursor: pointer !important;
 }
-
-
 
 /* Custom richColors palette 'Sooner' */
 
@@ -266,5 +266,3 @@ body.default-cursor .cursor-pointer {
 [data-sonner-toast] [data-icon] {
   color: white !important;
 }
-
-
