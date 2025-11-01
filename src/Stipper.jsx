@@ -99,60 +99,79 @@ function Scene2({ dispatch ,scene}) {
 
 
 import {todosContext} from './components/TodoList'
-import { useContext , useState } from "react";
+import { useContext , useState ,useEffect} from "react";
+import { Spinner } from "./components/ui/spinner"
 
 function Scene3({ setShowStepper }) {
 
   const {setTodos} = useContext(todosContext)
 
   const [isValid , setisValid] = useState(false)
-
+  const [loading, setLoading] = useState(false);
+  const timerRef = useRef(null);
   const inputRef = useRef(null);
 
+  useEffect(() => {
+      return () => {
+        // cleanup timer on unmount
+        if (timerRef.current) clearTimeout(timerRef.current);
+      };
+  }, []);
+  
+
   const handleImport = () => {
-    inputRef.current.click();
+      inputRef.current.click();
+
+        
   };
 
+
+
   const handleFileChange = async (event) => {
+    
     const file = event.target.files[0];
     if (!file) return;
 
     if (file.type !== "application/json") {
-      toast.success("Please select a JSON file.")
+      toast.success("Please select a JSON file.");
       return;
     }
 
-    try {
-      const text = await file.text();
-      const data = JSON.parse(text);
+    setLoading(true)
+    setTimeout(async () => {
+      try {
+        const text = await file.text();
+        const data = JSON.parse(text);
 
-      console.log(data)
+        console.log(data);
 
-      // Validate JSON structure
-      const isValid =
-        Array.isArray(data) &&
-        data.every(
-          (item) =>
-            typeof item.id === "number" &&
-            typeof item.content === "string" &&
-            typeof item.modeEdit === "boolean" &&
-            typeof item.check === "boolean"
-        );  
+        const isValid =
+          Array.isArray(data) &&
+          data.every(
+            (item) =>
+              typeof item.id === "number" &&
+              typeof item.content === "string" &&
+              typeof item.modeEdit === "boolean" &&
+              typeof item.check === "boolean"
+          );
 
-      if (!isValid) {
-        toast.error("Invalid JSON format! Expected [{ id, content, modeEdit, check }, ...]")
-        return;
+        if (!isValid) {
+          toast.error("Invalid JSON format! Expected [{ id, content, modeEdit, check }, ...]");
+          return;
+        }
+
+        toast.success("JSON imported successfully!");
+        setTodos(data);
+        setisValid(true);
+      } catch (err) {
+        toast.error("Failed to read JSON file.");
+        console.error(err);
       }
 
-      toast.success("JSON imported successfully!")
-      setTodos(data)  
-      setisValid(true)
+      setLoading(false)
+      }, 3000)
 
-    } catch (err) {
-      toast.error("Failed to read JSON file.")
-      console.error(err);
-    }
-  }
+    };
 
 
 
@@ -178,7 +197,21 @@ function Scene3({ setShowStepper }) {
 
           <ConfettiButton  setShowStepper={setShowStepper}>{isValid? "Start" : "New Project" }</ConfettiButton>
 
-          {!isValid &&  <Button variant="secondary" onClick={handleImport}>Import Project</Button>}
+          {!isValid && ( 
+
+            loading ? (
+                <Button variant="secondary" disabled size="lg">
+                                    <Spinner />
+                                    <span className="ml-2">Please wait...</span>
+                </Button>
+            ):(
+             <Button variant="secondary" onClick={handleImport}>Import Project</Button>
+
+            )
+            
+          )}
+
+
           
           <input
             ref={inputRef}
