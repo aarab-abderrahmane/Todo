@@ -1,18 +1,33 @@
 import {TodoList}  from "./components/TodoList"
 import {useState,createContext,useEffect} from 'react'
-import * as React from "react"
 import { SmoothCursor } from "./components/ui/smooth-cursor"
 import LiveCalendar from "./components/LiveCalendar"
 import { Calendar } from "./components/ui/calendar";
 import LiveClockDetailed from './components/LiveClockDetailed'
 import { ToastContext } from "./ToastContext"
 import { Toaster } from "./components/ui/sonner"
-
-
+import Stipper from "./Stipper";
 
 export  const PreferencesContext = createContext({})
 
+
 function App() {
+
+  //start 
+
+  const [showStepper,setShowStepper] = useState(false)
+
+  useEffect(()=>{
+
+      const isVisited = localStorage.getItem('hasVisited')
+      console.log(isVisited)
+      if(!isVisited){
+          localStorage.setItem('hasVisited',true)
+          setShowStepper(true)
+
+      }
+  })
+
 
 
   const [calendarDate,setCalendarDate] = useState(new Date())
@@ -202,7 +217,8 @@ function App() {
             <Toaster />
               
       </ToastContext.Provider>
-
+      
+      {showStepper && <Stipper showStepper={showStepper} setShowStepper={setShowStepper}/>}
     </PreferencesContext.Provider>
    
   )
