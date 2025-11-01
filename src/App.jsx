@@ -6,7 +6,6 @@ import { Calendar } from "./components/ui/calendar";
 import LiveClockDetailed from './components/LiveClockDetailed'
 import { ToastContext } from "./ToastContext"
 import { Toaster } from "./components/ui/sonner"
-import Stipper from "./Stipper";
 
 export  const PreferencesContext = createContext({})
 
@@ -15,18 +14,8 @@ function App() {
 
   //start 
 
-  const [showStepper,setShowStepper] = useState(false)
 
-  useEffect(()=>{
 
-      const isVisited = localStorage.getItem('hasVisited')
-      console.log(isVisited)
-      if(!isVisited){
-          localStorage.setItem('hasVisited',true)
-          setShowStepper(true)
-
-      }
-  })
 
 
 
@@ -218,7 +207,6 @@ function App() {
               
       </ToastContext.Provider>
       
-      {showStepper && <Stipper showStepper={showStepper} setShowStepper={setShowStepper}/>}
     </PreferencesContext.Provider>
    
   )

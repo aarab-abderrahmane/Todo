@@ -13,6 +13,7 @@ import {
 import DropdownMenuLabo from "./DropDownMenuLabo"
 import { toast } from "sonner"
 
+import Stipper from "../Stipper";
 
 
 
@@ -20,7 +21,20 @@ export const todosContext = createContext()
 
 export  function TodoList() {
 
+  const [showStepper,setShowStepper] = useState(false)
+  useEffect(()=>{
+
+      const isVisited = localStorage.getItem('hasVisited')
+      console.log(isVisited)
+      if(!isVisited){
+          // localStorage.setItem('hasVisited',true)
+          setShowStepper(true)
+
+      }
+  })
   const [inputContent, setInputContent] = useState("");
+
+
 
   const [activeSparkles, setActiveSparkles] = useState(false);
 
@@ -164,7 +178,7 @@ export  function TodoList() {
 
 
   return (
-    <todosContext.Provider  value={{todos,handleAdd,handleCheck,handleEdit,handleSave,hanldeDelete}}>
+    <todosContext.Provider  value={{todos,setTodos,handleAdd,handleCheck,handleEdit,handleSave,hanldeDelete}}>
 
     <div className="flex flex-col gap-6  w-[90vw]  md:w-[50vw]    max-w-[550px] h-[90vh]  max-h-[850px]">
       {/* <!-- Input --> */}
@@ -220,6 +234,10 @@ export  function TodoList() {
         <DropdownMenuLabo/>
   
     </div>
+
+
+    {showStepper && <Stipper showStepper={showStepper} setShowStepper={setShowStepper}/>}
+
 
     </todosContext.Provider>
 

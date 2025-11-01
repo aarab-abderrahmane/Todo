@@ -58,6 +58,18 @@ body{
     font-family: "Poppins", sans-serif;
 }
 
+/* Customize selected text */
+::selection {
+    color: var(--color-text);         
+    background-color: var(--color-background); 
+}
+
+/* For better browser */
+::-moz-selection {
+    color: var(--color-text);
+    background-color: var(--color-background);
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 10px;
@@ -256,10 +268,9 @@ body.default-cursor .cursor-pointer {
 }
 
 [data-sonner-toast][data-type="error"] {
-  background: linear-gradient(135deg, #ef4444, #dc2626) !important;
-  color: white !important;
-  border: none !important;
-  box-shadow: 0 4px 14px 0 rgba(239, 68, 68, 0.3) !important;
+  background: rgb(212, 12, 12) !important;
+  color: rgb(39, 0, 0) !important;
+  border: 2px rgb(39, 0, 0) solid !important;
 }
 
 /* Custom icon colors */
