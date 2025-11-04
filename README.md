@@ -48,7 +48,8 @@ A beautiful, feature-rich todo list application built with React 19, Vite, and s
 ## 🎬 Demo
 
 ![App Demo](./public/planpulse.vercel.app_1.png)
-![Features](./public/planpulse.vercel.app_2.png)
+![Features](./public/planpulse.vercel.app_%202.png)
+
 
 ## 🚀 Quick Start
 
