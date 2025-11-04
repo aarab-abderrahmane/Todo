@@ -14,7 +14,10 @@ import DropdownMenuLabo from "./DropDownMenuLabo"
 import { toast } from "sonner"
 
 import Stipper from "../Stipper";
+import {DndContext,closestCorners} from '@dnd-kit/core';
+import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 
+import { arrayMove } from "@dnd-kit/sortable";
 
 
 export const todosContext = createContext()
@@ -119,22 +122,23 @@ export  function TodoList() {
 
 
           <ContextMenu key={td.id}>
-          <ContextMenuTrigger>
+            <ContextMenuTrigger>
 
-                    <List
-          id={td.id}
-          content={td.content}
-          modeEdit={td.modeEdit}
-          check={td.check}
-        />
-          </ContextMenuTrigger>
-            <ContextMenuContent>
-              <ContextMenuItem>Profile</ContextMenuItem>
-              <ContextMenuItem  className="text-red-500 font-bold " onSelect={()=>hanldeDelete(td.id)} >Delete</ContextMenuItem>
-            </ContextMenuContent>
+                      <List
+            id={td.id}
+            content={td.content}
+            modeEdit={td.modeEdit}
+            check={td.check}
+          />
+            </ContextMenuTrigger>
+              <ContextMenuContent>
+                <ContextMenuItem>Profile</ContextMenuItem>
+                <ContextMenuItem  className="text-red-500 font-bold " onSelect={()=>hanldeDelete(td.id)} >Delete</ContextMenuItem>
+              </ContextMenuContent>
           </ContextMenu>
 
       ));
+
     } else {
 
       return (
@@ -173,6 +177,28 @@ export  function TodoList() {
 
 
   }
+
+
+  const getTaskPos= id => todos.findIndex(task=>task.id=== id)
+  const handleDragEnd = event=>{
+    const {active,over} = event
+
+    if(active.id === over.id) return ; 
+
+    setTodos((prev)=>{
+
+      const originalPos = getTaskPos(active.id)
+      const newPos = getTaskPos(over.id)
+
+      return arrayMove(prev,originalPos,newPos)
+    }
+
+    )
+
+  }
+
+
+
 
 
 
@@ -217,13 +243,24 @@ export  function TodoList() {
           </h2>
         </div>
         <div className="overflow-y-scroll overflow-x-hidden max-h-[calc(50vh-10px)] p-4 pb-8 drop-shadow-[0_4px_6px_rgba(255,255,255,0.5)]">
+      
+          <DndContext
+          onDragEnd={handleDragEnd}
+          collisionDetection={closestCorners} >
+          {/* darg + drop */}
+      
           <ul className=" flex flex-col gap-2">
 
-            {ListTodos}
+              <SortableContext items={todos} 
+              
+              strategy={verticalListSortingStrategy}>
 
-
+                {ListTodos}
+              </SortableContext>
 
           </ul>
+          </DndContext>
+
         </div>
       </div>
     </div>

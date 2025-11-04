@@ -6,7 +6,22 @@ import { CodeXmlIcon  } from './ui/icons/CodeXmlIcon'
 import {CircleCheckIcon} from './ui/icons/CircleCheckIcon'
 import {PreferencesContext} from '../App'
 
+import { useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
+
 const List = ({id,content,modeEdit,check})=>{
+
+
+
+    const {attributes,listeners,setNodeRef,
+        transform,transition
+        }=useSortable({id})
+
+    const style = {
+        transition,
+        transform : CSS.Transform.toString(transform),
+        borderWidth:"2px",boxShadow:"none"
+    }
 
     const {PreferencesSettings} = useContext(PreferencesContext)
     const buttons = PreferencesSettings.buttons
@@ -30,7 +45,11 @@ const List = ({id,content,modeEdit,check})=>{
             
 
 
-            <li class="glass  bg-white/30  flex items-center  overflow-x-hidden rounded-xl px-4 py-2 h-[60px] overflow-y-hidden group  md:hover:scale-[1.04] " style={{borderWidth:"2px",boxShadow:"none"}}   >
+            <li 
+            ref={setNodeRef}    
+            class="glass  bg-white/30  flex items-center  overflow-x-hidden rounded-xl px-4 py-2 h-[60px] overflow-y-hidden group  md:hover:scale-[1.04] " 
+            style={style}   >
+                <i {...attributes} {...listeners} class="bi bi-grip-vertical absolute left-1 group-hover:block hidden text-xl cursor-pointer "></i>
                 <input class={`w-[80%] font-medium text-[var(--color-text)] bg-transparent  outline-none decoration-[var(--color-text)] decoration-2 ${check? "line-through" : ""}`} disabled={check || !modeEdit} value={todoContent} onChange={(e)=>setTodoContent(e.target.value)}></input>
                 <div className="flex  items-center justify-end gap-3  w-[110px]  ">
                     
