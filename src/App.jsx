@@ -1,5 +1,5 @@
 import {TodoList}  from "./components/TodoList"
-import {useState,createContext,useEffect, useContext} from 'react'
+import {useState,createContext,useEffect, useContext,useMemo} from 'react'
 import { SmoothCursor } from "./components/ui/smooth-cursor"
 import LiveCalendar from "./components/LiveCalendar"
 import { Calendar } from "./components/ui/calendar";
@@ -18,7 +18,6 @@ import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 
 // DOck 
-import React from "react";
 import { FloatingDock } from "./components/ui/floating-dock";
 
 
@@ -27,6 +26,62 @@ function App() {
 
   //start 
 
+  const defaultPreferences = useMemo(() => ({
+      customizeLayout: {
+        active: false,
+        info: [
+          { id: 0, type: "calendar" },
+          { id: 1, type: "clock" }
+        ]
+      },
+      hasVisited: false,
+      general: { hideTexts: false, opacityTexts: 100 },
+      cursorType: "smooth",
+      theme_name: "blue",
+      themes: {
+        red: {
+          "--color-background": "#dc9090",
+          "--color-text": "#460c0c",
+          "--color-button": "#f84f4f"
+        },
+        blue: {
+          "--color-background": "#90b5dc",
+          "--color-text": "#0c2646",
+          "--color-button": "#4f83f8"
+        },
+        yellow: {
+          "--color-background": "#e6dc90",
+          "--color-text": "#46400c",
+          "--color-button": "#f8e14f"
+        },
+        green: {
+          "--color-background": "#90dca4",
+          "--color-text": "#0c4620",
+          "--color-button": "#4ff86a"
+        },
+        purple: {
+          "--color-background": "#b890dc",
+          "--color-text": "#2a0c46",
+          "--color-button": "#9b4ff8"
+        },
+        dark: {
+          "--color-background": "#000000ff",
+          "--color-text": "#ffffffff",
+          "--color-button": "#000000ff"
+        },
+        default: {
+          "--color-background": "#C6C7DC",
+          "--color-text": "#645D7E",
+          "--color-button": "#C6C7DC"
+        }
+      },
+      buttons: {
+        buttonDelete: { active: false, color: "bg-[var(--color-primary-light)]" },
+        buttonEdit: { active: true, color: "bg-[var(--color-primary-light)]" }
+      }
+    }), []);
+
+
 
   const [PreferencesSettings,setPreferencesSettings] = useState(()=>{
 
@@ -34,64 +89,16 @@ function App() {
       const preferenceObj = JSON.parse(saved)
       return saved && saved!==null && saved!==undefined 
       ? {...preferenceObj, customizeLayout: {...preferenceObj.customizeLayout,active:false}} 
-      :  {  
-            customizeLayout : {
-              active : false , 
-              info:[{ id: 0, type: "calendar" },{ id: 1, type: "clock" }]
-            } ,
-            hasVisited:false , 
-            general:{hideTexts:false,opacityTexts:100},
-            cursorType:"smooth",
-            theme_name:"blue",
-            themes: {
-              red: {
-                "--color-background": "#dc9090",
-                "--color-text": "#460c0c",
-                "--color-button": "#f84f4f"
-              },
-              blue: {
-                "--color-background": "#90b5dc",
-                "--color-text": "#0c2646",
-                "--color-button": "#4f83f8"
-              },
-              yellow: {
-                "--color-background": "#e6dc90",
-                "--color-text": "#46400c",
-                "--color-button": "#f8e14f"
-              },
-              green: {
-                "--color-background": "#90dca4",
-                "--color-text": "#0c4620",
-                "--color-button": "#4ff86a"
-              },
-              purple: {
-                "--color-background": "#b890dc",
-                "--color-text": "#2a0c46",
-                "--color-button": "#9b4ff8"
-              },
-              dark: {
-                "--color-background": "#000000ff",
-                "--color-text": "#ffffffff",
-                "--color-button": "#000000ff"
-              },
-              default:{
-                "--color-background": "#C6C7DC",
-                "--color-text": "#645D7E",
-                "--color-button": "#C6C7DC"
-              },
-         
-              },
-            buttons:{
-              buttonDelete: { active: false, color: 'bg-[var(--color-primary-light)]' },
-              buttonEdit: { active: true, color: 'bg-[var(--color-primary-light)]' },
-            }
-    
-    }
+      :  defaultPreferences
   })
+
+  const [timeItems, setTimeItems] = useState(PreferencesSettings?.customizeLayout.info);
+
 
 
   useEffect(()=>{
       localStorage.setItem("Preferences",JSON.stringify(PreferencesSettings))
+      setTimeItems(PreferencesSettings?.customizeLayout.info)
   },[PreferencesSettings])
 
 
@@ -150,13 +157,6 @@ function App() {
 
 
 
-
-
-
-
-  const [timeItems, setTimeItems] = useState(PreferencesSettings?.customizeLayout.info);
-
-
   useEffect(()=>{
 
     localStorage.setItem('Preferences',JSON.stringify({...PreferencesSettings,customizeLayout:{...PreferencesSettings.customizeLayout,info:timeItems}}))
@@ -191,27 +191,23 @@ function App() {
       icon: (
         <i class="bi bi-stop-fill  text-[var(--color-text)] cursor-pointer text-xl"></i>
       ),
-      href: "#",
+      action : ()=>setPreferencesSettings(prev=>({...prev,customizeLayout:{...prev.customizeLayout,active:false}}))
     },
  
-    {
-      title: "Save",
-      icon: (
-        <i class="bi bi-bookmark  text-[var(--color-text)] cursor-pointer text-xl"></i>
-      ),
-      href: "#",
-    },
     {
       title: "Reset",
       icon: (
         <i class="bi bi-arrow-clockwise  text-[var(--color-text)] cursor-pointer text-xl"></i>
       ),
-      href: "#",
+      action : ()=>setPreferencesSettings(prev=>({...prev,customizeLayout:defaultPreferences.customizeLayout}))
+
     },
    
   ];
 
 
+  console.log(PreferencesSettings.customizeLayout)
+  
   return (
 
     <PreferencesContext.Provider value={{PreferencesSettings,setPreferencesSettings,applyTheme,ToggleCursor}}>
