@@ -98,7 +98,6 @@ function App() {
 
   useEffect(()=>{
       localStorage.setItem("Preferences",JSON.stringify(PreferencesSettings))
-      setTimeItems(PreferencesSettings?.customizeLayout.info)
   },[PreferencesSettings])
 
 
@@ -199,7 +198,11 @@ function App() {
       icon: (
         <i class="bi bi-arrow-clockwise  text-[var(--color-text)] cursor-pointer text-xl"></i>
       ),
-      action : ()=>setPreferencesSettings(prev=>({...prev,customizeLayout:defaultPreferences.customizeLayout}))
+      action : ()=>{
+        setPreferencesSettings(prev=>({...prev,customizeLayout:defaultPreferences.customizeLayout}))
+        setTimeItems(defaultPreferences.customizeLayout.info)
+      }
+
 
     },
    
@@ -207,6 +210,7 @@ function App() {
 
 
   console.log(PreferencesSettings.customizeLayout)
+  console.log(timeItems)
   
   return (
 
