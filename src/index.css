@@ -277,3 +277,21 @@ body.default-cursor .cursor-pointer {
 [data-sonner-toast] [data-icon] {
   color: white !important;
 }
+
+
+
+.shake{
+
+  animation: tilt-shaking 0.3s ease-in-out infinite;
+  transform-origin: center;
+}
+
+
+
+@keyframes tilt-shaking {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(1deg); }
+  50% { transform: rotate(0eg); }
+  75% { transform: rotate(-1deg); }
+  100% { transform: rotate(0deg); }
+}

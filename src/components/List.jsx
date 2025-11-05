@@ -8,8 +8,8 @@ import {PreferencesContext} from '../App'
 
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-
 import {InView} from './ui/in-view'
+
 
 const List = ({id,content,modeEdit,check})=>{
 
@@ -20,7 +20,7 @@ const List = ({id,content,modeEdit,check})=>{
         }=useSortable({id})
 
     const style = {
-        transition: "0.3s transform ease",
+        transition: "0.6s transform ease",
         transform : CSS.Transform.toString(transform),
         borderWidth:"2px",boxShadow:"none"
     }

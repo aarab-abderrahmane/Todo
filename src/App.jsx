@@ -1,5 +1,5 @@
 import {TodoList}  from "./components/TodoList"
-import {useState,createContext,useEffect} from 'react'
+import {useState,createContext,useEffect, useContext} from 'react'
 import { SmoothCursor } from "./components/ui/smooth-cursor"
 import LiveCalendar from "./components/LiveCalendar"
 import { Calendar } from "./components/ui/calendar";
@@ -10,22 +10,28 @@ import { Toaster } from "./components/ui/sonner"
 export  const PreferencesContext = createContext({})
 
 
+// dnd-kit
+import {DndContext,closestCorners} from '@dnd-kit/core';
+import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import { arrayMove } from "@dnd-kit/sortable";
+import { useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
+
 function App() {
 
   //start 
 
 
-
-
-
-
-  const [calendarDate,setCalendarDate] = useState(new Date())
   const [PreferencesSettings,setPreferencesSettings] = useState(()=>{
 
       const saved = localStorage.getItem('Preferences');
       return saved && saved!==null && saved!==undefined 
-      ? JSON.parse(saved) 
-      :  {   
+      ? {...JSON.parse(saved),customizeActive : false} 
+      :  {  
+            customizeLayout : {
+              active : false , 
+              info:[{ id: 0, type: "calendar" },{ id: 1, type: "clock" }]
+            } ,
             hasVisited:false , 
             general:{hideTexts:false,opacityTexts:100},
             cursorType:"smooth",
@@ -74,7 +80,6 @@ function App() {
             }
     
     }
-
   })
 
 
@@ -140,8 +145,40 @@ function App() {
 
 
 
-  
-  
+
+
+  const [timeItems, setTimeItems] = useState(PreferencesSettings.customizeLayout.info);
+
+
+  useEffect(()=>{
+
+    localStorage.setItem('Preferences',JSON.stringify({...PreferencesSettings,customizeLayout:{...PreferencesSettings.customizeLayout,info:timeItems}}))
+
+  },[timeItems])
+
+
+   // drag drop 
+
+    const getTaskPos= id => timeItems.findIndex(task=>task.id=== id)
+    const handleDragEnd = event=>{
+        const {active,over} = event
+
+        if(active.id === over.id) return ; 
+
+        setTimeItems((prev)=>{
+
+          const originalPos = getTaskPos(active.id)
+          const newPos = getTaskPos(over.id)
+
+          return arrayMove(prev,originalPos,newPos)
+        }
+
+        )
+
+  }
+
+
+
   return (
 
     <PreferencesContext.Provider value={{PreferencesSettings,setPreferencesSettings,applyTheme,ToggleCursor}}>
@@ -169,29 +206,23 @@ function App() {
                   {/* <!-- Left section --> */}
                     <div className="flex flex-col gap-3 z-10   max-w-[1000px] w-[90vw] xl:w-[50vw]  ">
 
-                    {/* <!-- Calendar --> */}
-                    <div
-                    class="glass   rounded-3xl !important shadow  flex flex-col md:flex-row items-center md:items-stretch lg:justify-between   w-full lg:h-[50vh] lg:max-h-[450px] overflow-hidden md:hover:scale-[1.03]"
-                    style={{ padding: "2px" }}
-                    >
+                      {/* <!-- Calendar --> */}
+                      {/* <!-- Clock --> */}
+                      <DndContext
+                      onDragEnd={handleDragEnd}
+                      collisionDetection={closestCorners} >
 
-                      <LiveCalendar/>
+                        <SortableContext
+                          items={timeItems.map(item => item.id)}
+                          strategy={verticalListSortingStrategy}
+                        >
+                          {timeItems.map(item => (
+                            <ShowLatestLayout key={item.id} item={item} GlobalCalendar={GlobalCalendar}/>
+                          ))}
+                        </SortableContext>
 
-                      <div className="overflow-y-scroll w-full md:w-[55%] m-5  lg:h-[45vh] lg:max-h-[400px]">
-                      <Calendar
-                          mode="single"
-                          selected={calendarDate}
-                          onSelect={setCalendarDate}
-                          className="  shadow-sm  w-full   md:pb-6  "
-                          captionLayout="dropdown"
-                      />
-                      </div>
-
-                    </div>
-                    
-                    
-                    {/* <!-- Clock --> */}
-                    <LiveClockDetailed />
+      
+                      </DndContext>
 
                   </div>
 
@@ -213,3 +244,56 @@ function App() {
 }
 
 export default App
+
+
+
+
+function ShowLatestLayout({ item }) {
+  const { attributes, listeners, setNodeRef, transform } = useSortable({ id: item.id });
+
+  const style = {
+    transition: "0.3s transform ease",
+    transform: CSS.Transform.toString(transform),
+  };
+
+  const { PreferencesSettings } = useContext(PreferencesContext);
+
+  return PreferencesSettings?.customizeActive ? (
+    <div ref={setNodeRef} style={style}  {...attributes} {...listeners}>
+      {item.type==="calendar" ? <GlobalCalendar/> : <LiveClockDetailed/> }
+    </div>
+  ) : (
+    item.type==="calendar" ? <GlobalCalendar/> : <LiveClockDetailed/> 
+  );
+}
+
+
+function GlobalCalendar(){
+
+  const [calendarDate,setCalendarDate] = useState(new Date())
+  const { PreferencesSettings } = useContext(PreferencesContext);
+
+
+    return  (
+        <div
+            className={`
+              ${PreferencesSettings.customizeActive? "shake" : ""}
+              glass   rounded-3xl !important shadow  flex flex-col md:flex-row items-center md:items-stretch lg:justify-between   w-full lg:h-[50vh] lg:max-h-[450px] overflow-hidden md:hover:scale-[1.03]`}
+            style={{ padding: "2px" }}
+            >
+
+              <LiveCalendar/>
+
+              <div className="overflow-y-scroll w-full md:w-[55%] m-5  lg:h-[45vh] lg:max-h-[400px]">
+              <Calendar
+                  mode="single"
+                  selected={calendarDate}
+                  onSelect={setCalendarDate}
+                  className="  shadow-sm  w-full   md:pb-6  "
+                  captionLayout="dropdown"
+              />
+              </div>
+
+      </div>
+  )
+}

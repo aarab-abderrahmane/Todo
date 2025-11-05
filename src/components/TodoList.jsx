@@ -19,17 +19,7 @@ import Stipper from "../Stipper";
 import {DndContext,closestCorners} from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { arrayMove } from "@dnd-kit/sortable";
-import {
-  DragOverlay,
-} from '@dnd-kit/core';
 
-import {
-  MouseSensor,
-  TouchSensor,
-  useSensor,
-  useSensors,
-} from "@dnd-kit/core";
-    
 
 export const todosContext = createContext()
 
@@ -266,9 +256,8 @@ export  function TodoList() {
               
                 strategy={verticalListSortingStrategy}>
 
-                  
-
                 {ListTodos}
+                
               </SortableContext>
 
 

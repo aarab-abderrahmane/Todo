@@ -30,7 +30,9 @@ import {Preferences} from './Preferences'
 
 import { Kbd, KbdGroup } from "./ui/kbd"
 import{useEffect,useRef} from 'react'
-import { Spinner } from "./ui/spinner"
+import { Spinner } from "./ui/spinner"    
+
+import {PreferencesContext} from '../App'
 
 
 
@@ -132,6 +134,11 @@ export default function DropdownMenuLabo() {
   },[])
 
 
+  const {setPreferencesSettings} = useContext(PreferencesContext)
+  function activeCustomizeLayout(){
+      setPreferencesSettings(prev=>({...prev,customizeActive:true}))
+  }
+
   return (
     <>
       <DropdownMenu modal={false} >
@@ -164,8 +171,21 @@ export default function DropdownMenuLabo() {
              <i class="bi bi-box-arrow-in-up text-xl font-black"></i>
               Export
             </DropdownMenuItem>
-            <DropdownMenuSeparator  className='font-bold h-[1px] bg-[var(--color-text)]' />
 
+            <DropdownMenuSeparator className='font-bold h-[1px] bg-[var(--color-text)]'/>
+            <DropdownMenuItem className="p-3" disabled={todos.length>0 ? false : true} onSelect={()=>setOpenDialog(true)}>
+             <i class="bi bi-box-arrow-down text-xl font-black"></i>
+              Import 
+            </DropdownMenuItem>
+
+            <DropdownMenuSeparator className='font-bold h-[1px] bg-[var(--color-text)]'/>
+            <DropdownMenuItem className="p-3" disabled={todos.length>0 ? false : true} onSelect={()=>activeCustomizeLayout()}>
+             <i class="bi bi-columns-gap text-xl font-black"></i>
+              Customize Layout
+            </DropdownMenuItem>
+
+
+            <DropdownMenuSeparator  className='font-bold h-[1px] bg-[var(--color-text)]' />
             <DropdownMenuItem className="text-red-500 p-3 font-bold focus:bg-red-200  " onSelect={()=>setshowConfirm(true)}>
               <i class="bi bi-arrow-repeat text-xl font-black !important   " ></i>
               Reset

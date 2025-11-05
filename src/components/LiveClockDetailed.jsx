@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect,useContext } from "react";
+import {PreferencesContext} from '../App'
 
 export default function LiveClockDetailed() {
 
     const [now,setNow] = useState(new Date())
-
+    const {PreferencesSettings} = useContext(PreferencesContext)
     useEffect(()=>{
 
         const timer = setInterval(()=>{
@@ -23,7 +24,10 @@ export default function LiveClockDetailed() {
     const ampm = now.getHours() >= 12 ? "PM" : "AM";
 
   return (
-    <div className="glass  flex flex-col  w-full  lg:h-[40vh] max-h-[400px] bg-white/40 rounded-3xl  shadow backdrop-blur-lg md:hover:scale-[1.03] overflow-hidden">
+    <div
+    className={`
+    ${PreferencesSettings.customizeActive ? "shake" : ""}
+    glass  flex flex-col  w-full  lg:h-[40vh] max-h-[400px] bg-white/40 rounded-3xl  shadow backdrop-blur-lg md:hover:scale-[1.03] overflow-hidden`}>
       <div className="text-[var(--color-text)] flex  gap-4 items-center p-4  border-b-4 border-white/20">
         <h1 className="text-2xl font-bold md:text-[2rem]">Clcok</h1>
         <i class="bi bi-clock"></i>
