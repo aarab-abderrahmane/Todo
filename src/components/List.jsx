@@ -9,6 +9,8 @@ import {PreferencesContext} from '../App'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 
+import {InView} from './ui/in-view'
+
 const List = ({id,content,modeEdit,check})=>{
 
 
@@ -18,7 +20,7 @@ const List = ({id,content,modeEdit,check})=>{
         }=useSortable({id})
 
     const style = {
-        transition,
+        transition: "0.3s transform ease",
         transform : CSS.Transform.toString(transform),
         borderWidth:"2px",boxShadow:"none"
     }
@@ -44,7 +46,7 @@ const List = ({id,content,modeEdit,check})=>{
 
             
 
-
+            <InView>
             <li 
             ref={setNodeRef}    
             class="glass  bg-white/30  flex items-center  overflow-x-hidden rounded-xl px-4 py-2 h-[60px] overflow-y-hidden group  md:hover:scale-[1.04] " 
@@ -63,6 +65,7 @@ const List = ({id,content,modeEdit,check})=>{
                 </div>
                 
             </li>
+            </InView>
 
     )
 

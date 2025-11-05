@@ -14,11 +14,22 @@ import DropdownMenuLabo from "./DropDownMenuLabo"
 import { toast } from "sonner"
 
 import Stipper from "../Stipper";
+
+//drag drop
 import {DndContext,closestCorners} from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
-
 import { arrayMove } from "@dnd-kit/sortable";
+import {
+  DragOverlay,
+} from '@dnd-kit/core';
 
+import {
+  MouseSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+    
 
 export const todosContext = createContext()
 
@@ -253,10 +264,14 @@ export  function TodoList() {
 
               <SortableContext items={todos} 
               
-              strategy={verticalListSortingStrategy}>
+                strategy={verticalListSortingStrategy}>
+
+                  
 
                 {ListTodos}
               </SortableContext>
+
+
 
           </ul>
           </DndContext>
