@@ -64,6 +64,43 @@ export function Preferences({ showPreferences, setShowPreferences }) {
 
   const [isOpen, setIsOpen] = useState(false);
 
+  const ButtonHoverRight = () => {
+  return (
+    <button
+      onClick={() => applyTheme("default")}
+      className="
+        bg-white/40 rounded-3xl text-[var(--color-text)] border-[var(--color-text)]  border-2
+        group relative inline-flex h-12 w-12 items-center justify-center 
+        overflow-hidden rounded-full 
+        transition-all duration-300 
+        hover:w-[100px]
+        group 
+      "
+    >
+      {/* Text that slides in on hover */}
+      <div
+        className="
+           text-[var(--color-text)] font-bold
+          inline-flex whitespace-nowrap opacity-0 
+          transition-all duration-200 
+          group-hover:-translate-x-3 group-hover:opacity-100
+          group-hover:cursor-pointer
+        "
+      >
+        Reset
+      </div>
+
+      {/* Arrow Icon */}
+      <div className="absolute right-3 group">
+          <i class="bi bi-arrow-clockwise text-[var(--color-text)] text-xl "></i>
+
+      </div>
+
+    </button>
+    );
+  };
+
+
   return (
     <Dialog
       open={showPreferences}
@@ -126,8 +163,8 @@ export function Preferences({ showPreferences, setShowPreferences }) {
               </AccordionItem>
               <AccordionItem value="item-1">
                 <AccordionTrigger>Theme Preferences</AccordionTrigger>
-                <AccordionContent className="flex flex-col gap-4 text-balance">
-                  <div className="flex justify-center gap-3 flex-wrap sm:flex-nowrap">
+                <AccordionContent className="flex flex-col gap-4 text-balance" >
+                  <div className="flex justify-center md:items-center gap-3 flex-wrap sm:flex-nowrap ">
                     {Object.keys(PreferencesSettings.themes)?.map(
                       (key, index) => {
                         const colorInfo = PreferencesSettings.themes[key];
@@ -158,12 +195,11 @@ export function Preferences({ showPreferences, setShowPreferences }) {
                       }
                     )}
 
-                    <button
-                      className="bg-[var(--color-button)] rounded-xl text-[var(--color-text)] border-[var(--color-text)] w-[80px] border-2"
-                      onClick={() => applyTheme("default")}
-                    >
-                      Reset
-                    </button>
+
+                    {/* // reset Button */}
+                    <ButtonHoverRight/>
+
+
                   </div>
                 </AccordionContent>
               </AccordionItem>

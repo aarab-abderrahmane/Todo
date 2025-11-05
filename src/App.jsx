@@ -64,11 +64,7 @@ function App() {
           "--color-text": "#2a0c46",
           "--color-button": "#9b4ff8"
         },
-        dark: {
-          "--color-background": "#000000ff",
-          "--color-text": "#ffffffff",
-          "--color-button": "#000000ff"
-        },
+
         default: {
           "--color-background": "#C6C7DC",
           "--color-text": "#645D7E",
