@@ -17,6 +17,12 @@ import { arrayMove } from "@dnd-kit/sortable";
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 
+// DOck 
+import React from "react";
+import { FloatingDock } from "./components/ui/floating-dock";
+
+
+
 function App() {
 
   //start 
@@ -25,8 +31,9 @@ function App() {
   const [PreferencesSettings,setPreferencesSettings] = useState(()=>{
 
       const saved = localStorage.getItem('Preferences');
+      const preferenceObj = JSON.parse(saved)
       return saved && saved!==null && saved!==undefined 
-      ? {...JSON.parse(saved),customizeActive : false} 
+      ? {...preferenceObj, customizeLayout: {...preferenceObj.customizeLayout,active:false}} 
       :  {  
             customizeLayout : {
               active : false , 
@@ -147,14 +154,14 @@ function App() {
 
 
 
-  const [timeItems, setTimeItems] = useState(PreferencesSettings.customizeLayout.info);
+  const [timeItems, setTimeItems] = useState(PreferencesSettings?.customizeLayout.info);
 
 
   useEffect(()=>{
 
     localStorage.setItem('Preferences',JSON.stringify({...PreferencesSettings,customizeLayout:{...PreferencesSettings.customizeLayout,info:timeItems}}))
 
-  },[timeItems])
+  },[timeItems,PreferencesSettings])
 
 
    // drag drop 
@@ -178,6 +185,32 @@ function App() {
   }
 
 
+  const links = [
+    {
+      title: "Cancel",
+      icon: (
+        <i class="bi bi-stop-fill  text-[var(--color-text)] cursor-pointer text-xl"></i>
+      ),
+      href: "#",
+    },
+ 
+    {
+      title: "Save",
+      icon: (
+        <i class="bi bi-bookmark  text-[var(--color-text)] cursor-pointer text-xl"></i>
+      ),
+      href: "#",
+    },
+    {
+      title: "Reset",
+      icon: (
+        <i class="bi bi-arrow-clockwise  text-[var(--color-text)] cursor-pointer text-xl"></i>
+      ),
+      href: "#",
+    },
+   
+  ];
+
 
   return (
 
@@ -197,11 +230,23 @@ function App() {
                   </div>
             )}
 
+
+            {
+              PreferencesSettings.customizeLayout.active && (
+
+                      <div className="fixed z-[400] bg-red-400  top-0 right-1/2 left-1/2 tansform  flex items-center justify-center h-[6rem] ">
+                        <FloatingDock
+                          mobileClassName="translate-y-0" // only for demo, remove for production
+                          items={links}
+                        />
+                      </div>
+
+              )
+            }
+
             
 
               <div className="flex flex-col  items-center mt-12 md:mt-0 xl:flex-row xl:justify-center w-[100vw]  gap-4 p-4 lg:p-8 min-h-screen overflow-y-scroll overflow-x-hidden  ">
-
-
 
                   {/* <!-- Left section --> */}
                     <div className="flex flex-col gap-3 z-10   max-w-[1000px] w-[90vw] xl:w-[50vw]  ">
@@ -258,7 +303,7 @@ function ShowLatestLayout({ item }) {
 
   const { PreferencesSettings } = useContext(PreferencesContext);
 
-  return PreferencesSettings?.customizeActive ? (
+  return PreferencesSettings?.customizeLayout.active? (
     <div ref={setNodeRef} style={style}  {...attributes} {...listeners}>
       {item.type==="calendar" ? <GlobalCalendar/> : <LiveClockDetailed/> }
     </div>
@@ -277,7 +322,7 @@ function GlobalCalendar(){
     return  (
         <div
             className={`
-              ${PreferencesSettings.customizeActive? "shake" : ""}
+              ${PreferencesSettings.customizeLayout.active? "shake" : ""}
               glass   rounded-3xl !important shadow  flex flex-col md:flex-row items-center md:items-stretch lg:justify-between   w-full lg:h-[50vh] lg:max-h-[450px] overflow-hidden md:hover:scale-[1.03]`}
             style={{ padding: "2px" }}
             >

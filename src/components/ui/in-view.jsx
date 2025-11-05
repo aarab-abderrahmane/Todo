@@ -9,7 +9,7 @@ const defaultVariants = {
     scale: 1,
     filter: 'blur(0px)',
      transition: {
-        duration: 0.4,         
+        duration: 0.5,         
         ease: 'easeOut',       
       },
   }

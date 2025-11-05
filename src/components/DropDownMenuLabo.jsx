@@ -4,9 +4,15 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-  DropdownMenuSeparator
-} from "./ui/dropdown-menu";
+} from "./ui/dropdown-menu"
+
 import {
   Dialog,
   DialogClose,
@@ -134,9 +140,11 @@ export default function DropdownMenuLabo() {
   },[])
 
 
-  const {setPreferencesSettings} = useContext(PreferencesContext)
+  const {setPreferencesSettings,PreferencesSettings} = useContext(PreferencesContext)
   function activeCustomizeLayout(){
-      setPreferencesSettings(prev=>({...prev,customizeActive:true}))
+      // setPreferencesSettings(prev=>({...prev,customizeActive:true}))
+      setPreferencesSettings(prev=>({...prev,customizeLayout:{...prev.customizeLayout,active:true}}))
+
   }
 
   return (
@@ -147,15 +155,15 @@ export default function DropdownMenuLabo() {
             <MoreHorizontalIcon />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-[80vw] lg:w-[50vw] max-w-[300px] rounded-xl border-2 border-[var(--color-text)]  " align="end" >
+        <DropdownMenuContent className="w-[80vw] lg:w-[50vw] max-w-[300px] rounded-xl border border-[var(--color-text)]  " align="end" >
           <DropdownMenuLabel className="p-3 bg-[var(--color-background)] text-[var(--color-text)]" >Actions</DropdownMenuLabel>
           <DropdownMenuGroup className="">
-            <DropdownMenuSeparator className='h-[2px] bg-[var(--color-text)]'/>
+            <DropdownMenuSeparator className='h-[1px] bg-[var(--color-text)]'/>
 
             <DropdownMenuItem className="p-3 flex justify-between" onSelect={()=>setShowPreferences(true)}>
             <div >
-                <i class="bi bi-transparency text-xl font-black me-2"></i>         
-                 Preferences
+                <i class="bi bi-transparency text-xl font-black me-2 text-[var(--color-text)]"></i>         
+                Preferences
             </div>
 
             <KbdGroup>
@@ -167,32 +175,50 @@ export default function DropdownMenuLabo() {
             </DropdownMenuItem>
 
             <DropdownMenuSeparator className='font-bold h-[1px] bg-[var(--color-text)]'/>
-            <DropdownMenuItem className="p-3" disabled={todos.length>0 ? false : true} onSelect={()=>setOpenDialog(true)}>
-             <i class="bi bi-box-arrow-in-up text-xl font-black"></i>
-              Export
-            </DropdownMenuItem>
 
-            <DropdownMenuSeparator className='font-bold h-[1px] bg-[var(--color-text)]'/>
-            <DropdownMenuItem className="p-3" disabled={todos.length>0 ? false : true} onSelect={()=>setOpenDialog(true)}>
-             <i class="bi bi-box-arrow-down text-xl font-black"></i>
-              Import 
-            </DropdownMenuItem>
 
-            <DropdownMenuSeparator className='font-bold h-[1px] bg-[var(--color-text)]'/>
-            <DropdownMenuItem className="p-3" disabled={todos.length>0 ? false : true} onSelect={()=>activeCustomizeLayout()}>
-             <i class="bi bi-columns-gap text-xl font-black"></i>
+            <DropdownMenuItem disabled={PreferencesSettings.customizeLayout.active} className="p-3" onSelect={activeCustomizeLayout}>
+             <i class="bi bi-columns-gap text-xl font-black text-[var(--color-text)]"></i>
               Customize Layout
             </DropdownMenuItem>
 
 
+
             <DropdownMenuSeparator  className='font-bold h-[1px] bg-[var(--color-text)]' />
+
+            <DropdownMenuSub  >
+              <DropdownMenuSubTrigger  className="p-3 outline-none  p-3  focus:bg-[var(--color-background)] " >
+                <i class="bi bi-database-fill text-xl font-black text-[var(--color-text)]"></i>
+                Move Data
+                </DropdownMenuSubTrigger>
+              <DropdownMenuPortal >
+                <DropdownMenuSubContent className="bg-[var(--color-secondary)] border border-[var(--color-text)]">
+                  <DropdownMenuItem className="p-3" disabled={todos.length>0 ? false : true} onSelect={()=>setOpenDialog(true)}>
+                    <i class="bi bi-box-arrow-down text-xl font-black text-[var(--color-text)]"></i>
+                      Import 
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator className='font-bold h-[1px] bg-[var(--color-text)]'/>
+
+                  <DropdownMenuItem className="p-3" disabled={todos.length>0 ? false : true} onSelect={()=>setOpenDialog(true)}>
+                    <i class="bi bi-box-arrow-in-up text-xl font-black text-[var(--color-text)]"></i>
+                      Export
+                  </DropdownMenuItem>
+                  
+                </DropdownMenuSubContent>
+              </DropdownMenuPortal>
+            </DropdownMenuSub>
+
+
+
+            <DropdownMenuSeparator  className='font-bold h-[1px] bg-[var(--color-text)]' />
+
             <DropdownMenuItem className="text-red-500 p-3 font-bold focus:bg-red-200  " onSelect={()=>setshowConfirm(true)}>
               <i class="bi bi-arrow-repeat text-xl font-black !important   " ></i>
               Reset
             </DropdownMenuItem>
-
-
+            
             <DropdownMenuSeparator  className='font-bold h-[1px] bg-[var(--color-text)]' />
+
 
              <DropdownMenuItem className="text-red-500 p-3 font-bold  flex justify-center gap-6  " >
 
