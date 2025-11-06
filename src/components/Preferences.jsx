@@ -43,6 +43,9 @@ import { useState } from "react";
 import {BackgrounAccordion} from './PreferencesItems/backgroundAccordion'
 
 
+// animated tooltip
+import { AnimatedTooltip } from "../components/ui/animated-tooltip";
+
 export function Preferences({ showPreferences, setShowPreferences }) {
   const {
     PreferencesSettings,
@@ -105,6 +108,8 @@ export function Preferences({ showPreferences, setShowPreferences }) {
   };
 
 
+
+
   return (
     <Dialog
       open={showPreferences}
@@ -165,40 +170,39 @@ export function Preferences({ showPreferences, setShowPreferences }) {
                   </div>
                 </AccordionContent>
               </AccordionItem>
-              <AccordionItem value="item-1">
+              <AccordionItem value="item-1" >
                 <AccordionTrigger>Theme Preferences</AccordionTrigger>
-                <AccordionContent className="flex flex-col gap-4 text-balance" >
-                  <div className="flex justify-center md:items-center gap-3 flex-wrap sm:flex-nowrap ">
+                <AccordionContent className="flex flex-col gap-4 text-balance h-[120px]  justify-end " >
+                  <div className="flex justify-center md:items-center gap-6 flex-wrap sm:flex-nowrap ">
+
+
+                    <div className="flex">
+
                     {Object.keys(PreferencesSettings.themes)?.map(
                       (key, index) => {
+
                         const colorInfo = PreferencesSettings.themes[key];
+                        const items_= {
+                          theme_name:PreferencesSettings.theme_name,
+                          colorInfo:colorInfo,
+                          key : key , 
+                          index:index,
+                          id:`${index}abc`
+
+                        }
 
                         return key !== "default" ? (
-                          <div
-                            key={index}
-                            className={`w-[40px] h-[40px]
-                          bg-[${colorInfo["--color-button"]}] 
-                          rounded-full hover:border-2 
-                          ${
-                            PreferencesSettings.theme_name === key
-                              ? "border-2"
-                              : ""
-                          } 
-                          border-[var(--color-primary)]
-                          
-                          `}
-                            onClick={
-                              PreferencesSettings.theme_name === key
-                                ? undefined
-                                : () => applyTheme(key)
-                            }
-                          ></div>
+
+
+                          <AnimatedTooltip  item={items_} applyTheme={applyTheme} />
+
                         ) : (
                           ""
                         );
                       }
                     )}
 
+                    </div>
 
                     {/* // reset Button */}
                     <ButtonHoverRight/>
