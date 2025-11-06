@@ -41,10 +41,15 @@ import { Spinner } from "./ui/spinner"
 import {PreferencesContext} from '../App'
 
 
+import { Badge } from "./ui/badge"
+
+import {ImportDataSection} from '../ImportDataSection'
+
 
 export default function DropdownMenuLabo() {
   
   const[showPreferences , setShowPreferences] = useState(false)
+  const [showUploadData, setShowUploadData] = useState(false);
   const [showConfirm , setshowConfirm] = useState(false)
   const [loading, setLoading] = useState(false);
   const timerRef = useRef(null);
@@ -132,6 +137,9 @@ export default function DropdownMenuLabo() {
           if (e.ctrlKey && e.key.toLowerCase() === 'b') {
             e.preventDefault()
             setShowPreferences((prev) => !prev)
+          
+          }else if(e.ctrlKey && e.key.toLowerCase() === 'y'){
+            activeCustomizeLayout()
           }
         }
 
@@ -177,9 +185,18 @@ export default function DropdownMenuLabo() {
             <DropdownMenuSeparator className='font-bold h-[1px] bg-[var(--color-text)]'/>
 
 
-            <DropdownMenuItem disabled={PreferencesSettings.customizeLayout.active} className="p-3" onSelect={activeCustomizeLayout}>
-             <i class="bi bi-columns-gap text-xl font-black text-[var(--color-text)]"></i>
-              Customize Layout
+            <DropdownMenuItem disabled={PreferencesSettings.customizeLayout.active} className="p-3 justify-between" onSelect={activeCustomizeLayout}>
+              <div>
+                <i class="bi bi-columns-gap text-xl font-black me-2 text-[var(--color-text)]"></i>
+                Customize Layout
+              </div>
+
+              <KbdGroup>
+              <Kbd>Ctrl</Kbd>
+              <span>+</span>
+              <Kbd>Y</Kbd>
+              </KbdGroup>
+
             </DropdownMenuItem>
 
 
@@ -193,8 +210,8 @@ export default function DropdownMenuLabo() {
                 </DropdownMenuSubTrigger>
               <DropdownMenuPortal >
                 <DropdownMenuSubContent className="bg-[var(--color-secondary)] border border-[var(--color-text)]">
-                  <DropdownMenuItem className="p-3" disabled={todos.length>0 ? false : true} onSelect={()=>setOpenDialog(true)}>
-                    <i class="bi bi-box-arrow-down text-xl font-black text-[var(--color-text)]"></i>
+                  <DropdownMenuItem className="p-3"  onSelect={()=>setShowUploadData(true)}>
+                    <i class="bi bi-box-arrow-down text-xl font-black text-[var(--color-text)]" ></i>
                       Import 
                   </DropdownMenuItem>
                   <DropdownMenuSeparator className='font-bold h-[1px] bg-[var(--color-text)]'/>
@@ -212,26 +229,34 @@ export default function DropdownMenuLabo() {
 
             <DropdownMenuSeparator  className='font-bold h-[1px] bg-[var(--color-text)]' />
 
-            <DropdownMenuItem className="text-red-500 p-3 font-bold focus:bg-red-200  " onSelect={()=>setshowConfirm(true)}>
-              <i class="bi bi-arrow-repeat text-xl font-black !important   " ></i>
-              Reset
+            <DropdownMenuItem className="text-red-500 p-3 font-bold focus:bg-red-200  justify-between " disabled={todos.length===0 ? true : false} onSelect={()=>setshowConfirm(true)}>
+              <div>
+              <i class="bi bi-arrow-repeat text-xl font-black !important  pe-2  " ></i>
+                Reset
+              </div>
+
+              {todos.length===0 && <Badge variant="outline">No data found..</Badge>}
             </DropdownMenuItem>
             
             <DropdownMenuSeparator  className='font-bold h-[1px] bg-[var(--color-text)]' />
 
 
-             <DropdownMenuItem className="text-red-500 p-3 font-bold  flex justify-center gap-6  " >
+             <DropdownMenuItem className="flex justify-between w-full  " >
+                <h1 className="font-medium">About me :</h1>
+                <div className="text-red-500 p-3 font-bold  flex justify-center gap-6">
 
-                <a href='https://github.com/aarab-abderrahmane' target="_blank" >
-                 <img className="size-6 " src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg" />
+                  <a href='https://github.com/aarab-abderrahmane' target="_blank" >
+                  <img className="size-6 " src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg" />
 
-                </a>
+                  </a>
 
-                            
-                <a href='https://www.linkedin.com/in/aarab-abderrahmane-2b9509336/' target="_blank" >
+                              
+                  <a href='https://www.linkedin.com/in/aarab-abderrahmane-2b9509336/' target="_blank" >
 
-                <img className="size-6" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linkedin/linkedin-original.svg" />
-                </a>
+                  <img className="size-6" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linkedin/linkedin-original.svg" />
+                  </a>
+                </div>
+
             </DropdownMenuItem>
 
           </DropdownMenuGroup>
@@ -296,7 +321,12 @@ export default function DropdownMenuLabo() {
         </form>
       </Dialog>
 
-
+      {/* Upload section  */}
+      <Dialog open={showUploadData} onOpenChange={setShowUploadData}>
+        <DialogContent className="max-w-[785px] max-h-[90vh] bg-gray-300 h-full md:max-h-[450px] w-[90vw] rounded-3xl p-0 border-none overflow-y-scroll md:overflow-hidden ">
+              <ImportDataSection   />
+        </DialogContent>
+      </Dialog>
     </>
   );
 }

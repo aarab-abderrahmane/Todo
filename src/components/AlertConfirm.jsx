@@ -57,12 +57,12 @@ export function AlertConfrim({showConfirm, setshowConfirm,confirmDelete}) {
             </DialogClose>
 
             {loading?(
-                  <Button disabled className="bg-red-700 text-white border-red-800 border-2 " >
+                  <Button disabled variant="danger" className="bg-red-700 text-white border-red-800 border-2 " >
                     <Spinner />
                     Deleting...
                   </Button>
             ):(
-                <Button type="submit"  className="bg-red-700 text-white border-red-800 border-2 " onClick={handleDeleteClick}>Confirm</Button>
+                <Button variant="danger"   onClick={handleDeleteClick}>Confirm</Button>
             )}
 
           </DialogFooter>

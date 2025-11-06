@@ -15,9 +15,9 @@ const buttonVariants = cva(
         outline:
           "border-0 text-black border-red-700 bg-white/30 shadow-xs hover:bg-white/50 hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
         secondary:
-          "bg-[var(--color-background)] border-2 border-[var(--color-text)]  text-[var(--color-text)] hover:bg-green-400  ",
+          "bg-[var(--color-background)] border-2 border-[var(--color-text)]  text-[var(--color-text)] hover:bg-[var(--color-button)]  ",
         danger : 
-              "border-red-700 border-2 text-red-700 hover:bg-red-200 ",
+              "border-red-700 border-2 text-red-700 hover:bg-red-400 bg-red-200  ",
         ghost:
           "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
         link: "text-primary underline-offset-4 hover:underline",

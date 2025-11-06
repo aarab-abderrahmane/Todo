@@ -159,7 +159,7 @@ export const CodeBlock = ({
                   theme === "dark" ? "text-slate-400" : "text-gray-500"
                 } />
             </button>
-            <button
+            {/* <button
               onClick={downloadCode}
               className={`p-2 hover:${
                 theme === "dark" ? "bg-slate-700" : "bg-gray-200"
@@ -170,7 +170,7 @@ export const CodeBlock = ({
                 className={
                   theme === "dark" ? "text-slate-400" : "text-gray-500"
                 } />
-            </button>
+            </button> */}
             <button
               onClick={copyToClipboard}
               className={`p-2 hover:${

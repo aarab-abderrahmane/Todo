@@ -34,9 +34,8 @@ export  function TodoList() {
           setShowStepper(true)
 
       }
-  })
+  },[])
   const [inputContent, setInputContent] = useState("");
-
 
 
   const [activeSparkles, setActiveSparkles] = useState(false);
@@ -48,7 +47,6 @@ export  function TodoList() {
       ? setActiveSparkles(true)
       : setActiveSparkles(false);
   };
-
 
 
   const [todos, setTodos] = useState(() => {

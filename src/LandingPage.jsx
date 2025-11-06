@@ -124,13 +124,7 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="w-full max-w-5xl text-center py-12 text-gray-600">
-        <p>Built with ❤️ by aarab abderrahmane</p>
-        <p className="mt-2">
-          License: <a href="https://github.com/aarab-abderrahmane/Todo?tab=GPL-3.0-1-ov-file" className="text-purple-600 hover:underline">GPL</a>
-        </p>
-      </footer>
+
     </div>
   );
 };

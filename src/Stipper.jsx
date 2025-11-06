@@ -3,7 +3,7 @@ import {
   Dialog,
   DialogContent,
 } from "./components/ui/dialog";
-import React, { useReducer ,useRef} from "react";
+import { useReducer ,useRef} from "react";
 
 
 
@@ -22,7 +22,50 @@ import { toast } from "sonner"
 
 import {ConfettiButton} from './components/ui/confetti'
 
+import { TextEffect } from './components/ui/text-effect';
+
 // --- Scene Components :
+
+
+function TitleEffect({children}){
+
+  return (
+    <TextEffect
+        per='char'
+        delay={0.5}
+        variants={{
+          container: {
+            hidden: {
+              opacity: 0,
+            },
+            visible: {
+              opacity: 1,
+              transition: {
+                staggerChildren: 0.05,
+              },
+            },
+          },
+          item: {
+            hidden: {
+              opacity: 0,
+              rotateX: 90,
+              y: 10,
+            },
+            visible: {
+              opacity: 1,
+              rotateX: 0,
+              y: 0,
+              transition: {
+                duration: 0.2,
+              },
+            },
+          },
+        }}
+      >
+        {children}
+      </TextEffect>
+  )
+}
 
 function Scene1({ dispatch,scene }) {
   return (
@@ -33,16 +76,21 @@ function Scene1({ dispatch,scene }) {
             {scene}
           </p>
           <div>
-            <h1 className="text-2xl font-bold mb-2">Welcome to PlanPulse</h1>
+            <h1 className="text-2xl font-bold mb-2"><TitleEffect>Welcome to PlanPulse</TitleEffect></h1>
             <p className="text-sm font-normal">
+
+              <TextEffect per='char' delay={1.5}>
               This Todo app helps you stay organized and productive by managing your daily tasks in one place. 
               You can easily create, edit, and delete tasks. With a clean and responsive interface built using 
               React and Vite, it provides a smooth user experience on any device. Whether for personal use or 
               work planning, this project offers a simple and efficient way to keep your goals clear and your 
               workflow focused.
+             </TextEffect>
+
             </p>
           </div>
         </div>
+
 
         <div className="h-[50px] w-full flex items-start gap-2 justify-end px-6">
           <Button
@@ -54,6 +102,7 @@ function Scene1({ dispatch,scene }) {
           </Button>
           <Button onClick={() => dispatch({ type: "2" })}>Next</Button>
         </div>
+
       </div>
       <img
         src="logo.png"
@@ -72,9 +121,16 @@ function Scene2({ dispatch ,scene}) {
             {scene}
           </p>
           <div>
-            <h1 className="text-2xl font-bold mb-2">Preferences & Personalization</h1>
+            <h1 className="text-2xl font-bold mb-2"><TitleEffect>Preferences & Personalization</TitleEffect></h1>
             <p className="text-sm font-normal">
-              In the Preferences section , users have comprehensive control over their workflow and interface. This centralized hub allows for the customization of key elements, including button visibility, theme selection, and cursor appearance, enabling a truly personalized user experience.        </p>
+              <TextEffect
+        per='char'
+        delay={2.5}
+        preset='blur'
+      >
+            In the Preferences section , users have comprehensive control over their workflow and interface. This centralized hub allows for the customization of key elements, including button visibility, theme selection, and cursor appearance, enabling a truly personalized user experience.       
+      </TextEffect>
+       </p>
           </div>
         </div>
 
@@ -185,15 +241,13 @@ function Scene3({ setShowStepper }) {
         </EmptyMedia>
         <EmptyTitle>Restore Your Lists or Start Fresh</EmptyTitle>
         <EmptyDescription>
+           <TextEffect per='char' preset='fade' >
           No previous to-do lists were found in your account. You can start organizing your tasks by creating your first list, or if you have a saved backup, you can easily restore all your old tasks and lists using the "Import List" option.
+           </TextEffect>
         </EmptyDescription>
       </EmptyHeader>
       <EmptyContent>
-        <div className="flex gap-2">
-          {/* <Button
-          variant="outline"
-        className="bg-white/50"
-            ></Button> */}
+        <div className="flex flex-col sm:flex-row  gap-2 items-center">
 
           <ConfettiButton  setShowStepper={setShowStepper}>{isValid? "Start" : "New Project" }</ConfettiButton>
 
@@ -211,7 +265,7 @@ function Scene3({ setShowStepper }) {
             
           )}
 
-
+          
           
           <input
             ref={inputRef}
@@ -222,6 +276,16 @@ function Scene3({ setShowStepper }) {
           />
 
         </div>
+        <Button
+        variant="link"
+        asChild
+        className="text-muted-foreground"
+        size="sm"
+        >
+        <a href="https://github.com/aarab-abderrahmane/Todo" target="Blank">
+          Learn More <ArrowUpRightIcon />
+        </a>
+      </Button>
       </EmptyContent>
 
     </Empty>
@@ -252,7 +316,7 @@ export default function Stepper({ showStepper, setShowStepper }) {
 
   return (
     <Dialog open={showStepper} onOpenChange={setShowStepper}>
-      <DialogContent className="max-w-[785px] bg-gray-300 h-full max-h-[450px] w-[90vw] rounded-3xl p-0 border-none overflow-hidden">
+      <DialogContent className="max-w-[785px] max-h-[90vh] bg-gray-300 h-full md:max-h-[450px] w-[90vw] rounded-3xl p-0 border-none overflow-y-scroll md:overflow-hidden ">
         {scene === "1" && <Scene1 dispatch={dispatch} scene={scene} />}
         {scene === "2" && <Scene2 dispatch={dispatch} scene={scene} />}
         {scene === "3" && <Scene3 setShowStepper={setShowStepper} scene={scene} />}

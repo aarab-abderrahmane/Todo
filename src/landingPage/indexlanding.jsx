@@ -1,10 +1,8 @@
 "use client";
 
 import { TimelineContent } from "./timeline-animation";
-import useNewsLetter from "./hooks/useNewsLetter";
 import { Zap } from "lucide-react";
-import { useRef, useState } from "react";
-import { toast } from "sonner";
+import { useRef, } from "react";
 
 import GitHubButton from './button.jsx'
 
@@ -14,30 +12,6 @@ import {Link, useNavigate} from 'react-router'
 
 function Index() {
   const heroRef = useRef(null);
-  const [Send] = useNewsLetter();
-  const [loading, setLoading] = useState(false);
-  const BASE_URL = import.meta.env.VITE_PUBLIC_URL || "";
-  const handleNewsLetterData = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    const target = e.target;
-    const formData = new FormData(target);
-    const clientEmail = formData.get("newsletter_email");
-
-    const data = {
-      email: clientEmail.toString(),
-    };
-
-    try {
-      await Send(data);
-      toast.success("Thanks for subscribing to our newsletter");
-    } catch (error) {
-      console.error("Failed to send newsletter data:", error);
-      toast.error("Something went wrong. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
 
 
   const navigate = useNavigate()
@@ -200,7 +174,7 @@ function Index() {
           </div>
           </div>
 
-          <article className="text-center  relative z-20 bg-transparent space-y-4 sm:px-0 px-2 mt-6">
+          <article className="flex flex-col items-center relative z-20 bg-transparent space-y-4 sm:px-0 px-2 mt-6">
             <TimelineContent
               animationNum={1}
               timelineRef={heroRef}
@@ -228,6 +202,15 @@ function Index() {
 
             </TimelineContent>
 
+            <TimelineContent animationNum={5} timelineRef={heroRef}>
+                <footer className="w-full max-w-5xl text-center  text-gray-600 ">
+                <p>Built with ❤️ by aarab abderrahmane</p>
+                <p className="">
+                  License: <a href="https://github.com/aarab-abderrahmane/Todo?tab=GPL-3.0-1-ov-file" className="text-purple-600 hover:underline">GPL</a>
+                </p>
+              </footer>
+            </TimelineContent>
+
             <TimelineContent animationNum={4} timelineRef={heroRef}>
                 <div className="w-full flex justify-center">
 
@@ -237,58 +220,8 @@ function Index() {
 
 
                 </div>
-            </TimelineContent>
-                {/*
-                
-                            <form
-                onSubmit={handleNewsLetterData}
-                className="flex gap-2 relative z-50  rounded-md sm:w-[30rem] w-[95%] mx-auto"
-              >
-  <input
-                  name="newsletter_email"
-                  type="email"
-                  placeholder="Your Email Address"
-                  required
-                  className="bg-transparent border border-neutral-200 backdrop-blur-md p-3 h-12 w-full rounded-lg focus:outline-none text-white"
-                /> */}
-                {/* <button
-                  disabled={loading}
-                  type="submit"
-                  className={`flex-shrink-0 sm:text-base text-sm h-12 px-3 bg-gradient-to-t from-blue-600 to-blue-500 text-white rounded-md sm:font-semibold font-medium capitalize ${
-                    loading ? "opacity-50 cursor-not-allowed" : ""
-                  }`}
-                >
-                  {loading ? "Sending..." : "Get Started"}
-                </button> */}
-            {/* <div className="flex just ify-center gap-2 pt-0">
-              <a
-                href="#"
-                className="w-12 h-12 p-2 grid place-content-center bg-gray-950 backdrop-blur-lg rounded-lg"
-              >
-                <img
-  src={`${BASE_URL}/hero/layoutkinanlytics.png`}                alt="social-icon"
-                  className="grayscale"
-                />
-              </a>
-              <a
-                href="#"
-                className="w-12 h-12 p-2 grid place-content-center bg-red-500 backdrop-blur-lg rounded-lg"
-              >
-                <img
-  src={`${BASE_URL}/hero/layoutkinanlytics.png`}                alt="social-icon"
-                  className="grayscale"
-                />
-              </a>
-              <a
-                href="#"
-                className="w-12 h-12 p-2 grid place-content-center bg-blue-500 backdrop-blur-lg rounded-lg"
-              >
-                <img
-  src={`${BASE_URL}/hero/layoutkinanlytics.png`}                alt="social-icon"
-                  className="grayscale"
-                />
-              </a>
-            </div> */}
+            </TimelineContent >
+
           </article>
         </section>
       </main>
