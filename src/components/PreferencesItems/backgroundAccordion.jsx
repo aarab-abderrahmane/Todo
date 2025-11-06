@@ -18,15 +18,15 @@ export function BackgrounAccordion(){
     const backgroundInfo = useMemo(()=>[
 
         {id:0,content:<i class="bi bi-ban text-2xl"></i>,path:''},
-        { id: 1, content: "Asfalt Light", path: "./backgrounds/asfalt-light.png" },
-        { id: 2, content: "Batthern", path: "./backgrounds/batthern.png" },
-        { id: 3, content: "Church", path: "./backgrounds/church.png" },
-        { id: 4, content: "Light Wool", path: "./backgrounds/light-wool.png" },
-        { id: 5, content: "Starring", path: "./backgrounds/starring.png" },
-        { id: 6, content: "White Brick Wall", path: "./backgrounds/white-brick-wall.png" },
-        { id: 7, content: "White Diamond Dark", path: "./backgrounds/white-diamond-dark.png" },
-        { id: 8, content: "Worn Dots", path: "./backgrounds/worn-dots.png" },
-        { id: 9, content: "Zig Zag", path: "./backgrounds/zig-zag.png" },
+        { id: 1, content: "Asfalt Light", path: "/backgrounds/asfalt-light.png" },
+        { id: 2, content: "Batthern", path: "/backgrounds/batthern.png" },
+        { id: 3, content: "Church", path: "/backgrounds/church.png" },
+        { id: 4, content: "Light Wool", path: "/backgrounds/light-wool.png" },
+        { id: 5, content: "Starring", path: "/backgrounds/starring.png" },
+        { id: 6, content: "White Brick Wall", path: "/backgrounds/white-brick-wall.png" },
+        { id: 7, content: "White Diamond Dark", path: "/backgrounds/white-diamond-dark.png" },
+        { id: 8, content: "Worn Dots", path: "/backgrounds/worn-dots.png" },
+        { id: 9, content: "Zig Zag", path: "/backgrounds/zig-zag.png" },
 
     ],[])
 
