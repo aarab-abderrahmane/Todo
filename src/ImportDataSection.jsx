@@ -139,17 +139,15 @@ export function ImportDataSection() {
         <EmptyMedia variant="icon">
           <i class="bi bi-filetype-json text-3xl  text-[var(--color-text)] bg-[var(--color-background)] rounded-xl p-2 px-3 "></i>
         </EmptyMedia>
-        <EmptyTitle>Restore Your Lists or Start Fresh</EmptyTitle>
+        <EmptyTitle>Restore Your Tasks from Backup</EmptyTitle>
         <EmptyDescription>
            <TextEffect per='char' preset='fade' >
-          No previous to-do lists were found in your account. You can start organizing your tasks by creating your first list, or if you have a saved backup, you can easily restore all your old tasks and lists using the "Import List" option.
-           </TextEffect>
+          Easily bring back your saved to-do lists from a previous session. Upload your exported JSON file to instantly restore all your tasks, progress, and preferences — so you can pick up right where you left off.           </TextEffect>
         </EmptyDescription>
       </EmptyHeader>
       <EmptyContent>
         <div className="flex flex-col sm:flex-row  gap-2 items-center">
 
-          {/* <ConfettiButton  setShowUpload={setShowUpload}>{isValid? "Start" : "New Project" }</ConfettiButton> */}
 
           {!isValid && ( 
 

@@ -242,7 +242,7 @@ export default function DropdownMenuLabo() {
 
 
              <DropdownMenuItem className="flex justify-between w-full  " >
-                <h1 className="font-medium">About me :</h1>
+                <h1 className="font-medium ms-2">About me :</h1>
                 <div className="text-red-500 p-3 font-bold  flex justify-center gap-6">
 
                   <a href='https://github.com/aarab-abderrahmane' target="_blank" >
