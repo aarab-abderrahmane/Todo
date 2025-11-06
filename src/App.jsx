@@ -27,6 +27,7 @@ function App() {
   //start 
 
   const defaultPreferences = useMemo(() => ({
+      background:{active:false,id:0,path:""},
       customizeLayout: {
         active: false,
         info: [
@@ -91,31 +92,45 @@ function App() {
   const [timeItems, setTimeItems] = useState(PreferencesSettings?.customizeLayout.info);
 
 
-
   useEffect(()=>{
       localStorage.setItem("Preferences",JSON.stringify(PreferencesSettings))
+      if(PreferencesSettings.background.id==="0"){
+
+        document.body.classList.remove('addBackground')
+        return
+      }
+
+      PreferencesSettings.background.active  ? document.body.classList.add('addBackground') : ""
+
+
   },[PreferencesSettings])
-
-
-
   
 
-    const applyTheme = (name) => {
-      if(PreferencesSettings){
+  const applyTheme = (name) => {
+    if(PreferencesSettings){
 
-        const selected = PreferencesSettings.themes[name];
-        Object.entries(selected).forEach(([key, value]) => {
-          document.documentElement.style.setProperty(key, value);
-        });
-        setPreferencesSettings(prev => ({ ...prev, theme_name: name }));
+      const selected = PreferencesSettings.themes[name];
+      Object.entries(selected).forEach(([key, value]) => {
+        document.documentElement.style.setProperty(key, value);
+      });
+      setPreferencesSettings(prev => ({ ...prev, theme_name: name }));
 
+      }
+
+  };
+
+
+    const applyBackground = (path) => {
+      if(PreferencesSettings.background.active ){
+        document.documentElement.style.setProperty('--background-name', `url(${path})`);
         }
-
     };
   
 
   useEffect(()=>{
       applyTheme(PreferencesSettings.theme_name)
+      ToggleCursor(PreferencesSettings.cursorType)
+      applyBackground(PreferencesSettings.background.path)
 
   },[])
 
@@ -144,11 +159,6 @@ function App() {
 
   }
 
-
-  useEffect(()=>{
-      ToggleCursor(PreferencesSettings.cursorType)
-
-  },[])
 
 
 
@@ -205,12 +215,9 @@ function App() {
   ];
 
 
-  console.log(PreferencesSettings.customizeLayout)
-  console.log(timeItems)
-  
   return (
 
-    <PreferencesContext.Provider value={{PreferencesSettings,setPreferencesSettings,applyTheme,ToggleCursor}}>
+    <PreferencesContext.Provider value={{PreferencesSettings,setPreferencesSettings,applyTheme,ToggleCursor,applyBackground}}>
 
       {PreferencesSettings.cursorType==="smooth" ? <SmoothCursor  /> : ""}
       

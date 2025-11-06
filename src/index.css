@@ -13,7 +13,8 @@
   --color-placeholder : #645D7E;
   --color-button : #C6C7DC;
   --color-primary-light:#645d7e5e;
-;
+
+  --background-name: url('');
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -48,10 +49,15 @@
   --sidebar-ring: oklch(0.708 0 0)}
 
 body{
-
     background-color: var(--color-background);
     overflow-x: hidden;
     min-width: 100vw;
+
+}
+
+body.addBackground{
+    background-image: var(--background-name) ;  
+    background-repeat: repeat;
 }
 
 *{
@@ -278,15 +284,11 @@ body.default-cursor .cursor-pointer {
   color: white !important;
 }
 
-
-
 .shake{
 
   animation: tilt-shaking 0.3s ease-in-out infinite;
   transform-origin: center;
 }
-
-
 
 @keyframes tilt-shaking {
   0% { transform: rotate(0deg); }

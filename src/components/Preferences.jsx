@@ -38,6 +38,11 @@ import {
 
 import { useState } from "react";
 
+
+//Carousel 
+import {BackgrounAccordion} from './PreferencesItems/backgroundAccordion'
+
+
 export function Preferences({ showPreferences, setShowPreferences }) {
   const {
     PreferencesSettings,
@@ -49,7 +54,6 @@ export function Preferences({ showPreferences, setShowPreferences }) {
   let ButtonsState = PreferencesSettings.buttons;
 
   function toggleButton(buttonkey) {
-    console.log("hello worl");
     setPreferencesSettings((prev) => ({
       ...prev,
       buttons: {
@@ -204,6 +208,19 @@ export function Preferences({ showPreferences, setShowPreferences }) {
                 </AccordionContent>
               </AccordionItem>
 
+              <AccordionItem value="item-5">
+                <AccordionTrigger>
+                  Background
+                </AccordionTrigger>
+                <AccordionContent className="flex flex-col gap-4 text-balance">
+                  <div className="w-full flex justify-center ">
+                   
+                     <BackgrounAccordion/>
+
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+
               <AccordionItem value="item-3">
                 <AccordionTrigger>Custome Cursor</AccordionTrigger>
                 <AccordionContent className="flex flex-col gap-4 text-balance">
@@ -328,6 +345,8 @@ export function Preferences({ showPreferences, setShowPreferences }) {
                   </div>
                 </AccordionContent>
               </AccordionItem>
+
+
             </Accordion>
           </div>
 

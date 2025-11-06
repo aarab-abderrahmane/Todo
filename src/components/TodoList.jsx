@@ -29,7 +29,6 @@ export  function TodoList() {
   useEffect(()=>{
 
       const isVisited = localStorage.getItem('hasVisited')
-      console.log(isVisited)
       if(!isVisited){
           // localStorage.setItem('hasVisited',true)
           setShowStepper(true)
