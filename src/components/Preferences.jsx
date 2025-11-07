@@ -356,7 +356,7 @@ export function Preferences({ showPreferences, setShowPreferences }) {
                     >
                       <div className="flex items-center gap-3 px-4">
                         <h4 className="text-sm font-semibold">
-                          Border
+                          Corners
                         </h4>
                         <CollapsibleTrigger asChild>
                           <Button
@@ -376,7 +376,7 @@ export function Preferences({ showPreferences, setShowPreferences }) {
                         <div className=" px-4 py-2  text-sm">
                           {!PreferencesSettings.general.hideTexts && (
                             <div className="flex items-center gap-4">
-                              <p>Border Radius : </p>
+                              <p>Corners Radius : </p>
                               <Slider
                                 defaultValue={[
                                   PreferencesSettings.corners,
