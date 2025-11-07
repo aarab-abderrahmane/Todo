@@ -27,6 +27,7 @@ function App() {
   //start 
 
   const defaultPreferences = useMemo(() => ({
+      corners:1.5,
       background:{active:false,id:0,path:""},
       customizeLayout: {
         active: false,
@@ -37,7 +38,7 @@ function App() {
       },
       hasVisited: false,
       general: { hideTexts: false, opacityTexts: 100 },
-      cursorType: "smooth",
+      cursorType: "default",
       theme_name: "blue",
       themes: {
         red: {
@@ -65,13 +66,33 @@ function App() {
           "--color-text": "#2a0c46",
           "--color-button": "#9b4ff8"
         },
-
+        orange: {
+          "--color-background": "#f2b38a",
+          "--color-text": "#4a2308",
+          "--color-button": "#ff8c42"
+        },
+        teal: {
+          "--color-background": "#8adcd3",
+          "--color-text": "#0c3d36",
+          "--color-button": "#4ff8d4"
+        },
+        pink: {
+          "--color-background": "#f0a9c3",
+          "--color-text": "#460c2b",
+          "--color-button": "#f84f93"
+        },
+        gray: {
+          "--color-background": "#d1d1d1",
+          "--color-text": "#2f2f2f",
+          "--color-button": "#a0a0a0"
+        },
         default: {
           "--color-background": "#C6C7DC",
           "--color-text": "#645D7E",
           "--color-button": "#C6C7DC"
         }
       },
+
       buttons: {
         buttonDelete: { active: false, color: "bg-[var(--color-primary-light)]" },
         buttonEdit: { active: true, color: "bg-[var(--color-primary-light)]" }
@@ -101,7 +122,7 @@ function App() {
       }
 
       PreferencesSettings.background.active  ? document.body.classList.add('addBackground') : ""
-
+        
 
   },[PreferencesSettings])
   
@@ -119,20 +140,36 @@ function App() {
 
   };
 
+  const ApplyCorners = ()=>{
 
-    const applyBackground = (path) => {
-      if(PreferencesSettings.background.active ){
-        document.documentElement.style.setProperty('--background-name', `url(${path})`);
-        }
-    };
+
+            const corner = PreferencesSettings.corners;
+            document.documentElement.style.setProperty('--border-radius',`${corner}rem`)
+
+  }
+
+  console.log(PreferencesSettings.corners)
+
+
+  const applyBackground = (path) => {
+    if(PreferencesSettings.background.active ){
+      document.documentElement.style.setProperty('--background-name', `url(${path})`);
+      }
+  };
   
 
   useEffect(()=>{
       applyTheme(PreferencesSettings.theme_name)
       ToggleCursor(PreferencesSettings.cursorType)
       applyBackground(PreferencesSettings.background.path)
+      
 
   },[])
+
+  useEffect(() => {
+      ApplyCorners()
+  }, [PreferencesSettings.corners]);
+
 
 
   function ToggleCursor(selectedCursor=""){
@@ -217,7 +254,7 @@ function App() {
 
   return (
 
-    <PreferencesContext.Provider value={{PreferencesSettings,setPreferencesSettings,applyTheme,ToggleCursor,applyBackground}}>
+    <PreferencesContext.Provider value={{PreferencesSettings,setPreferencesSettings,applyTheme,ToggleCursor,applyBackground,ApplyCorners}}>
 
       {PreferencesSettings.cursorType==="smooth" ? <SmoothCursor  /> : ""}
       
@@ -326,7 +363,7 @@ function GlobalCalendar(){
         <div
             className={`
               ${PreferencesSettings.customizeLayout.active? "shake" : ""}
-              glass   rounded-3xl !important shadow  flex flex-col md:flex-row items-center md:items-stretch lg:justify-between   w-full lg:h-[50vh] lg:max-h-[450px] overflow-hidden md:hover:scale-[1.03]`}
+              glass applyRadius !important shadow  flex flex-col md:flex-row items-center md:items-stretch lg:justify-between   w-full lg:h-[50vh] lg:max-h-[450px] overflow-hidden md:hover:scale-[1.03]`}
             style={{ padding: "2px" }}
             >
 

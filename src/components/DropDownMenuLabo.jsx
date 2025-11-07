@@ -159,11 +159,11 @@ export default function DropdownMenuLabo() {
     <>
       <DropdownMenu modal={false} >
         <DropdownMenuTrigger asChild>
-          <Button variant="default" aria-label="Open menu" size="icon-lg ">
+          <Button variant="default" aria-label="Open menu" size="icon-lg " className="rounded-[min(var(--border-radius),1rem)]">
             <MoreHorizontalIcon />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-[80vw] lg:w-[50vw] max-w-[300px] rounded-xl border border-[var(--color-text)]  " align="end" >
+        <DropdownMenuContent className=" rounded-[min(var(--border-radius),1rem)] !important w-[80vw] lg:w-[50vw] max-w-[300px]  border border-[var(--color-text)]  " align="end" >
           <DropdownMenuLabel className="p-3 bg-[var(--color-background)] text-[var(--color-text)]" >Actions</DropdownMenuLabel>
           <DropdownMenuGroup className="">
             <DropdownMenuSeparator className='h-[1px] bg-[var(--color-text)]'/>
@@ -203,13 +203,13 @@ export default function DropdownMenuLabo() {
 
             <DropdownMenuSeparator  className='font-bold h-[1px] bg-[var(--color-text)]' />
 
-            <DropdownMenuSub  >
+            <DropdownMenuSub   >
               <DropdownMenuSubTrigger  className="p-3 outline-none  p-3  focus:bg-[var(--color-background)] " >
                 <i class="bi bi-database-fill text-xl font-black text-[var(--color-text)]"></i>
                 Move Data
                 </DropdownMenuSubTrigger>
               <DropdownMenuPortal >
-                <DropdownMenuSubContent className="bg-[var(--color-secondary)] border border-[var(--color-text)]">
+                <DropdownMenuSubContent className="rounded-[min(var(--border-radius),1rem)] bg-[var(--color-secondary)] border border-[var(--color-text)]">
                   <DropdownMenuItem className="p-3"  onSelect={()=>setShowUploadData(true)}>
                     <i class="bi bi-box-arrow-down text-xl font-black text-[var(--color-text)]" ></i>
                       Import 

@@ -54,8 +54,8 @@ export  function TodoList() {
     return saved && saved !== "null" && saved !== "undefined"
       ? JSON.parse(saved)
       : [
-          { id: 0, content: "example todo1", modeEdit: false, check: true },
-          { id: 1, content: "example todo2", modeEdit: false, check: false },
+          { id: 0, content: "example todo1", modeEdit: false, check: true ,mask:false},
+          { id: 1, content: "example todo2", modeEdit: false, check: false ,mask:false},
         ];
   });
 
@@ -112,7 +112,14 @@ export  function TodoList() {
     );
   };
 
-    const ListTodos = useMemo(() => {
+  const MaskTodo = (id)=>{
+
+        document.getElementById(id).classList.toggle('blurred')
+        setTodos(prev=>prev.map(td=>td.id===id ? {...td,mask:!td.mask} : td ))
+
+  }
+
+  const ListTodos = useMemo(() => {
 
     if (todos && todos.length > 0) {
       return todos.map((td) => (
@@ -127,11 +134,12 @@ export  function TodoList() {
             content={td.content}
             modeEdit={td.modeEdit}
             check={td.check}
+            mask={td.mask}
           />
             </ContextMenuTrigger>
-              <ContextMenuContent>
-                <ContextMenuItem>Profile</ContextMenuItem>
-                <ContextMenuItem  className="text-red-500 font-bold " onSelect={()=>hanldeDelete(td.id)} >Delete</ContextMenuItem>
+              <ContextMenuContent className="p-6 !important" >
+                <ContextMenuItem className="flex cursor-pointer border-b border-[var(--color-text)]  p-2.5 " onSelect={()=>MaskTodo(td.id)} ><i class="bi bi-eye-fill"></i>Mask</ContextMenuItem>
+                <ContextMenuItem  className="text-red-900 font-bold bg-red-300 flex cursor-pointer p-2.5 " onSelect={()=>hanldeDelete(td.id)} ><i class="bi bi-trash2-fill"></i>Delete</ContextMenuItem>
               </ContextMenuContent>
           </ContextMenu>
 
@@ -202,11 +210,11 @@ export  function TodoList() {
 
 
   return (
-    <todosContext.Provider  value={{todos,setTodos,handleAdd,handleCheck,handleEdit,handleSave,hanldeDelete}}>
+    <todosContext.Provider  value={{todos,setTodos,MaskTodo,handleAdd,handleCheck,handleEdit,handleSave,hanldeDelete}}>
 
     <div className="flex flex-col gap-6  w-[90vw]  md:w-[50vw]    max-w-[550px] h-[90vh]  max-h-[850px]">
       {/* <!-- Input --> */}
-      <div className="glass rounded-2xl  shadow-lg flex flex-col items-center space-y-3 md:hover:scale-[1.04]">
+      <div className="glass  applyRadius   shadow-lg flex flex-col items-center space-y-3 md:hover:scale-[1.04]">
         <input
           type="text"
           placeholder="Write here anything"
@@ -221,7 +229,7 @@ export  function TodoList() {
             setActiveSparkles(false);
             handleAdd(inputContent);
           }}
-          className="glass rounded-full transition w-[70%] flex justify-center items-center  drop-shadow-[0_4px_6px_rgba(255,255,255,0.5)] active:scale-[0.95]  "
+          className="glass applyRadius transition w-[70%] flex justify-center items-center  drop-shadow-[0_4px_6px_rgba(255,255,255,0.5)] active:scale-[0.95]  "
           style={{ backgroundColor: "var(--color-button)" }}
         >
           {activeSparkles ? (
@@ -234,7 +242,7 @@ export  function TodoList() {
       </div>
 
       {/* <!-- Todo List --> */}
-      <div className="glass relative flex-1  rounded-3xl shadow-lg    max-h-[50vh] md:max-h-[80vh]  overflow-y-hidden md:hover:scale-[1.04] " >
+      <div className="glass relative flex-1  applyRadius shadow-lg    max-h-[50vh] md:max-h-[80vh]  overflow-y-hidden md:hover:scale-[1.04] " >
         <div className="mb-4 sticky top-0 z-20 border-b-4 border-white/20">
           <h2 className="text-center text-xl lg:text-2xl font-bold text-[var(--color-text)]  py-4">
             Todo List <i class="bi bi-clipboard-minus"></i>

@@ -52,6 +52,7 @@ export function Preferences({ showPreferences, setShowPreferences }) {
     setPreferencesSettings,
     applyTheme,
     ToggleCursor,
+    ApplyCorners
   } = useContext(PreferencesContext);
 
   let ButtonsState = PreferencesSettings.buttons;
@@ -69,7 +70,7 @@ export function Preferences({ showPreferences, setShowPreferences }) {
     }));
   }
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [collapsibleState, setCollapsibleState] = useState({text:false,corners:false});
 
   const ButtonHoverRight = () => {
   return (
@@ -119,7 +120,7 @@ export function Preferences({ showPreferences, setShowPreferences }) {
       }}
     >
       <form>
-        <DialogContent className="max-w-[80vw] backdrop-blur-md border-2 bg-white/60 rounded-3xl   md:max-w-[500px] lg:max-w-[600px] xl:max-w-[700px]   flex flex-col overflow-hidden">
+        <DialogContent className="applyRadius max-w-[80vw] backdrop-blur-md  bg-white/50  border-1  md:max-w-[500px] lg:max-w-[600px] xl:max-w-[700px]   flex flex-col overflow-hidden">
           <DialogHeader>
             <DialogTitle>Preferences</DialogTitle>
             <DialogDescription>
@@ -135,7 +136,7 @@ export function Preferences({ showPreferences, setShowPreferences }) {
               className="w-full "
               defaultValue="item-1"
             >
-              <AccordionItem value="item-2">
+              <AccordionItem value="item-2" >
                 <AccordionTrigger>
                   Button Visibility Preferences
                 </AccordionTrigger>
@@ -172,11 +173,10 @@ export function Preferences({ showPreferences, setShowPreferences }) {
               </AccordionItem>
               <AccordionItem value="item-1" >
                 <AccordionTrigger>Theme Preferences</AccordionTrigger>
-                <AccordionContent className="flex flex-col gap-4 text-balance h-[120px]  justify-end " >
-                  <div className="flex justify-center md:items-center gap-6 flex-wrap sm:flex-nowrap ">
+                <AccordionContent className="flex flex-col   gap-4 text-balance h-[240px] md:h-[200px] lg:h-[120px]  justify-end " >
+                  <div className="flex justify-center  items-center gap-6 flex-col lg:flex-row  ">
 
-
-                    <div className="flex">
+                    <div className="flex flex-wrap justify-center sm:flex-nowrap ">
 
                     {Object.keys(PreferencesSettings.themes)?.map(
                       (key, index) => {
@@ -276,15 +276,16 @@ export function Preferences({ showPreferences, setShowPreferences }) {
                 <AccordionTrigger>General</AccordionTrigger>
                 <AccordionContent className="flex flex-col gap-4 text-balance">
 
-                  <div className="h-[150px] flex flex-col gap-6 ">
+                  <div className="h-[200px] flex flex-col gap-6 ">
+
                     <Collapsible
-                      open={isOpen}
-                      onOpenChange={setIsOpen}
+                      open={collapsibleState.text}
+                      onOpenChange={()=>setCollapsibleState(prev=>({...prev,text:!prev.text}))}
                       className="flex w-full flex-col gap-2"
                     >
-                      <div className="flex items-center gap-6 px-4">
+                      <div className="flex items-center gap-3 px-4">
                         <h4 className="text-sm font-semibold">
-                          Costume Text :
+                          Costume Text 
                         </h4>
                         <CollapsibleTrigger asChild>
                           <Button
@@ -292,7 +293,7 @@ export function Preferences({ showPreferences, setShowPreferences }) {
                             size="icon"
                             className="size-8 "
                           >
-                            <i class="bi bi-caret-down text-2xl"></i>
+                            <i class="bi bi-caret-down text-2xl mt-2 cursor-pointer"></i>
                             <span className="sr-only">Toggle</span>
                           </Button>
                         </CollapsibleTrigger>
@@ -301,7 +302,7 @@ export function Preferences({ showPreferences, setShowPreferences }) {
                         <div className="flex items-center space-x-2">
                           <Switch
                             id="airplane-mode"
-                            className="bg-gray-400"
+                            className="bg-white/50"
                             checked={PreferencesSettings.general.hideTexts}
                             onCheckedChange={(checked) =>
                               setPreferencesSettings((prev) => ({
@@ -346,6 +347,55 @@ export function Preferences({ showPreferences, setShowPreferences }) {
                         </div>
                       </CollapsibleContent>
                     </Collapsible>
+
+
+                    <Collapsible
+                      open={collapsibleState.corners}
+                      onOpenChange={()=>setCollapsibleState(prev=>({...prev,corners:!prev.corners}))}
+                      className="flex w-full flex-col gap-2"
+                    >
+                      <div className="flex items-center gap-3 px-4">
+                        <h4 className="text-sm font-semibold">
+                          Border
+                        </h4>
+                        <CollapsibleTrigger asChild>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="size-8 "
+                          >
+                            <i class="bi bi-caret-down text-2xl mt-2 cursor-pointer"></i>
+                            <span className="sr-only">Toggle</span>
+                          </Button>
+                        </CollapsibleTrigger>
+                      </div>
+            
+
+
+                      <CollapsibleContent className="flex flex-col gap-2 w-full ">
+                        <div className=" px-4 py-2  text-sm">
+                          {!PreferencesSettings.general.hideTexts && (
+                            <div className="flex items-center gap-4">
+                              <p>Border Radius : </p>
+                              <Slider
+                                defaultValue={[
+                                  PreferencesSettings.corners,
+                                ]}
+                                min={0}
+                                max={3}
+                                step={0.5}
+                                onValueChange={(value) =>
+                                  setPreferencesSettings(prev=>({...prev,corners:value}))
+                                }
+                                className="bg-gray-400 max-w-[300px] w-[80vw] rounded-full mx-2"
+                              />
+                            </div>
+                          )}
+                        </div>
+                      </CollapsibleContent>
+                    </Collapsible>
+
+
                   </div>
                 </AccordionContent>
               </AccordionItem>

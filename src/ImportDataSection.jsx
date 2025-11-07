@@ -99,7 +99,6 @@ export function ImportDataSection() {
         const text = await file.text();
         const data = JSON.parse(text);
 
-        console.log(data);
 
         const isValid =
           Array.isArray(data) &&
@@ -108,17 +107,20 @@ export function ImportDataSection() {
               typeof item.id === "number" &&
               typeof item.content === "string" &&
               typeof item.modeEdit === "boolean" &&
-              typeof item.check === "boolean"
+              typeof item.check === "boolean" &&
+              typeof item.mask === "boolean"
+
           );
 
         if (!isValid) {
-          toast.error("Invalid JSON format! Expected [{ id, content, modeEdit, check }, ...]");
+          toast.error("Invalid JSON format! Expected [{ id, content, modeEdit, check, mask }, ...]");
           return;
         }
 
         toast.success("JSON imported successfully!");
         setTodos(data);
         setisValid(true);
+
       } catch (err) {
         toast.error("Failed to read JSON file.");
         console.error(err);
@@ -141,7 +143,7 @@ export function ImportDataSection() {
         </EmptyMedia>
         <EmptyTitle>Restore Your Tasks from Backup</EmptyTitle>
         <EmptyDescription>
-           <TextEffect per='char' preset='fade' >
+           <TextEffect per='char' preset='fade' speedReveal={2.5}>
           Easily bring back your saved to-do lists from a previous session. Upload your exported JSON file to instantly restore all your tasks, progress, and preferences — so you can pick up right where you left off.           </TextEffect>
         </EmptyDescription>
       </EmptyHeader>

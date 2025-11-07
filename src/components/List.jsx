@@ -11,7 +11,7 @@ import { CSS } from '@dnd-kit/utilities'
 import {InView} from './ui/in-view'
 
 
-const List = ({id,content,modeEdit,check})=>{
+const List = ({id,content,modeEdit,check,mask})=>{
 
 
 
@@ -27,7 +27,7 @@ const List = ({id,content,modeEdit,check})=>{
 
     const {PreferencesSettings} = useContext(PreferencesContext)
     const buttons = PreferencesSettings.buttons
-    const {handleCheck,handleEdit,handleSave,hanldeDelete} = useContext(todosContext)
+    const {handleCheck,handleEdit,handleSave,hanldeDelete,MaskTodo} = useContext(todosContext)
 
     const [todoContent , setTodoContent] = useState(content)
 
@@ -49,19 +49,29 @@ const List = ({id,content,modeEdit,check})=>{
             <InView>
             <li 
             ref={setNodeRef}    
-            class="glass  bg-white/30  flex items-center  overflow-x-hidden rounded-xl px-4 py-2 h-[60px] overflow-y-hidden group  md:hover:scale-[1.04] " 
+            class="glass applyRadius  bg-white/30  flex items-center  overflow-x-hidden  px-4 py-2 h-[60px] overflow-y-hidden group  md:hover:scale-[1.04] " 
             style={style}   >
                 <i {...attributes} {...listeners} class="bi bi-grip-vertical absolute left-1 group-hover:block hidden text-xl cursor-pointer "></i>
-                <input class={`w-[80%] ms-2 font-medium text-[var(--color-text)] bg-transparent  outline-none decoration-[var(--color-text)] decoration-2 ${check? "line-through" : ""}`} disabled={check || !modeEdit} value={todoContent} onChange={(e)=>setTodoContent(e.target.value)}></input>
+                <input id={id} class={`
+                    w-[80%]   ms-2 font-medium text-[var(--color-text)] bg-transparent  outline-none decoration-[var(--color-text)] decoration-2 
+                    ${mask ? "blurred" : ""}
+                    ${check? "line-through" : ""}`} disabled={check || !modeEdit} value={todoContent} onChange={(e)=>setTodoContent(e.target.value)}></input>
                 <div className="flex  items-center justify-end gap-3  w-[110px]  ">
                     
-
-                    < CodeXmlIcon  size={25} duration={0.5}  class={` text-[var(--color-text)]  hidden ${check || modeEdit || !buttons?.buttonEdit.active ? "" : "group-hover:block" }`} onClick={()=>handleEdit(id)}/>
                     
-                    <Trash2Icon  size={25} duration={0.5} onClick={()=>hanldeDelete(id)} class={` cursor-pointer text-red-600  hidden ${ modeEdit || !buttons?.buttonDelete.active ? "" : "group-hover:block" } `}  />
-                    <CircleCheckIcon  size={30} duration={0.5} class={`rounded-full  cursor-pointer hidden text-[var(--color-text)]  ${check || !modeEdit ? "" : "group-hover:block"} `}  onClick={verify} />
+                    {!mask && (
+                            <>
+                            < CodeXmlIcon  size={25} duration={0.5}  class={` text-[var(--color-text)]  hidden ${check || modeEdit || !buttons?.buttonEdit.active ? "" : "group-hover:block" }`} onClick={()=>handleEdit(id)}/>
+                                
+                                <Trash2Icon  size={25} duration={0.5} onClick={()=>hanldeDelete(id)} class={` cursor-pointer text-red-600  hidden ${ modeEdit || !buttons?.buttonDelete.active ? "" : "group-hover:block" } `}  />
+                                <CircleCheckIcon  size={30} duration={0.5} class={`rounded-full  cursor-pointer hidden text-[var(--color-text)]  ${check || !modeEdit ? "" : "group-hover:block"} `}  onClick={verify} />
 
-                    {!modeEdit && <Checkbox   id={id}  check={check} handleCheck={handleCheck} modeEdit={modeEdit} />}
+                                {!modeEdit && <Checkbox   id={id}  check={check} handleCheck={handleCheck} modeEdit={modeEdit} />}
+                    </>
+                    )}
+
+                    {mask && (<i class="bi bi-eye-slash text-2xl cursor-pointer hidden text-[var(--color-text)] group-hover:block" onClick={()=>MaskTodo(id)}></i>)}
+
                 </div>
                 
             </li>

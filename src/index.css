@@ -13,6 +13,7 @@
   --color-placeholder : #645D7E;
   --color-button : #C6C7DC;
   --color-primary-light:#645d7e5e;
+  --border-radius : 1.5rem;
 
   --background-name: url('');
   --radius: 0.625rem;
@@ -119,7 +120,7 @@ body.addBackground{
   /* max-width: 400px;               max-w-[180px] */
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);    /* backdrop-blur-lg */
-  border: 3px solid rgba(255, 255, 255, 0.237); /* border-[rgba(...)] */
+  border: 3px solid rgba(255, 255, 255, 0.237) ; /* border-[rgba(...)] */
   box-shadow:
     0 8px 20px rgba(0, 0, 0, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.05);   /* shadow-[...] */
@@ -128,10 +129,14 @@ body.addBackground{
   transition-timing-function: ease-in-out; /* ease-in-out */
 }
 
+.applyRadius{
+  border-radius: var(--border-radius) ;
+}
+
 .context-menu{
 
   padding: 0 !important;
-
+  border : 2px solid var(--color-text) !important
 }
 
 @theme inline {
@@ -296,4 +301,10 @@ body.default-cursor .cursor-pointer {
   50% { transform: rotate(0eg); }
   75% { transform: rotate(-0.5deg); }
   100% { transform: rotate(0deg); }
+}
+
+/* input mask */
+.blurred {
+  filter: blur(3px);
+  transition: filter 0.3s;
 }

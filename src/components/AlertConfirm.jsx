@@ -43,10 +43,10 @@ export function AlertConfrim({showConfirm, setshowConfirm,confirmDelete}) {
     <Dialog  open={showConfirm} onOpenChange={setshowConfirm} >
       <form>
 
-        <DialogContent className="max-w-[85vw] max-w-[450px] bg-white/70  flex flex-col overflow-x-hidden">
-          <DialogHeader>
-            <DialogTitle>Clear Everything ⚠️</DialogTitle>
-            <DialogDescription>
+        <DialogContent className="max-w-[85vw] max-w-[450px] md:h-[250px] max-h-[500px]  backdrop-blur-md  bg-white/50  border-none rounded-3xl  flex flex-col justify-between overflow-x-hidden ">
+          <DialogHeader >
+            <DialogTitle className="font-bold">Clear Everything &nbsp;&nbsp;⚠️</DialogTitle>
+            <DialogDescription className="mt-3 text-md">
               You are about to delete all your todos and reset the application to its initial state. All your progress will be lost.
             </DialogDescription>
           </DialogHeader>

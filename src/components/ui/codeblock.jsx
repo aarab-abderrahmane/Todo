@@ -90,7 +90,7 @@ export const CodeBlock = ({
 
   return (
     <div
-      className={`relative w-full rounded-xl overflow-hidden shadow-2xl ${
+      className={`rounded-[min(var(--border-radius),2rem)] relative w-full  overflow-hidden shadow-2xl ${
         theme === "dark" ? "bg-slate-900" : "bg-white"
       } border ${theme === "dark" ? "border-slate-700" : "border-gray-200"}`}>
       <div
