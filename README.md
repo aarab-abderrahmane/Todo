@@ -599,7 +599,7 @@ See [LICENSE](./LICENSE) for full details.
 
 **Aarab Abderrahmane**
 
-- 🌐 Portfolio: [planpulse.vercel.app](https://planpulse.vercel.app)
+- 🌐 Portfolio: [planpulse.vercel.app](https://aarab-abderrahmane.vercel.app)
 - 💻 GitHub: [@aarab-abderrahmane](https://github.com/aarab-abderrahmane)
 - 📧 Email: [Your Email]
 
