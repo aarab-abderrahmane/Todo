@@ -11,7 +11,7 @@ A beautiful, feature-rich todo list application with advanced customization, dra
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.1.16-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![License](https://img.shields.io/badge/License-GPL--3.0-blue.svg)](./LICENSE)
 
-[Live Demo](https://planpulse.vercel.app) · [Report Bug](https://github.com/aarab-abderrahmane/Todo/issues) · [Request Feature](https://github.com/aarab-abderrahmane/Todo/issues)
+[Live Demo](https://planpulse.vercel.app) · [Report Bug](https://github.com/aarab-abderrahmane/PlanPulse/issues) · [Request Feature](https://github.com/aarab-abderrahmane/PlanPulse/issues)
 
 </div>
 
@@ -79,8 +79,8 @@ A beautiful, feature-rich todo list application with advanced customization, dra
 
 ```bash
 # Clone the repository
-git clone https://github.com/aarab-abderrahmane/Todo.git
-cd Todo
+git clone https://github.com/aarab-abderrahmane/PlanPulse.git
+cd PlanPulse
 
 # Install dependencies
 npm install
@@ -104,7 +104,7 @@ npm run preview
 ## 🏗️ Project Structure
 
 ```
-Todo/
+PlanPulse/
 ├── src/
 │   ├── components/
 │   │   ├── ui/                      # shadcn/ui components
@@ -555,8 +555,8 @@ Import:
 
 No major issues reported. If you encounter any bugs:
 
-1. Check [existing issues](https://github.com/aarab-abderrahmane/Todo/issues)
-2. [Create a new issue](https://github.com/aarab-abderrahmane/Todo/issues/new) with:
+1. Check [existing issues](https://github.com/aarab-abderrahmane/PlanPulse/issues)
+2. [Create a new issue](https://github.com/aarab-abderrahmane/PlanPulse/issues/new) with:
    - Clear description
    - Steps to reproduce
    - Expected vs actual behavior
@@ -641,10 +641,10 @@ Special thanks to the open-source community for inspiration and tools that made 
 
 ## 🔗 Quick Links
 
-- 📚 [Documentation](https://github.com/aarab-abderrahmane/Todo/wiki)
-- 🐛 [Issue Tracker](https://github.com/aarab-abderrahmane/Todo/issues)
-- 💬 [Discussions](https://github.com/aarab-abderrahmane/Todo/discussions)
-- 📝 [Changelog](https://github.com/aarab-abderrahmane/Todo/releases)
+- 📚 [Documentation](https://github.com/aarab-abderrahmane/PlanPulse/wiki)
+- 🐛 [Issue Tracker](https://github.com/aarab-abderrahmane/PlanPulse/issues)
+- 💬 [Discussions](https://github.com/aarab-abderrahmane/PlanPulse/discussions)
+- 📝 [Changelog](https://github.com/aarab-abderrahmane/PlanPulse/releases)
 - 🌐 [Live Demo](https://planpulse.vercel.app)
 
 ---
