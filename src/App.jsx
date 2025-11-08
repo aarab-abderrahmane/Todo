@@ -29,6 +29,7 @@ function App() {
   //start 
 
   const defaultPreferences = useMemo(() => ({
+      appVersion: "3.0.0",
       corners:1.5,
       background:{active:false,id:0,path:""},
       customizeLayout:  [
