@@ -19,6 +19,7 @@ import { CSS } from '@dnd-kit/utilities'
 
 // DOck 
 import { FloatingDock } from "./components/ui/floating-dock";
+import { Preferences } from "./components/Preferences";
 
 
 
@@ -29,13 +30,12 @@ function App() {
   const defaultPreferences = useMemo(() => ({
       corners:1.5,
       background:{active:false,id:0,path:""},
-      customizeLayout: {
-        active: false,
-        info: [
-          { id: 0, type: "calendar" },
-          { id: 1, type: "clock" }
-        ]
-      },
+      customizeLayout:  [
+
+          [{ id: 0, type: "calendar" },{ id: 1, type: "clock" }],
+          [{ id: 2, type: "todoList" }]
+
+        ],
       general: { hideTexts: false, opacityTexts: 100 },
       cursorType: "default",
       theme_name: "blue",
@@ -98,19 +98,17 @@ function App() {
       }
     }), []);
 
-
-
   const [PreferencesSettings,setPreferencesSettings] = useState(()=>{
 
       const saved = localStorage.getItem('Preferences');
       const preferenceObj = JSON.parse(saved)
       return saved && saved!==null && saved!==undefined 
-      ? {...preferenceObj, customizeLayout: {...preferenceObj.customizeLayout,active:false}} 
+      ? preferenceObj 
       :  defaultPreferences
   })
 
-  const [timeItems, setTimeItems] = useState(PreferencesSettings?.customizeLayout.info);
-
+  const [Layout, setLayout] = useState(PreferencesSettings.customizeLayout);
+  const [dragMode,setDragMode] = useState({active:false , mode : "items"})
 
 
   useEffect(()=>{
@@ -125,7 +123,6 @@ function App() {
         
 
   },[PreferencesSettings])
-  
 
   const applyTheme = (name) => {
     if(PreferencesSettings){
@@ -148,8 +145,6 @@ function App() {
 
   }
 
-
-
   const applyBackground = (path) => {
     if(PreferencesSettings.background.active ){
       document.documentElement.style.setProperty('--background-name', `url(${path})`);
@@ -162,13 +157,11 @@ function App() {
       ToggleCursor(PreferencesSettings.cursorType)
       applyBackground(PreferencesSettings.background.path)
       
-
   },[])
 
   useEffect(() => {
       ApplyCorners()
   }, [PreferencesSettings.corners]);
-
 
 
   function ToggleCursor(selectedCursor=""){
@@ -197,33 +190,67 @@ function App() {
 
 
 
-
   useEffect(()=>{
 
-    localStorage.setItem('Preferences',JSON.stringify({...PreferencesSettings,customizeLayout:{...PreferencesSettings.customizeLayout,info:timeItems}}))
+    localStorage.setItem('Preferences',JSON.stringify({...PreferencesSettings,customizeLayout:Layout}))
 
-  },[timeItems,PreferencesSettings])
+  },[PreferencesSettings,Layout])
 
 
    // drag drop 
 
-    const getTaskPos= id => timeItems.findIndex(task=>task.id=== id)
-    const handleDragEnd = event=>{
-        const {active,over} = event
+  const handleDragEnd = ({ active, over }) => {
 
-        if(active.id === over.id) return ; 
+          
+        if (!over || active.id === over.id) return;
+        
+        setLayout(prev => {
+          if (!Array.isArray(prev)) return prev;
 
-        setTimeItems((prev)=>{
+          // --- Dragging entire sections ---
+          if (dragMode.mode === "section") {
+            console.log("section mode")
 
-          const originalPos = getTaskPos(active.id)
-          const newPos = getTaskPos(over.id)
+            const activeIndex = prev.findIndex(section => section.some(item => item.id === active.id));
+            const overIndex = prev.findIndex(section => section.some(item => item.id === over.id));
 
-          return arrayMove(prev,originalPos,newPos)
-        }
+            if (activeIndex === -1 || overIndex === -1 || activeIndex === overIndex) return prev;
 
-        )
+            const newLayout = [...prev];
+            [newLayout[activeIndex], newLayout[overIndex]] = [newLayout[overIndex], newLayout[activeIndex]];
+            return newLayout;
+          }
 
-  }
+          // --- Dragging items inside calendar/clock section ---
+          if (dragMode.mode === "items") {
+          console.log("items mode ")
+
+            const timeSectionIndex = prev.findIndex(
+              section => section.some(item => item.type === "calendar") || section.some(item => item.type === "clock")
+            );
+
+            if (timeSectionIndex === -1) return prev;
+
+            const timeSection = [...prev[timeSectionIndex]];
+            const oldIndex = timeSection.findIndex(item => item.id === active.id);
+            const newIndex = timeSection.findIndex(item => item.id === over.id);
+
+            if (oldIndex === -1 || newIndex === -1) return prev;
+
+            const newTimeSection = arrayMove(timeSection, oldIndex, newIndex);
+
+            const newLayout = [...prev];
+            newLayout[timeSectionIndex] = newTimeSection;
+
+            console.log(newLayout)
+
+            return newLayout;
+          }
+
+          return prev;
+        });
+    };
+
 
 
   const links = [
@@ -232,7 +259,7 @@ function App() {
       icon: (
         <i class="bi bi-stop-fill  text-[var(--color-text)] cursor-pointer text-xl"></i>
       ),
-      action : ()=>setPreferencesSettings(prev=>({...prev,customizeLayout:{...prev.customizeLayout,active:false}}))
+      action : ()=>setDragMode(prev=>({...prev , active:false}))
     },
  
     {
@@ -240,20 +267,22 @@ function App() {
       icon: (
         <i class="bi bi-arrow-clockwise  text-[var(--color-text)] cursor-pointer text-xl"></i>
       ),
-      action : ()=>{
-        setPreferencesSettings(prev=>({...prev,customizeLayout:defaultPreferences.customizeLayout}))
-        setTimeItems(defaultPreferences.customizeLayout.info)
+      action : ()=> {
+        setLayout(defaultPreferences.customizeLayout)
+        setDragMode(prev=>({...prev , active:false}))
       }
-
 
     },
    
   ];
 
 
+
+
+
   return (
 
-    <PreferencesContext.Provider value={{PreferencesSettings,setPreferencesSettings,applyTheme,ToggleCursor,applyBackground,ApplyCorners}}>
+    <PreferencesContext.Provider value={{PreferencesSettings,setPreferencesSettings,applyTheme,ToggleCursor,applyBackground,ApplyCorners,setDragMode,dragMode}}>
 
       {PreferencesSettings.cursorType==="smooth" ? <SmoothCursor  /> : ""}
       
@@ -269,9 +298,9 @@ function App() {
                   </div>
             )}
 
-
+        
             {
-              PreferencesSettings.customizeLayout.active && (
+              dragMode.active && (
 
                       <div className="fixed z-[400] bg-red-400  top-0 right-1/2 left-1/2 tansform  flex items-center justify-center h-[6rem] ">
                         <FloatingDock
@@ -287,34 +316,41 @@ function App() {
 
               <div className="flex flex-col  items-center mt-12 md:mt-0 xl:flex-row xl:justify-center w-[100vw]  gap-4 p-4 lg:p-8 min-h-screen overflow-y-scroll overflow-x-hidden  ">
 
-                  {/* <!-- Left section --> */}
-                    <div className="flex flex-col gap-3 z-10   max-w-[1000px] w-[90vw] xl:w-[50vw]  ">
+                  <DndContext
+                  onDragEnd={handleDragEnd}
+                  collisionDetection={closestCorners} >
 
-                      {/* <!-- Calendar --> */}
-                      {/* <!-- Clock --> */}
-                      <DndContext
-                      onDragEnd={handleDragEnd}
-                      collisionDetection={closestCorners} >
+                    {dragMode.mode==="items" ? (
 
-                        <SortableContext
-                          items={timeItems.map(item => item.id)}
-                          strategy={verticalListSortingStrategy}
-                        >
-                          {timeItems.map(item => (
-                            <ShowLatestLayout key={item.id} item={item} GlobalCalendar={GlobalCalendar}/>
-                          ))}
-                        </SortableContext>
+                            Layout.map((section,index) => section.some(item=>item.type==="todoList") ? (
+                                <div key={index}>
+                                    <TodoList />
+                                </div>
+                                  
+                                ) : (
+                            
+                                <div className="  flex flex-col gap-3 z-10   max-w-[1000px] w-[90vw] xl:w-[50vw]  ">
 
-      
-                      </DndContext>
+                                      <SortableContext
+                                          items={section.map(item => item.id)}
+                                          strategy={verticalListSortingStrategy}
+                                        > 
+                                          {section.map(item => (
+                                            <ShowLatestLayout key={item.id} item={item} />
+                                          ))}
 
-                  </div>
+                                      </SortableContext>
 
-                
-                  {/* right section  */}
-                    <TodoList />
-                
+                                </div>
 
+
+                            ) )
+                            
+
+
+                    ):(<p>section mode</p>)}
+                  </DndContext>
+             
 
             </div>
 
@@ -324,7 +360,7 @@ function App() {
       
     </PreferencesContext.Provider>
    
-  )
+  ) 
 }
 
 export default App
@@ -335,33 +371,39 @@ export default App
 function ShowLatestLayout({ item }) {
   const { attributes, listeners, setNodeRef, transform } = useSortable({ id: item.id });
 
+
   const style = {
     transition: "0.3s transform ease",
     transform: CSS.Transform.toString(transform),
   };
 
-  const { PreferencesSettings } = useContext(PreferencesContext);
+  const {dragMode} = useContext(PreferencesContext);
 
-  return PreferencesSettings?.customizeLayout.active? (
+  return dragMode.active? (
+
     <div ref={setNodeRef} style={style}  {...attributes} {...listeners}>
       {item.type==="calendar" ? <GlobalCalendar/> : <LiveClockDetailed/> }
     </div>
+
   ) : (
+
     item.type==="calendar" ? <GlobalCalendar/> : <LiveClockDetailed/> 
+
   );
+
 }
 
 
 function GlobalCalendar(){
 
   const [calendarDate,setCalendarDate] = useState(new Date())
-  const { PreferencesSettings } = useContext(PreferencesContext);
+  const { dragMode } = useContext(PreferencesContext);
 
 
     return  (
         <div
             className={`
-              ${PreferencesSettings.customizeLayout.active? "shake" : ""}
+              ${dragMode.active? "shake" : ""}
               glass applyRadius !important shadow  flex flex-col md:flex-row items-center md:items-stretch lg:justify-between   w-full lg:h-[50vh] lg:max-h-[450px] overflow-hidden md:hover:scale-[1.03]`}
             style={{ padding: "2px" }}
             >

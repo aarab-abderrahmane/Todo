@@ -55,6 +55,8 @@ export default function DropdownMenuLabo() {
   const [loading, setLoading] = useState(false);
   const timerRef = useRef(null);
 
+  const {PreferencesSettings,setDragMode} = useContext(PreferencesContext)
+
   function resetStorage() {
     localStorage.setItem("todos", JSON.stringify([]));
     window.location.reload();
@@ -140,7 +142,7 @@ export default function DropdownMenuLabo() {
             setShowPreferences((prev) => !prev)
           
           }else if(e.ctrlKey && e.key.toLowerCase() === 'y'){
-            activeCustomizeLayout()
+            setDragMode(prev=>({...prev, active:!prev.active, mode:'items'}))
           }
         }
 
@@ -149,12 +151,8 @@ export default function DropdownMenuLabo() {
   },[])
 
 
-  const {setPreferencesSettings,PreferencesSettings} = useContext(PreferencesContext)
-  function activeCustomizeLayout(){
-      // setPreferencesSettings(prev=>({...prev,customizeActive:true}))
-      setPreferencesSettings(prev=>({...prev,customizeLayout:{...prev.customizeLayout,active:true}}))
 
-  }
+  
  const navigate = useNavigate()
 
 
@@ -189,7 +187,7 @@ export default function DropdownMenuLabo() {
             <DropdownMenuSeparator className='font-bold h-[1px] bg-[var(--color-text)]'/>
 
 
-            <DropdownMenuItem disabled={PreferencesSettings.customizeLayout.active} className="p-3 justify-between" onSelect={activeCustomizeLayout}>
+            <DropdownMenuItem disabled={PreferencesSettings.customizeLayout.active} className="p-3 justify-between" onSelect={()=>setDragMode(prev=>({...prev, active:!prev.active, mode:'items'}))}>
               <div>
                 <i class="bi bi-columns-gap text-xl font-black me-2 text-[var(--color-text)]"></i>
                 Customize Layout
