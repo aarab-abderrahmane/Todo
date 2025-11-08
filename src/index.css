@@ -254,11 +254,13 @@ body.default-cursor .cursor-pointer {
 /* Custom richColors palette 'Sooner' */
 
 [data-sonner-toast]{
-  border-radius: 15px !important;
+  border-radius: var(--border-radius) !important;
     -webkit-backdrop-filter: blur(20px) !important;
   backdrop-filter: blur(20px) !important;    /* backdrop-blur-lg */
 }
+
 [data-sonner-toast][data-type="success"]{
+  
   background: var(--color-button) !important;
   color: var(--color-text) !important;
   border: 2px var(--color-text) solid !important;
@@ -286,7 +288,7 @@ body.default-cursor .cursor-pointer {
 
 /* Custom icon colors */
 [data-sonner-toast] [data-icon] {
-  color: white !important;
+  color: var(--color-text) !important;
 }
 
 .shake{

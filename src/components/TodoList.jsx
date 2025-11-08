@@ -218,7 +218,7 @@ export  function TodoList() {
         <input
           type="text"
           placeholder="Write here anything"
-          className="rounded-[min(var(--border-radius),2rem)] flex-1 bg-white/50 text-[var(--color-placeholder)] w-[90%] placeholder-gray-600  px-6 py-4 focus:outline-none focus:border-purple-400"
+          className="rounded-[min(var(--border-radius),2rem)] flex-1 bg-white/50 text-[var(--color-text)] w-[90%] placeholder-gray-700  px-6 py-4 focus:outline-none focus:border-purple-400"
           value={inputContent}
           onChange={Typing}
         />
