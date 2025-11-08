@@ -44,6 +44,7 @@ import {PreferencesContext} from '../App'
 import { Badge } from "./ui/badge"
 
 import {ImportDataSection} from '../ImportDataSection'
+import { useNavigate } from "react-router";
 
 
 export default function DropdownMenuLabo() {
@@ -154,6 +155,9 @@ export default function DropdownMenuLabo() {
       setPreferencesSettings(prev=>({...prev,customizeLayout:{...prev.customizeLayout,active:true}}))
 
   }
+ const navigate = useNavigate()
+
+
 
   return (
     <>
@@ -225,7 +229,20 @@ export default function DropdownMenuLabo() {
               </DropdownMenuPortal>
             </DropdownMenuSub>
 
+            <DropdownMenuSeparator  className='font-bold h-[1px] bg-[var(--color-text)]' />
 
+            <DropdownMenuItem className="p-3 flex justify-between" onSelect={()=>{
+                  localStorage.setItem('hasVisited',JSON.stringify(false))
+                  navigate('/')
+
+            }}>
+              <div >
+                  <i class="bi bi-house text-xl font-black me-2 text-[var(--color-text)]"></i>         
+                  Home Page
+              </div>
+
+
+            </DropdownMenuItem>
 
             <DropdownMenuSeparator  className='font-bold h-[1px] bg-[var(--color-text)]' />
 
@@ -322,9 +339,9 @@ export default function DropdownMenuLabo() {
       </Dialog>
 
       {/* Upload section  */}
-      <Dialog open={showUploadData} onOpenChange={setShowUploadData}>
+      <Dialog open={showUploadData} onOpenChange={setShowUploadData} >
         <DialogContent className="max-w-[785px] max-h-[90vh] bg-gray-300 h-full md:max-h-[450px] w-[90vw]  p-0 border-none overflow-y-scroll md:overflow-hidden ">
-              <ImportDataSection   />
+              <ImportDataSection setShowUploadData={setShowUploadData}  />
         </DialogContent>
       </Dialog>
     </>

@@ -35,6 +35,7 @@ function DialogOverlay({
   return (
     <DialogPrimitive.Overlay
       data-slot="dialog-overlay"
+      
       className={cn(
         "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/50",
         className
@@ -47,12 +48,14 @@ function DialogContent({
   className,
   children,
   showCloseButton = true,
+  isInteractOutsite = undefined,
   ...props
 }) {
   return (
     <DialogPortal data-slot="dialog-portal">
       <DialogOverlay />
       <DialogPrimitive.Content
+       onInteractOutside={isInteractOutsite}
         data-slot="dialog-content"
         className={cn(
         "bg-[var(--color-secondary)] " +

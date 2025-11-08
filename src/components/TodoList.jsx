@@ -28,8 +28,8 @@ export  function TodoList() {
   const [showStepper,setShowStepper] = useState(false)
   useEffect(()=>{
 
-      const isVisited = localStorage.getItem('hasVisited')
-      if(!isVisited){
+      const isStarted = JSON.parse(localStorage.getItem('hasStarted'))
+      if(!isStarted){
           // localStorage.setItem('hasVisited',true)
           setShowStepper(true)
 
@@ -218,7 +218,7 @@ export  function TodoList() {
         <input
           type="text"
           placeholder="Write here anything"
-          className=" flex-1 bg-white/50 text-[var(--color-placeholder)] w-[90%] placeholder-gray-600 rounded-xl px-6 py-4 focus:outline-none focus:border-purple-400"
+          className="rounded-[min(var(--border-radius),2rem)] flex-1 bg-white/50 text-[var(--color-placeholder)] w-[90%] placeholder-gray-600  px-6 py-4 focus:outline-none focus:border-purple-400"
           value={inputContent}
           onChange={Typing}
         />

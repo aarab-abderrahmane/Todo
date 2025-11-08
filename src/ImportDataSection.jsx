@@ -56,13 +56,13 @@ function TitleEffect({children}){
   )
 }
 
-export function ImportDataSection() {
+export function ImportDataSection({setShowUploadData}) {
 
  
 
   const {setTodos} = useContext(todosContext)
 
-  const [isValid , setisValid] = useState(false)
+
   const [loading, setLoading] = useState(false);
   const timerRef = useRef(null);
   const inputRef = useRef(null);
@@ -113,13 +113,15 @@ export function ImportDataSection() {
           );
 
         if (!isValid) {
+          setLoading(false)
           toast.error("Invalid JSON format! Expected [{ id, content, modeEdit, check, mask }, ...]");
           return;
         }
 
         toast.success("JSON imported successfully!");
         setTodos(data);
-        setisValid(true);
+        setShowUploadData(false)
+
 
       } catch (err) {
         toast.error("Failed to read JSON file.");
@@ -151,7 +153,7 @@ export function ImportDataSection() {
         <div className="flex flex-col sm:flex-row  gap-2 items-center">
 
 
-          {!isValid && ( 
+          {
 
             loading ? (
                 <Button variant="secondary" disabled size="lg">
@@ -163,7 +165,7 @@ export function ImportDataSection() {
 
             )
             
-          )}
+          }
 
           
           

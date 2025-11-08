@@ -317,8 +317,9 @@ export default function Stepper({ showStepper, setShowStepper }) {
   const [scene, dispatch] = useReducer(reducer, "1");
 
   return (
-    <Dialog open={showStepper} onOpenChange={setShowStepper}>
-      <DialogContent className="max-w-[785px] max-h-[90vh] bg-gray-300 h-full md:max-h-[450px] w-[90vw] rounded-3xl p-0 border-none overflow-y-scroll md:overflow-hidden ">
+       
+    <Dialog open={showStepper} onOpenChange={setShowStepper} >
+      <DialogContent isInteractOutsite={(e) => e.preventDefault()} className="max-w-[785px] max-h-[90vh] bg-gray-300 h-full md:max-h-[450px] w-[90vw] rounded-3xl p-0 border-none overflow-y-scroll md:overflow-hidden ">
         {scene === "1" && <Scene1 dispatch={dispatch} scene={scene} />}
         {scene === "2" && <Scene2 dispatch={dispatch} scene={scene} />}
         {scene === "3" && <Scene3 setShowStepper={setShowStepper} scene={scene} />}

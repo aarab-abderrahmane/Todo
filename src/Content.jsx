@@ -28,8 +28,9 @@ function RouterHandler() {
   const location = useLocation()
 
   useEffect(() => {
-    const hasVisited = localStorage.getItem('hasVisited');
-    if (hasVisited && location.pathname === '/') {
+    const hasVisited = JSON.parse(localStorage.getItem('hasVisited'));
+    console.log(hasVisited)
+    if (hasVisited &&  location.pathname === '/' ) {
       navigate('/todos');
     }
   }, [navigate,location.pathname]);

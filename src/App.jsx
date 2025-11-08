@@ -36,7 +36,6 @@ function App() {
           { id: 1, type: "clock" }
         ]
       },
-      hasVisited: false,
       general: { hideTexts: false, opacityTexts: 100 },
       cursorType: "default",
       theme_name: "blue",
@@ -113,6 +112,7 @@ function App() {
   const [timeItems, setTimeItems] = useState(PreferencesSettings?.customizeLayout.info);
 
 
+
   useEffect(()=>{
       localStorage.setItem("Preferences",JSON.stringify(PreferencesSettings))
       if(PreferencesSettings.background.id==="0"){
@@ -143,12 +143,11 @@ function App() {
   const ApplyCorners = ()=>{
 
 
-            const corner = PreferencesSettings.corners;
-            document.documentElement.style.setProperty('--border-radius',`${corner}rem`)
+      const corner = PreferencesSettings.corners;
+      document.documentElement.style.setProperty('--border-radius',`${corner}rem`)
 
   }
 
-  console.log(PreferencesSettings.corners)
 
 
   const applyBackground = (path) => {
