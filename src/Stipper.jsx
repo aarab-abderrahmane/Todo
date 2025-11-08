@@ -79,7 +79,7 @@ function Scene1({ dispatch,scene }) {
             <h1 className="text-2xl font-bold mb-2"><TitleEffect>Welcome to PlanPulse</TitleEffect></h1>
             <p className="text-sm font-normal">
 
-              <TextEffect per='char' delay={1.5}>
+              <TextEffect per='char' delay={1.5} speedReveal={2}>
               This Todo app helps you stay organized and productive by managing your daily tasks in one place. 
               You can easily create, edit, and delete tasks. With a clean and responsive interface built using 
               React and Vite, it provides a smooth user experience on any device. Whether for personal use or 
@@ -127,6 +127,7 @@ function Scene2({ dispatch ,scene}) {
         per='char'
         delay={2.5}
         preset='blur'
+        speedReveal={1.5}
       >
             In the Preferences section , users have comprehensive control over their workflow and interface. This centralized hub allows for the customization of key elements, including button visibility, theme selection, and cursor appearance, enabling a truly personalized user experience.       
       </TextEffect>
@@ -208,7 +209,8 @@ function Scene3({ setShowStepper }) {
               typeof item.id === "number" &&
               typeof item.content === "string" &&
               typeof item.modeEdit === "boolean" &&
-              typeof item.check === "boolean"
+              typeof item.check === "boolean" &&
+              typeof item.mask === "boolean"
           );
 
         if (!isValid) {
@@ -241,7 +243,7 @@ function Scene3({ setShowStepper }) {
         </EmptyMedia>
         <EmptyTitle>Restore Your Lists or Start Fresh</EmptyTitle>
         <EmptyDescription>
-           <TextEffect per='char' preset='fade' >
+           <TextEffect per='char' preset='fade' speedReveal={2} >
           No previous to-do lists were found in your account. You can start organizing your tasks by creating your first list, or if you have a saved backup, you can easily restore all your old tasks and lists using the "Import List" option.
            </TextEffect>
         </EmptyDescription>
