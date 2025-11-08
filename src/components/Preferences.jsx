@@ -142,7 +142,7 @@ export function Preferences({ showPreferences, setShowPreferences }) {
                 </AccordionTrigger>
                 <AccordionContent className="flex flex-col gap-4 text-balance">
                   <div className="w-full flex justify-center ">
-                    <div className=" bg-white/50 h-[55px] max-w-[400px] w-[80%] rounded-xl flex items-center justify-between px-4 border border-black">
+                    <div className="applyRadius bg-white/30 h-[55px] max-w-[400px] w-[80%]  flex items-center justify-between px-4 border border-black">
                       <p>Todo List</p>
                       <div className="flex justify-end flex-1 h-full pe-4  ">
                         <Trash2Icon
@@ -237,7 +237,7 @@ export function Preferences({ showPreferences, setShowPreferences }) {
                             PreferencesSettings.cursorType === "smooth"
                               ? "bg-[var(--color-button)]"
                               : ""
-                          }  flex flex-col justify-center items-center gap-3 border-2 border-[var(--color-text)] rounded-3xl hover:cursor-pointer `}
+                          }  rounded-[min(var(--border-radius),2rem)] flex flex-col justify-center items-center gap-3 border-2 border-[var(--color-text)] hover:cursor-pointer `}
                         >
                           <i class="bi bi-cursor-fill text-lg bg-white border-[var(--color-text)] flex items-center justify-center w-[40px] h-[40px] rounded-full border-2"></i>
 
@@ -257,7 +257,7 @@ export function Preferences({ showPreferences, setShowPreferences }) {
                             PreferencesSettings.cursorType === "default"
                               ? "bg-[var(--color-button)]"
                               : ""
-                          }  flex flex-col justify-center items-center gap-3 border-2 border-[var(--color-text)] rounded-3xl hover:cursor-pointer `}
+                          }  rounded-[min(var(--border-radius),2rem)]  flex flex-col justify-center items-center gap-3 border-2 border-[var(--color-text)]  hover:cursor-pointer `}
                         >
                           <i class="bi bi-ban text-lg bg-white border-[var(--color-text)] flex items-center justify-center w-[40px] h-[40px] rounded-full border-2"></i>
 

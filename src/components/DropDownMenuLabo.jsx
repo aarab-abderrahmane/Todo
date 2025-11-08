@@ -159,7 +159,7 @@ export default function DropdownMenuLabo() {
     <>
       <DropdownMenu modal={false} >
         <DropdownMenuTrigger asChild>
-          <Button variant="default" aria-label="Open menu" size="icon-lg " className="rounded-[min(var(--border-radius),1rem)]">
+          <Button variant="default" aria-label="Open menu" size="icon-lg " >
             <MoreHorizontalIcon />
           </Button>
         </DropdownMenuTrigger>
@@ -272,7 +272,7 @@ export default function DropdownMenuLabo() {
 
       <Dialog open={openDialog} onOpenChange={setOpenDialog} >
         <form>
-          <DialogContent className=" backdrop-blur-md border-2 bg-white/60 rounded-3xl max-w-[80vw]  md:max-w-[500px] lg:max-w-[600px] xl:max-w-[800px] flex flex-col overflow-x-hidden">
+          <DialogContent className=" backdrop-blur-md border-2 bg-white/60 max-w-[80vw]  md:max-w-[500px] lg:max-w-[600px] xl:max-w-[800px] flex flex-col overflow-x-hidden">
             <DialogHeader>
               <DialogTitle>Export Data</DialogTitle>
               <DialogDescription>
@@ -323,7 +323,7 @@ export default function DropdownMenuLabo() {
 
       {/* Upload section  */}
       <Dialog open={showUploadData} onOpenChange={setShowUploadData}>
-        <DialogContent className="max-w-[785px] max-h-[90vh] bg-gray-300 h-full md:max-h-[450px] w-[90vw] rounded-3xl p-0 border-none overflow-y-scroll md:overflow-hidden ">
+        <DialogContent className="max-w-[785px] max-h-[90vh] bg-gray-300 h-full md:max-h-[450px] w-[90vw]  p-0 border-none overflow-y-scroll md:overflow-hidden ">
               <ImportDataSection   />
         </DialogContent>
       </Dialog>
