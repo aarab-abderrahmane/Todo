@@ -26,7 +26,7 @@ export default function LiveClockDetailed() {
   return (
     <div
     className={`
-    ${dragMode.active ? "shake" : ""}
+    ${dragMode.active && dragMode.mode==="items" ? "shake" : ""}
     glass applyRadius  flex flex-col  w-full  lg:h-[40vh] max-h-[400px] bg-white/40   shadow backdrop-blur-lg md:hover:scale-[1.03] overflow-hidden`}>
       <div className="text-[var(--color-text)] flex  gap-4 items-center p-4  border-b-4 border-white/20">
         <h1 className="text-2xl font-bold md:text-[2rem]">Clcok</h1>

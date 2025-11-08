@@ -12,7 +12,7 @@ export  const PreferencesContext = createContext({})
 
 // dnd-kit
 import {DndContext,closestCorners} from '@dnd-kit/core';
-import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import { SortableContext, verticalListSortingStrategy ,horizontalListSortingStrategy} from "@dnd-kit/sortable";
 import { arrayMove } from "@dnd-kit/sortable";
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
@@ -20,6 +20,7 @@ import { CSS } from '@dnd-kit/utilities'
 // DOck 
 import { FloatingDock } from "./components/ui/floating-dock";
 import { Preferences } from "./components/Preferences";
+import { Layout } from "lucide-react";
 
 
 
@@ -208,11 +209,17 @@ function App() {
           if (!Array.isArray(prev)) return prev;
 
           // --- Dragging entire sections ---
-          if (dragMode.mode === "section") {
-            console.log("section mode")
+          if (dragMode.mode === "sections") {
+ 
+            const toIndex = id => {
+              if (id === "left") return 0;
+              if (id === "right") return 1;
+              // fallback: find section that contains the item id
+              return prev.findIndex(section => section.some(item => item.id === id));
+            };
 
-            const activeIndex = prev.findIndex(section => section.some(item => item.id === active.id));
-            const overIndex = prev.findIndex(section => section.some(item => item.id === over.id));
+            const activeIndex = toIndex(active.id);
+            const overIndex = toIndex(over.id);
 
             if (activeIndex === -1 || overIndex === -1 || activeIndex === overIndex) return prev;
 
@@ -220,6 +227,7 @@ function App() {
             [newLayout[activeIndex], newLayout[overIndex]] = [newLayout[overIndex], newLayout[activeIndex]];
             return newLayout;
           }
+
 
           // --- Dragging items inside calendar/clock section ---
           if (dragMode.mode === "items") {
@@ -260,6 +268,14 @@ function App() {
         <i class="bi bi-stop-fill  text-[var(--color-text)] cursor-pointer text-xl"></i>
       ),
       action : ()=>setDragMode(prev=>({...prev , active:false}))
+    },
+
+    {
+      title: "Section Mode",
+      icon: (
+        <i class="bi bi-vr text-[var(--color-text)] cursor-pointer text-xl "></i>
+      ),
+      action : ()=>setDragMode(prev=>({...prev , mode:prev.mode==="sections" ? "items" : "sections"}))
     },
  
     {
@@ -336,7 +352,13 @@ function App() {
                                           strategy={verticalListSortingStrategy}
                                         > 
                                           {section.map(item => (
-                                            <ShowLatestLayout key={item.id} item={item} />
+                                            <ShowLatestLayout
+                                              key={item.id}
+                                              item={item} 
+                                              condition="calendar"
+                                              compar1={<GlobalCalendar/>} 
+                                              compar2={<LiveClockDetailed/>}
+                                              />
                                           ))}
 
                                       </SortableContext>
@@ -348,7 +370,27 @@ function App() {
                             
 
 
-                    ):(<p>section mode</p>)}
+                    ):(
+
+                        
+                        <SortableContext
+                            items={["left", "right"]}
+                            strategy={horizontalListSortingStrategy}
+                          >
+                            {Layout.map((section, i) => (
+                              <SortableSection
+                                key={i}
+                                id={i === 0 ? "left" : "right"}
+                                section={section}
+                                Layout={Layout}
+                              />
+                            ))}
+                          </SortableContext>
+
+
+
+
+                    )}
                   </DndContext>
              
 
@@ -367,8 +409,68 @@ export default App
 
 
 
+function SortableSection({ id, section }) {
+  const { setNodeRef, attributes, listeners, transform, transition } = useSortable({ id });
+  const {dragMode} = useContext(PreferencesContext);
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
 
-function ShowLatestLayout({ item }) {
+  return (
+
+    dragMode.active? (
+      <div
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
+      >
+        {section.some(item => item.type === "todoList") ? (
+          <TodoList />
+        ) : (
+          <div className="shake  flex flex-col gap-3 z-10   max-w-[1000px] w-[90vw] xl:w-[50vw]  ">
+            {section.map(item =>
+              item.type === "calendar" ? (
+                <GlobalCalendar key={item.id} />
+              ) : (
+                <LiveClockDetailed key={item.id} />
+              )
+            )}
+          </div>
+
+        )}
+      </div>
+
+
+    ):(
+
+      <div
+
+      >
+        {section.some(item => item.type === "todoList") ? (
+          <TodoList />
+        ) : (
+          <div className="  flex flex-col gap-3 z-10   max-w-[1000px] w-[90vw] xl:w-[50vw]  ">
+            {section.map(item =>
+              item.type === "calendar" ? (
+                <GlobalCalendar key={item.id} />
+              ) : (
+                <LiveClockDetailed key={item.id} />
+              )
+            )}
+          </div>
+
+        )}
+      </div>
+
+    )
+    
+  );
+}
+
+
+function ShowLatestLayout({ item , compar1 ,compar2 , condition }) {
   const { attributes, listeners, setNodeRef, transform } = useSortable({ id: item.id });
 
 
@@ -379,15 +481,17 @@ function ShowLatestLayout({ item }) {
 
   const {dragMode} = useContext(PreferencesContext);
 
+
   return dragMode.active? (
 
+
     <div ref={setNodeRef} style={style}  {...attributes} {...listeners}>
-      {item.type==="calendar" ? <GlobalCalendar/> : <LiveClockDetailed/> }
+      {item.type===condition ? compar1 : compar2 }
     </div>
 
   ) : (
 
-    item.type==="calendar" ? <GlobalCalendar/> : <LiveClockDetailed/> 
+    item.type===condition ? compar1 : compar2
 
   );
 
@@ -403,7 +507,7 @@ function GlobalCalendar(){
     return  (
         <div
             className={`
-              ${dragMode.active? "shake" : ""}
+              ${dragMode.active && dragMode.mode==="items" ? "shake" : ""}
               glass applyRadius !important shadow  flex flex-col md:flex-row items-center md:items-stretch lg:justify-between   w-full lg:h-[50vh] lg:max-h-[450px] overflow-hidden md:hover:scale-[1.03]`}
             style={{ padding: "2px" }}
             >

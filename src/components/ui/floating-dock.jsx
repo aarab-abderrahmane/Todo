@@ -2,10 +2,13 @@ import { cn } from "../../lib/utils";
 import { IconLayoutNavbarCollapse } from "@tabler/icons-react";
 import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from "motion/react";
 
-import { useRef, useState } from "react";
+import { useRef, useState ,useContext} from "react";
+
+import {PreferencesContext} from '../../App'
 
 export const FloatingDock = ({
   items,
+  dragMode,
   desktopClassName,
   mobileClassName
 }) => {
@@ -130,6 +133,10 @@ function IconContainer({
 
   const [hovered, setHovered] = useState(false);
 
+  const {dragMode} = useContext(PreferencesContext)
+
+  console.log(dragMode)
+
   return (
     <a  onClick={action}>
       <motion.div
@@ -137,7 +144,9 @@ function IconContainer({
         style={{ width, height }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
-        className="relative flex aspect-square items-center justify-center rounded-full bg-white/80 border border-[var(--color-text)]  cursor-pointer">
+        className={`
+        ${(dragMode.mode==="sections" && title.includes("Section Mode")) ? "bg-[var(--color-background)] " : "bg-white/80"}
+        relative flex aspect-square items-center justify-center rounded-full  border border-[var(--color-text)]  cursor-pointer`}>
         <AnimatePresence>
           {hovered && (
             <motion.div
@@ -151,7 +160,7 @@ function IconContainer({
         </AnimatePresence>
         <motion.div
           style={{ width: widthIcon, height: heightIcon }}
-          className="flex items-center justify-center ">
+          className="flex items-center justify-center  ">
           {icon}
         </motion.div>
       </motion.div>

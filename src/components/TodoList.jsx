@@ -1,5 +1,5 @@
 import List from "./List";
-import { createContext, useState,useEffect ,useMemo} from "react";
+import { createContext, useState,useEffect ,useMemo, useContext} from "react";
 import { SparklesText } from "./ui/sparkles-text";
 
 import { AlertCircleIcon, CheckCircle2Icon, PopcornIcon } from "lucide-react";
@@ -22,8 +22,11 @@ import { arrayMove } from "@dnd-kit/sortable";
 
 
 export const todosContext = createContext()
+import { PreferencesContext } from "../App";
 
 export  function TodoList() {
+
+  const {dragMode} = useContext(PreferencesContext)
 
   const [showStepper,setShowStepper] = useState(false)
   useEffect(()=>{
@@ -212,7 +215,10 @@ export  function TodoList() {
   return (
     <todosContext.Provider  value={{todos,setTodos,MaskTodo,handleAdd,handleCheck,handleEdit,handleSave,hanldeDelete}}>
 
-    <div className="flex flex-col gap-6  w-[90vw]  md:w-[50vw]    max-w-[550px] h-[90vh]  max-h-[850px]">
+    <div className={`
+      ${dragMode.active && dragMode.mode==="sections"   ? "shake" : ""}
+      flex flex-col gap-6  w-[90vw]  md:w-[50vw]    max-w-[550px] h-[90vh]  max-h-[850px]
+      `}>
       {/* <!-- Input --> */}
       <div className="glass  applyRadius   shadow-lg flex flex-col items-center space-y-3 md:hover:scale-[1.04]">
         <input
