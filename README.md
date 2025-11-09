@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Todo App Demo](./public/planpulse.vercel.app_3.png)
+![PlanPulse Banner](./public/planpulse.vercel.app_3.png)
 
 A beautiful, feature-rich todo list application with advanced customization, drag-and-drop functionality, stunning glassmorphism design, and powerful widget system. Built with React 19, Vite, and modern web technologies.
 
@@ -29,7 +29,7 @@ A beautiful, feature-rich todo list application with advanced customization, dra
 - ✅ **Task Completion** - Animated checkboxes with satisfying interactions
 - 📝 **Inline Editing** - Edit tasks directly in place
 - 🗑️ **Smart Deletion** - Confirmation dialogs for safety
-- 💾 **Auto-save** - All changes persist automatically
+- 💾 **Auto-save** - All changes persist automatically in localStorage
 - 📤 **Import/Export** - Backup and restore your todos as JSON
 - 🔒 **Task Masking** - Hide sensitive tasks with blur effect
 - 🎨 **Context Menu** - Right-click for quick actions
@@ -44,6 +44,7 @@ A beautiful, feature-rich todo list application with advanced customization, dra
 - 👁️ **Hide/Show UI** - Toggle text visibility for minimal interface
 - 🔆 **Opacity Control** - Adjust text transparency (0-100%)
 - 📐 **Corner Radius** - Customize border radius (0-3rem)
+- 🎨 **Font Customization** - Choose from 8 fonts with adjustable weights
 - 📱 **Fully Responsive** - Seamless experience on all devices
 - 🎭 **Glassmorphism UI** - Modern frosted-glass aesthetic
 - 🎯 **Button Customization** - Show/hide edit and delete buttons
@@ -54,27 +55,31 @@ A beautiful, feature-rich todo list application with advanced customization, dra
 
 ### 🧩 Widget System
 
-- 📅 **Live Calendar** - Interactive calendar widget with month/year selection
-- ⏰ **Detailed Clock** - Real-time clock with AM/PM display
+- 📅 **Live Calendar** - Interactive calendar widget with month/year selection using react-day-picker
+- ⏰ **Detailed Clock** - Real-time clock with hours:minutes:seconds and AM/PM display
 - 🔄 **Customizable Layout** - Drag and reorder widgets with two modes:
-  - **Items Mode** - Reorder calendar and clock widgets
-  - **Sections Mode** - Swap entire widget sections
-- 💫 **Smooth Animations** - All interactions feel polished and responsive
+  - **Items Mode** - Reorder calendar and clock widgets within their section
+  - **Sections Mode** - Swap entire widget sections (left/right)
+- 💫 **Smooth Animations** - All interactions feel polished and responsive using Framer Motion
 
 ### ⌨️ Enhanced UX
 
-- 🎊 **Celebration Effects** - Confetti animations on milestones
-- 🔔 **Toast Notifications** - Color-coded feedback for all actions
+- 🎊 **Celebration Effects** - Confetti animations on milestones using canvas-confetti
+- 🔔 **Toast Notifications** - Color-coded feedback for all actions via Sonner
 - 🌊 **Framer Motion** - Smooth, physics-based animations throughout
-- ⚡ **Keyboard Shortcuts** - Fast navigation (Ctrl+B, Ctrl+Y)
-- 🎯 **Floating Dock** - Quick access to important actions
+- ⚡ **Keyboard Shortcuts** - Fast navigation (Ctrl+B for Preferences, Ctrl+Y for Layout)
+- 🎯 **Floating Dock** - Quick access to layout customization controls
 - 🎬 **Welcome Stepper** - Interactive onboarding for new users
-- 🎨 **Landing Page** - Beautiful animated introduction
+- 🎨 **Landing Page** - Beautiful animated introduction with timeline effects
 
 ## 🎬 Demo
 
+<div align="center">
+
 ![App Demo](./public/planpulse.vercel.app_1.png)
 ![Features](./public/planpulse.vercel.app_%202.png)
+
+</div>
 
 ## 🚀 Quick Start
 
@@ -124,7 +129,6 @@ PlanPulse/
 │   │   │   ├── floating-dock.jsx        # Dock navigation
 │   │   │   ├── smooth-cursor.jsx        # Custom cursor
 │   │   │   ├── confetti.jsx             # Celebration effects
-│   │   │   ├── in-view.jsx              # Scroll animations
 │   │   │   ├── sparkles-text.jsx        # Animated text
 │   │   │   └── ... (40+ components)
 │   │   ├── TodoList.jsx                 # Main todo container with DnD
@@ -135,9 +139,9 @@ PlanPulse/
 │   │   ├── Preferences.jsx              # Comprehensive settings panel
 │   │   ├── DropDownMenuLabo.jsx         # Main dropdown menu
 │   │   ├── AlertConfirm.jsx             # Confirmation dialogs
-│   │   ├── CodeBlockDemo.jsx            # Code display for export
 │   │   └── PreferencesItems/
-│   │       └── backgroundAccordion.jsx  # Background carousel
+│   │       ├── backgroundAccordion.jsx  # Background carousel
+│   │       └── fontAccordion.jsx        # Font selection
 │   ├── landingPage/                     # Landing page components
 │   │   ├── indexlanding.jsx             # Main landing page
 │   │   ├── button.jsx                   # Animated CTA button
@@ -146,7 +150,6 @@ PlanPulse/
 │   │   └── utils.js                     # Helper functions (cn)
 │   ├── App.jsx                          # Root with Preferences context
 │   ├── Content.jsx                      # Router wrapper
-│   ├── LandingPage.jsx                  # Alternative landing (deprecated)
 │   ├── Stipper.jsx                      # Welcome stepper/onboarding
 │   ├── ImportDataSection.jsx            # Import functionality
 │   ├── ToastContext.jsx                 # Toast notifications context
@@ -154,13 +157,10 @@ PlanPulse/
 │   └── index.css                        # Global styles + CSS variables
 ├── public/
 │   ├── backgrounds/                     # Background pattern images
-│   ├── planpulse.vercel.app_*.png      # Demo screenshots
-│   └── logo.png
-├── index.html
+│   └── *.png                            # Demo screenshots
 ├── package.json
 ├── vite.config.js
 ├── tailwind.config.js
-├── components.json                      # shadcn/ui config
 └── README.md
 ```
 
@@ -174,6 +174,7 @@ The app uses **React Context API** for comprehensive state management:
 // Preferences Context - Theme, layout, and UI settings
 PreferencesContext = {
   appVersion: "3.0.0",
+  font: { id, weight },
   corners: 1.5,
   background: { active, id, path },
   customizeLayout: [
@@ -250,40 +251,6 @@ interface Theme {
 }
 ```
 
-### Component Hierarchy
-
-```
-App (PreferencesContext Provider)
-├── ToastContext Provider
-│   └── Toaster
-├── LandingPage (First-time visitors, route: /)
-└── Content (route: /todos)
-    ├── SmoothCursor (Optional)
-    ├── Background Text Overlay
-    ├── DndContext (Main drag system)
-    │   ├── Widget Sections (Calendar/Clock)
-    │   │   └── SortableContext (Items Mode)
-    │   │       ├── GlobalCalendar
-    │   │       │   ├── LiveCalendar
-    │   │       │   └── react-day-picker Calendar
-    │   │       └── LiveClockDetailed
-    │   └── TodoList Section
-    │       ├── Input (Add new todo)
-    │       ├── DndContext (Todo items)
-    │       │   └── SortableContext
-    │       │       └── List[] (Draggable todos)
-    │       │           ├── ContextMenu
-    │       │           ├── Checkbox (Animated)
-    │       │           ├── Edit/Delete buttons
-    │       │           └── Mask toggle
-    │       └── DropdownMenuLabo
-    │           ├── Preferences Dialog
-    │           ├── Import/Export Dialogs
-    │           └── AlertConfirm
-    ├── FloatingDock (Layout customization mode)
-    └── Stipper (Welcome stepper)
-```
-
 ## 💾 Data Persistence
 
 ### localStorage Keys
@@ -292,40 +259,13 @@ App (PreferencesContext Provider)
 // 1. Todos Data
 localStorage.key: 'todos'
 Format: Array<Todo>
-[
-  {
-    "id": 1,
-    "content": "Learn React",
-    "modeEdit": false,
-    "check": false,
-    "mask": false
-  }
-]
 
 // 2. Preferences Data
 localStorage.key: 'Preferences'
 Format: PreferencesObject
-{
-  "appVersion": "3.0.0",
-  "corners": 1.5,
-  "background": { "active": false, "id": 0, "path": "" },
-  "customizeLayout": [
-    [{ "id": 0, "type": "calendar" }, { "id": 1, "type": "clock" }],
-    [{ "id": 2, "type": "todoList" }]
-  ],
-  "general": { "hideTexts": false, "opacityTexts": 100 },
-  "cursorType": "smooth",
-  "theme_name": "blue",
-  "buttons": {
-    "buttonDelete": { "active": false },
-    "buttonEdit": { "active": true }
-  }
-}
 
 // 3. Onboarding State
 localStorage.key: 'hasVisited'
-Format: boolean
-
 localStorage.key: 'hasStarted'
 Format: boolean
 ```
@@ -341,19 +281,7 @@ Format: boolean
 
 ### Built-in Themes
 
-The app includes **9** carefully crafted color schemes:
-
-| Theme | Background | Text | Button |
-|-------|-----------|------|--------|
-| 🔵 **Blue** | #90b5dc | #0c2646 | #4f83f8 |
-| 🔴 **Red** | #dc9090 | #460c0c | #f84f4f |
-| 🟡 **Yellow** | #e6dc90 | #46400c | #f8e14f |
-| 🟢 **Green** | #90dca4 | #0c4620 | #4ff86a |
-| 🟣 **Purple** | #b890dc | #2a0c46 | #9b4ff8 |
-| 🟠 **Orange** | #f2b38a | #4a2308 | #ff8c42 |
-| 🔷 **Teal** | #8adcd3 | #0c3d36 | #4ff8d4 |
-| 🌸 **Pink** | #f0a9c3 | #460c2b | #f84f93 |
-| ⚫ **Gray** | #d1d1d1 | #2f2f2f | #a0a0a0 |
+The app includes **9** carefully crafted color schemes with customizable CSS variables.
 
 ### Background Patterns
 
@@ -377,47 +305,13 @@ Customize the theme by modifying CSS variables in `src/index.css`:
   --color-background: #90b5dc;
   --color-text: #0c2646;
   --color-button: #4f83f8;
-  --color-primary-light: rgba(79, 131, 248, 0.2);
   --border-radius: 1.5rem;
-  --background-name: url('');
-}
-```
-
-### Glassmorphism Effect
-
-```css
-.glass {
-  backdrop-filter: blur(20px);
-  background: rgba(255, 255, 255, 0.3);
-  border: 3px solid rgba(255, 255, 255, 0.237);
-  box-shadow:
-    0 8px 20px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  --font-family: 'Poppins', sans-serif;
+  --font-weight: 500;
 }
 ```
 
 ## 🔧 Tech Stack
-
-<table>
-<tr>
-<td align="center" width="96">
-<img src="https://skillicons.dev/icons?i=react" width="48" height="48" alt="React" />
-<br>React 19
-</td>
-<td align="center" width="96">
-<img src="https://skillicons.dev/icons?i=vite" width="48" height="48" alt="Vite" />
-<br>Vite 7
-</td>
-<td align="center" width="96">
-<img src="https://skillicons.dev/icons?i=tailwind" width="48" height="48" alt="Tailwind" />
-<br>Tailwind 4
-</td>
-<td align="center" width="96">
-<img src="https://skillicons.dev/icons?i=styledcomponents" width="48" height="48" alt="styled-components" />
-<br>styled-components
-</td>
-</tr>
-</table>
 
 ### Core Dependencies
 
@@ -450,42 +344,15 @@ Customize the theme by modifying CSS variables in `src/index.css`:
 | react-day-picker | 9.11.1 | Calendar component |
 | canvas-confetti | 1.9.4 | Celebration effects |
 
-### Utilities
+## ⌨️ Keyboard Shortcuts
 
-- **date-fns** - Date manipulation and formatting
-- **clsx** & **tailwind-merge** - Class name utilities
-- **class-variance-authority** - Component variants
-- **next-themes** - Theme management
-- **react-use** - React hooks collection
-
-## 📜 Available Scripts
-
-```bash
-# Development
-npm run dev      # Start dev server at http://localhost:5173
-                # Hot Module Replacement (HMR) enabled
-
-# Production
-npm run build    # Build optimized production bundle
-                # Output: dist/ folder
-
-npm run preview  # Preview production build locally
-                # Serves the dist/ folder
-
-# Code Quality
-npm run lint     # Run ESLint checks
-                # Fixes auto-fixable issues
-```
-
-## ⚡ Performance Optimizations
-
-- **⚡ Fast Refresh** - Instant feedback with React Fast Refresh
-- **📦 Code Splitting** - Route-based lazy loading
-- **🌳 Tree Shaking** - Removes unused code
-- **🗜️ Minification** - Compressed output
-- **💾 Memoization** - useMemo for expensive operations
-- **🎯 Optimized Renders** - Strategic use of React.memo
-- **📊 Bundle Size** - ~200KB gzipped (with all features)
+| Shortcut | Action |
+|----------|--------|
+| `Ctrl + B` | Open/Close Preferences |
+| `Ctrl + Y` | Toggle Layout Customization Mode |
+| `Enter` | Add new todo (when input focused) |
+| `Escape` | Cancel edit mode |
+| `Right Click` | Context menu on todo items |
 
 ## 🌐 Browser Support
 
@@ -498,152 +365,7 @@ npm run lint     # Run ESLint checks
 | Mobile Safari | iOS 14+ | ✅ Fully Supported |
 | Chrome Mobile | Latest | ✅ Fully Supported |
 
-**Requirements:**
-- ES6+ support
-- localStorage enabled
-- JavaScript enabled
-
-## ⌨️ Keyboard Shortcuts
-
-| Shortcut | Action |
-|----------|--------|
-| `Ctrl + B` | Open/Close Preferences |
-| `Ctrl + Y` | Toggle Layout Customization Mode |
-| `Enter` | Add new todo (when input focused) |
-| `Escape` | Cancel edit mode |
-| `Right Click` | Context menu on todo items |
-
-## 🎯 Key Features Explained
-
-### 1. Advanced Drag & Drop
-
-```javascript
-// Two distinct modes:
-// Items Mode: Reorder widgets within sections
-// Sections Mode: Swap entire sections (left/right)
-
-- Smooth animations during drag
-- Visual feedback (scale, opacity)
-- Auto-scroll near edges
-- Keyboard accessible
-- State persistence
-```
-
-### 2. Comprehensive Preferences
-
-```javascript
-// Centralized settings hub:
-- Button visibility toggles
-- 9 theme presets
-- 10+ background patterns
-- Custom background upload
-- Cursor style selection
-- Text opacity control
-- Corner radius adjustment
-- All settings persist in localStorage
-```
-
-### 3. Import/Export System
-
-```javascript
-Export:
-- Downloads JSON file with all todos
-- Includes metadata and timestamps
-- Filename: todos-export-{timestamp}.json
-
-Import:
-- Validates JSON structure
-- Merges or replaces existing data
-- Error handling with toast notifications
-- Loading states for UX
-```
-
-### 4. Task Masking
-
-```javascript
-// Privacy feature:
-- Right-click context menu to mask/unmask
-- Applies blur filter to sensitive tasks
-- Visual indicator when masked
-- State persists in localStorage
-```
-
-### 5. Widget System
-
-```javascript
-// Flexible and draggable:
-- Calendar: Month/year dropdown, date selection
-- Clock: Real-time with AM/PM
-- Customizable positions
-- Drag to reorder
-- Section-based layout
-```
-
-### 6. Welcome Experience
-
-```javascript
-// First-time user onboarding:
-- 3-step interactive stepper
-- Feature explanations
-- Import option for existing data
-- Beautiful animations
-- Skippable with localStorage flag
-```
-
-## 🎨 Customization Guide
-
-### Changing Themes
-
-1. Click **More Options** (⋯) → **Preferences**
-2. Navigate to **Theme Preferences**
-3. Select from 9 color schemes
-4. Click **Reset** to restore default theme
-5. Changes apply instantly
-
-### Setting Custom Backgrounds
-
-1. Open **Preferences** → **Background**
-2. Browse carousel of patterns
-3. Click **Upload** for custom image
-4. Toggle **Active** to apply
-5. Supports JPG, PNG, GIF, WebP
-
-### Customizing Layout
-
-1. Enable **Customize Layout** from dropdown menu (or press `Ctrl+Y`)
-2. Choose mode:
-   - **Items Mode**: Reorder calendar and clock
-   - **Sections Mode**: Swap entire sections
-3. Drag widgets to desired positions
-4. Click **Cancel** or press `Ctrl+Y` again to save
-
-### Adjusting UI Density
-
-1. Open **Preferences** → **General**
-2. Toggle **Hide Texts** for minimal UI
-3. Adjust **Opacity** slider (0-100%)
-4. Modify **Corner Radius** (0-3rem)
-
 ## 🛣️ Roadmap
-
-### ✅ Completed Features (v3.0.0)
-
-- ✅ Drag & Drop (tasks + widgets)
-- ✅ 9 theme system
-- ✅ 10+ background patterns
-- ✅ Import/Export (JSON)
-- ✅ Widget system (Calendar, Clock)
-- ✅ Task masking
-- ✅ Customizable cursor
-- ✅ Toast notifications
-- ✅ Glassmorphism design
-- ✅ Responsive layout
-- ✅ Onboarding stepper
-- ✅ Landing page
-- ✅ Context menus
-- ✅ Keyboard shortcuts
-- ✅ Button customization
-- ✅ Corner radius control
 
 ### 🚧 In Development (v3.1.0)
 
@@ -662,65 +384,10 @@ Import:
 - [ ] 👥 **Collaboration** - Share lists with others
 - [ ] ☁️ **Cloud Sync** - Multi-device support
 - [ ] 📱 **PWA** - Installable mobile app
-- [ ] ⌨️ **Vim Keybindings** - Alternative navigation
-- [ ] 🎨 **Theme Builder** - Create custom color schemes
-- [ ] 🔐 **Encryption** - End-to-end encrypted storage
-- [ ] 🗓️ **Recurring Tasks** - Daily/weekly/monthly repeats
-- [ ] 📎 **Attachments** - Link files to tasks
-- [ ] 🔊 **Voice Input** - Speech-to-text for tasks
-
-## 🐛 Known Issues
-
-No critical bugs reported. Minor improvements:
-
-- [ ] Safari: Glassmorphism backdrop-filter performance
-- [ ] Mobile: Drag handle visibility on touch devices
-- [ ] Large datasets (1000+ todos): Consider virtual scrolling
-
-Found a bug? [Create an issue](https://github.com/aarab-abderrahmane/PlanPulse/issues/new) with:
-- Clear description
-- Steps to reproduce
-- Expected vs actual behavior
-- Browser and OS info
-- Screenshots/video if applicable
-
-## 🤝 Contributing
-
-Contributions are welcome! Here's how:
-
-1. **Fork** the repository
-2. **Create** a feature branch (`git checkout -b feature/AmazingFeature`)
-3. **Commit** your changes (`git commit -m 'Add AmazingFeature'`)
-4. **Push** to the branch (`git push origin feature/AmazingFeature`)
-5. **Open** a Pull Request
-
-### Development Guidelines
-
-- Follow existing code style
-- Use meaningful commit messages (Conventional Commits)
-- Add comments for complex logic
-- Test on multiple browsers
-- Update documentation
-- Keep PRs focused and small
-
-### Code Style
-
-- React: Functional components with hooks
-- Naming: camelCase for functions, PascalCase for components
-- CSS: Tailwind utility classes + CSS variables
-- Comments: JSDoc for functions, inline for complex logic
 
 ## 📄 License
 
 This project is licensed under the **GNU General Public License v3.0**.
-
-- ✅ Commercial use allowed
-- ✅ Modification allowed
-- ✅ Distribution allowed
-- ✅ Private use allowed
-- ⚠️ Must disclose source
-- ⚠️ License and copyright notice required
-- ⚠️ Same license for derivatives
 
 See [LICENSE](./LICENSE) for full details.
 
@@ -732,17 +399,6 @@ See [LICENSE](./LICENSE) for full details.
 - 💻 GitHub: [@aarab-abderrahmane](https://github.com/aarab-abderrahmane)
 - 💼 LinkedIn: [Aarab Abderrahmane](https://www.linkedin.com/in/aarab-abderrahmane-2b9509336/)
 - 📧 Email: aarabderrahman@gmail.com
-
-## 💖 Support the Project
-
-If you find PlanPulse helpful:
-
-- ⭐ **Star this repository** - Show your appreciation
-- 🐛 **Report bugs** - Help improve stability
-- 💡 **Suggest features** - Share your ideas
-- 🔀 **Submit PRs** - Contribute code
-- 📢 **Share** - Tell others about PlanPulse
-- ☕ **Buy me a coffee** - Support development
 
 ## 🙏 Acknowledgments
 
@@ -757,47 +413,6 @@ If you find PlanPulse helpful:
 - [Framer Motion](https://www.framer.com/motion/) - Powerful animations
 - [Sonner](https://sonner.emilkowal.ski/) - Toast notifications
 - [React Day Picker](https://react-day-picker.js.org/) - Calendar component
-
-### Inspiration
-
-- [Todoist](https://todoist.com/) - Task management UX
-- [Things 3](https://culturedcode.com/things/) - Beautiful design
-- [Linear](https://linear.app/) - Smooth animations
-- [Raycast](https://www.raycast.com/) - Command palette patterns
-
-Special thanks to the open-source community for inspiration and tools!
-
-## 📊 Project Stats
-
-- **Languages:** JavaScript, CSS, HTML
-- **Framework:** React 19
-- **Build Tool:** Vite 7
-- **Dependencies:** 50+ packages
-- **Components:** 60+ reusable components
-- **Lines of Code:** 7,000+
-- **Bundle Size:** ~200KB (gzipped)
-- **Development Time:** 3+ months
-- **Last Updated:** January 2025
-
-## 🔗 Quick Links
-
-- 🌐 [Live Demo](https://planpulse.vercel.app)
-- 📚 [Documentation](https://github.com/aarab-abderrahmane/PlanPulse/wiki)
-- 🐛 [Issue Tracker](https://github.com/aarab-abderrahmane/PlanPulse/issues)
-- 💬 [Discussions](https://github.com/aarab-abderrahmane/PlanPulse/discussions)
-- 📝 [Changelog](https://github.com/aarab-abderrahmane/PlanPulse/releases)
-- 🎨 [Figma Designs](https://figma.com/...)
-
-## 📱 Screenshots
-
-### Desktop View
-![Desktop](./public/planpulse.vercel.app_1.png)
-
-### Mobile View
-![Mobile](./public/planpulse.vercel.app_3.png)
-
-### Preferences Panel
-![Preferences](./public/planpulse.vercel.app_%202.png)
 
 ---
 
