@@ -42,9 +42,11 @@ import { useState } from "react";
 //Carousel 
 import {BackgrounAccordion} from './PreferencesItems/backgroundAccordion'
 
-
 // animated tooltip
 import { AnimatedTooltip } from "../components/ui/animated-tooltip";
+
+// font accordion 
+import {FontAccordion} from './PreferencesItems/fontAccordion'
 
 export function Preferences({ showPreferences, setShowPreferences }) {
   const {
@@ -272,11 +274,20 @@ export function Preferences({ showPreferences, setShowPreferences }) {
                 </AccordionContent>
               </AccordionItem>
 
-              <AccordionItem value="item-4">
+                <AccordionItem value="item-4" >
+                <AccordionTrigger>
+                  Button Visibility Preferences
+                </AccordionTrigger>
+                <AccordionContent className="flex flex-col gap-4 text-balance">
+                        <FontAccordion/>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="item-5">
                 <AccordionTrigger>General</AccordionTrigger>
                 <AccordionContent className="flex flex-col gap-4 text-balance">
 
-                  <div className="h-[200px] flex flex-col gap-6 ">
+                  <div className="h-[200px] flex flex-col gap-2 ">
 
                     <Collapsible
                       open={collapsibleState.text}
@@ -298,7 +309,11 @@ export function Preferences({ showPreferences, setShowPreferences }) {
                           </Button>
                         </CollapsibleTrigger>
                       </div>
-                      <div className=" px-4 py-2  text-sm">
+                    
+
+
+                      <CollapsibleContent className="flex flex-col gap-2 w-full ">
+                        <div className=" px-4 py-2  text-sm">
                         <div className="flex items-center space-x-2">
                           <Switch
                             id="airplane-mode"
@@ -318,12 +333,10 @@ export function Preferences({ showPreferences, setShowPreferences }) {
                         </div>
                       </div>
 
-
-                      <CollapsibleContent className="flex flex-col gap-2 w-full ">
                         <div className=" px-4 py-2  text-sm">
                           {!PreferencesSettings.general.hideTexts && (
                             <div className="flex items-center gap-4">
-                              <p>Opacity (Text) : </p>
+                              <p>Opacity  </p>
                               <Slider
                                 defaultValue={[
                                   PreferencesSettings.general.opacityTexts,

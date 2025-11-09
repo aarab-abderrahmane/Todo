@@ -137,7 +137,7 @@ export function ImportDataSection({setShowUploadData}) {
 
 
   return (
-    <div className="flex flex-col items-center justify-center h-full bg-gray-300">
+    <div className="flex flex-col items-center justify-center h-full backdrop-blur-md  bg-white/50">
       <Empty>
       <EmptyHeader>
         <EmptyMedia variant="icon">

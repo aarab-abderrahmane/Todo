@@ -7,15 +7,20 @@
 :root {
   --color-primary: #460c0c;
   --color-background:#C6C7DC;
-
   --color-secondary: #e0e1f1;
   --color-text: #645D7E;
   --color-placeholder : #645D7E;
   --color-button : #C6C7DC;
   --color-primary-light:#645d7e5e;
-  --border-radius : 1.5rem;
 
+
+  --border-radius : 1.5rem;
   --background-name: url('');
+  --font-family: 'Poppins', sans-serif;
+  --font-weight : 500;
+
+
+
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -62,7 +67,10 @@ body.addBackground{
 }
 
 *{
-    font-family: "Poppins", sans-serif;
+    font-family: var(--font-family);
+    font-weight: var(--font-weight);
+    box-sizing: border-box;
+
 }
 
 /* Customize selected text */
@@ -226,12 +234,9 @@ body.addBackground{
   min-height: 100vh;
   /* display: flex;
   align-items: center; */
-}
-
-*{
-  box-sizing: border-box;
 
 }
+
 
 /* default cursor : */
 body.default-cursor *{

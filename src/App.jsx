@@ -22,7 +22,7 @@ import { FloatingDock } from "./components/ui/floating-dock";
 import { Preferences } from "./components/Preferences";
 import { Layout } from "lucide-react";
 
-
+import {useFontList}  from './components/PreferencesItems/fontAccordion'
 
 function App() {
 
@@ -30,6 +30,7 @@ function App() {
 
   const defaultPreferences = useMemo(() => ({
       appVersion: "3.0.0",
+      font: {id:"font-8",weight:500},
       corners:1.5,
       background:{active:false,id:0,path:""},
       customizeLayout:  [
@@ -109,8 +110,12 @@ function App() {
       :  defaultPreferences
   })
 
+
+  // for drag & drop 
   const [Layout, setLayout] = useState(PreferencesSettings.customizeLayout);
   const [dragMode,setDragMode] = useState({active:false , mode : "items"})
+
+
 
 
   useEffect(()=>{
@@ -154,12 +159,35 @@ function App() {
   };
   
 
+  const fonts = useFontList();
+  const applyFont = ()=>{
+      
+      if(PreferencesSettings.font){
+
+          const fontName = fonts.find(ft=>ft.id===PreferencesSettings.font.id).value
+
+          document.documentElement.style.setProperty('--font-family',fontName)
+          document.documentElement.style.setProperty('--font-weight',PreferencesSettings.font.weight)
+
+      }
+  }
+
+  useEffect(()=>{
+
+    applyFont()
+
+  },[PreferencesSettings.font])
+
+
+
   useEffect(()=>{
       applyTheme(PreferencesSettings.theme_name)
       ToggleCursor(PreferencesSettings.cursorType)
       applyBackground(PreferencesSettings.background.path)
       
   },[])
+
+
 
   useEffect(() => {
       ApplyCorners()
