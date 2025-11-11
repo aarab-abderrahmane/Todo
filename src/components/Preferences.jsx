@@ -181,7 +181,6 @@ export function Preferences({ showPreferences, setShowPreferences }) {
                   <div className="flex justify-center  items-center gap-6 flex-col lg:flex-row  ">
 
                     <div className="flex flex-wrap justify-center sm:flex-nowrap ">
-
                     {Object.keys(PreferencesSettings.themes)?.map(
                       (key, index) => {
 
