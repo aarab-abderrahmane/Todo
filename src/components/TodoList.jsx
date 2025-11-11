@@ -102,7 +102,6 @@ export  function TodoList() {
 
 
   const handleSave = (id, newValue) => {
-    console.log(newValue);
      setTodos(
       todos.map((td) => {
         if (td.id === id) {

@@ -38,12 +38,11 @@ export function FontAccordion() {
   const {PreferencesSettings,setPreferencesSettings} = useContext(PreferencesContext)
   const FontList = useFontList()
 
-  const findFontName = (id)=>{
+  const findFontName = (id) => {
+    const font = FontList.find(ft => ft.id === id);
+    return font?.name || "Unknown Font";
+  };
 
-        const tragetName = FontList.find(ft=>ft.id===id).name
-        return tragetName
-
-  }
 
   const fontWeights = [200, 300, 400, 500, 600, 700];
 
@@ -63,7 +62,7 @@ export function FontAccordion() {
             <div className="flex px-3 h-full flex-1 items-center  bg-white/50">
               <div className="flex flex-col gap-2">
                 <h1 className="font-bold">Customizing Font</h1>
-                <p>{findFontName(PreferencesSettings.font.id)}</p>
+                <p>{findFontName(PreferencesSettings?.font?.id)}</p>
               </div>
             </div>
           </div>
@@ -73,7 +72,7 @@ export function FontAccordion() {
             <h1>Font Family</h1>
             <Select onValueChange={(value)=>setPreferencesSettings(prev=>({...prev,font:{...prev.font,id:value}}))}>
               <SelectTrigger className="w-[180px] border-black">
-                <SelectValue placeholder={findFontName(PreferencesSettings.font.id)} />
+                <SelectValue placeholder={findFontName(PreferencesSettings?.font?.id)} />
               </SelectTrigger>
               <SelectContent className="bg-white/50 backdrop-blur-md ">
                 <SelectGroup>
