@@ -17,6 +17,8 @@ function Index() {
   const navigate = useNavigate()
 
   function handleStart(){
+      localStorage.setItem('hasVisited',JSON.stringify(true))
+
       navigate('/todos')
 
   }

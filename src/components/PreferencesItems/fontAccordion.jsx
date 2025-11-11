@@ -62,7 +62,7 @@ export function FontAccordion() {
             </Button>
             <div className="flex px-3 h-full flex-1 items-center  bg-white/50">
               <div className="flex flex-col gap-2">
-                <h1 className="font-bold">Customizing Typography</h1>
+                <h1 className="font-bold">Customizing Font</h1>
                 <p>{findFontName(PreferencesSettings.font.id)}</p>
               </div>
             </div>
@@ -82,7 +82,7 @@ export function FontAccordion() {
                         <SelectItem 
                         key={ft.id}
                         value={ft.id} 
-                        className={`${PreferencesSettings.font.id===ft.id ? "bg-[var(--color-background)]" : ""}`} >{ft.name}</SelectItem>
+                        className={`${PreferencesSettings.font.id===ft.id ? "bg-[var(--color-background)] " : ""}`} >{ft.name}</SelectItem>
                   ))}
 
                 </SelectGroup>
@@ -101,12 +101,11 @@ export function FontAccordion() {
                 key={i}
                 onClick={()=>setPreferencesSettings(prev=>({...prev,font:{...prev.font,weight:num}}))}
                 style={{ fontWeight: num }}
-                className={`${PreferencesSettings.font.weight===num ? "bg-[var(--color-background)]" : ""} rounded-[min(var(--border-radius),1rem)] flex justify-center items-center   border  border-black`}>
+                className={`${PreferencesSettings.font.weight===num ? "bg-gradient-to-r from-[var(--color-button)] via-[var(--color-background)]" : ""} rounded-[min(var(--border-radius),1rem)] flex justify-center items-center    border border-dashed  border-[var(--color-text)]`}>
                     Ag
                 </div>
 
         ))}
-
 
       
       </div>

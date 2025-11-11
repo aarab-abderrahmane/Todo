@@ -54,7 +54,7 @@ export function Preferences({ showPreferences, setShowPreferences }) {
     setPreferencesSettings,
     applyTheme,
     ToggleCursor,
-    ApplyCorners
+    defaultPreferences
   } = useContext(PreferencesContext);
 
   let ButtonsState = PreferencesSettings.buttons;
@@ -276,7 +276,7 @@ export function Preferences({ showPreferences, setShowPreferences }) {
 
                 <AccordionItem value="item-4" >
                 <AccordionTrigger>
-                  Button Visibility Preferences
+                  Custome Font
                 </AccordionTrigger>
                 <AccordionContent className="flex flex-col gap-4 text-balance">
                         <FontAccordion/>
@@ -426,7 +426,9 @@ export function Preferences({ showPreferences, setShowPreferences }) {
               variant="danger"
               size="default"
               onClick={() => {
-                setShowPreferences(false);
+                setPreferencesSettings(defaultPreferences)
+                location.reload()
+
               }}
             >
               Reset ALL

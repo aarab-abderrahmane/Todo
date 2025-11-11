@@ -19,8 +19,6 @@ import { CSS } from '@dnd-kit/utilities'
 
 // DOck 
 import { FloatingDock } from "./components/ui/floating-dock";
-import { Preferences } from "./components/Preferences";
-import { Layout } from "lucide-react";
 
 import {useFontList}  from './components/PreferencesItems/fontAccordion'
 
@@ -327,7 +325,16 @@ function App() {
 
   return (
 
-    <PreferencesContext.Provider value={{PreferencesSettings,setPreferencesSettings,applyTheme,ToggleCursor,applyBackground,ApplyCorners,setDragMode,dragMode}}>
+    <PreferencesContext.Provider value={
+      {PreferencesSettings,
+      defaultPreferences,
+      setPreferencesSettings,
+      applyTheme,
+      ToggleCursor,
+      applyBackground,
+      ApplyCorners,
+      setDragMode,
+      dragMode}}>
 
       {PreferencesSettings.cursorType==="smooth" ? <SmoothCursor  /> : ""}
       

@@ -29,7 +29,7 @@ function RouterHandler() {
 
   useEffect(() => {
     const hasVisited = JSON.parse(localStorage.getItem('hasVisited'));
-    if (hasVisited &&  location.pathname === '/' ) {
+    if (hasVisited && hasVisited!==null && hasVisited!== undefined &&  location.pathname === '/' ) {
       navigate('/todos');
     }
   }, [navigate,location.pathname]);
