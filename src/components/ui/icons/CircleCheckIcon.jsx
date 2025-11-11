@@ -1,4 +1,7 @@
-"use client";;
+"use client";
+import React  from "react";
+import PropTypes from "prop-types";
+
 import { cn } from "../../../lib/utils";
 import { motion, useAnimation, useReducedMotion } from "motion/react";
 import { forwardRef, useCallback, useImperativeHandle, useRef } from "react";
@@ -117,3 +120,12 @@ const CircleCheckIcon = forwardRef((
 
 CircleCheckIcon.displayName = "CircleCheckIcon";
 export { CircleCheckIcon };
+
+
+CircleCheckIcon.propTypes = {
+  onMouseEnter: PropTypes.func,
+  onMouseLeave: PropTypes.func,
+  className: PropTypes.string,
+  size: PropTypes.number,
+  duration: PropTypes.number,
+};

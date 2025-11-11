@@ -1,4 +1,6 @@
 import * as React from "react"
+import PropTypes from "prop-types";
+
 import * as ContextMenuPrimitive from "@radix-ui/react-context-menu"
 import { CheckIcon, ChevronRightIcon, CircleIcon } from "lucide-react"
 
@@ -61,6 +63,12 @@ function ContextMenuSubTrigger({
   );
 }
 
+ContextMenuSubTrigger.propTypes = {
+    className : PropTypes.string , 
+    inset : PropTypes.string , 
+    children : PropTypes.node
+}
+
 function ContextMenuSubContent({
   className,
   ...props
@@ -74,6 +82,10 @@ function ContextMenuSubContent({
       )}
       {...props} />
   );
+}
+
+ContextMenuSubContent.propTypes = {
+  className : PropTypes.string
 }
 
 function ContextMenuContent({
@@ -93,6 +105,10 @@ function ContextMenuContent({
   );
 }
 
+ContextMenuContent.propTypes = {
+  className : PropTypes.string
+}
+
 function ContextMenuItem({
   className,
   inset,
@@ -110,6 +126,12 @@ function ContextMenuItem({
       )}
       {...props} />
   );
+}
+
+ContextMenuItem.propTypes = {
+  className : PropTypes.string,
+  inset : PropTypes.string,
+  variant : PropTypes.string
 }
 
 function ContextMenuCheckboxItem({
@@ -138,6 +160,13 @@ function ContextMenuCheckboxItem({
   );
 }
 
+
+ContextMenuCheckboxItem.propTypes = {
+  className : PropTypes.string,
+  children : PropTypes.node , 
+  checked : PropTypes.bool
+}
+
 function ContextMenuRadioItem({
   className,
   children,
@@ -162,6 +191,11 @@ function ContextMenuRadioItem({
   );
 }
 
+ContextMenuRadioItem.propTypes = {
+  className : PropTypes.string,
+  children : PropTypes.node
+}
+
 function ContextMenuLabel({
   className,
   inset,
@@ -179,6 +213,11 @@ function ContextMenuLabel({
   );
 }
 
+ContextMenuLabel.propTypes = {
+  className : PropTypes.string,
+  inset: PropTypes.string
+}
+
 function ContextMenuSeparator({
   className,
   ...props
@@ -191,6 +230,10 @@ function ContextMenuSeparator({
   );
 }
 
+ContextMenuSeparator.propTypes = {
+  className : PropTypes.string
+}
+
 function ContextMenuShortcut({
   className,
   ...props
@@ -201,6 +244,10 @@ function ContextMenuShortcut({
       className={cn("text-muted-foreground ml-auto text-xs tracking-widest", className)}
       {...props} />
   );
+}
+
+ContextMenuShortcut.propTypes = {
+  className : PropTypes.string
 }
 
 export {

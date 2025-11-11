@@ -1,3 +1,4 @@
+import React from 'react';
 import { BrowserRouter, Routes, Route ,useNavigate,useLocation } from 'react-router';
 import App from './App.jsx';
 import Index from './landingPage/indexlanding.jsx';

@@ -1,3 +1,7 @@
+import React from 'react'
+import PropTypes from "prop-types";
+
+
 import { Button } from "./components/ui/button";
 import {
   Dialog,
@@ -67,6 +71,10 @@ function TitleEffect({children}){
   )
 }
 
+TitleEffect.propTypes = {
+  children  : PropTypes.node
+}
+
 function Scene1({ dispatch,scene }) {
   return (
     <div className="w-full h-full flex flex-col-reverse md:flex-row">
@@ -112,6 +120,12 @@ function Scene1({ dispatch,scene }) {
   );
 }
 
+Scene1.propTypes = {
+  dispatch  : PropTypes.func, 
+  scene : PropTypes.string
+}
+
+
 function Scene2({ dispatch ,scene}) {
   return (
     <div className="w-full h-full flex flex-col-reverse md:flex-row">
@@ -154,6 +168,10 @@ function Scene2({ dispatch ,scene}) {
   );
 }
 
+Scene2.propTypes = {
+  dispatch  : PropTypes.func, 
+  scene : PropTypes.string
+}
 
 import {todosContext} from './components/TodoList'
 import { useContext , useState ,useEffect} from "react";
@@ -239,12 +257,12 @@ function Scene3({ setShowStepper }) {
       <Empty>
       <EmptyHeader>
         <EmptyMedia variant="icon">
-          <i class="bi bi-filetype-json text-3xl  text-[var(--color-text)] bg-[var(--color-background)] rounded-xl p-2 px-3 "></i>
+          <i className="bi bi-filetype-json text-3xl  text-[var(--color-text)] bg-[var(--color-background)] rounded-xl p-2 px-3 "></i>
         </EmptyMedia>
         <EmptyTitle>Restore Your Lists or Start Fresh</EmptyTitle>
         <EmptyDescription>
            <TextEffect per='char' preset='fade' speedReveal={2} >
-          No previous to-do lists were found in your account. You can start organizing your tasks by creating your first list, or if you have a saved backup, you can easily restore all your old tasks and lists using the "Import List" option.
+          {"No previous to-do lists were found in your account. You can start organizing your tasks by creating your first list, or if you have a saved backup, you can easily restore all your old tasks and lists using the 'Import List'  option."}
            </TextEffect>
         </EmptyDescription>
       </EmptyHeader>
@@ -296,6 +314,9 @@ function Scene3({ setShowStepper }) {
   );
 }
 
+Scene3.propTypes = {
+  setShowStepper : PropTypes.bool
+}
 // --- Main :
 
 
@@ -326,4 +347,9 @@ export default function Stepper({ showStepper, setShowStepper }) {
       </DialogContent>
     </Dialog>
   );
+}
+
+Stepper.propTypes = {
+  showStepper : PropTypes.bool ,
+  setShowStepper : PropTypes.func
 }

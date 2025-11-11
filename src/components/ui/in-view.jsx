@@ -1,4 +1,7 @@
 'use client';;
+import React from 'react';
+import PropTypes from "prop-types";
+
 import { useRef, useState } from 'react';
 import { motion, useInView } from 'motion/react';
 
@@ -48,3 +51,13 @@ export function InView({
   );
   
 }
+
+
+InView.propTypes = {
+  children: PropTypes.node.isRequired,
+  variants: PropTypes.object,
+  transition: PropTypes.object,
+  viewOptions: PropTypes.object,
+  as: PropTypes.string,
+  once: PropTypes.bool,
+};

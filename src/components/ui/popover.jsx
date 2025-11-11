@@ -1,4 +1,6 @@
 import * as React from "react"
+import PropTypes from "prop-types";
+
 import * as PopoverPrimitive from "@radix-ui/react-popover"
 
 import { cn } from "../../lib/utils"
@@ -35,6 +37,14 @@ function PopoverContent({
     </PopoverPrimitive.Portal>
   );
 }
+
+PopoverContent.propTypes = {
+  className : PropTypes.string ,
+  align : PropTypes.string , 
+  sideOffset : PropTypes.number
+}
+
+
 
 function PopoverAnchor({
   ...props

@@ -1,6 +1,8 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+
 import {
   motion,
   useTransform,
@@ -17,21 +19,21 @@ export const AnimatedTooltip = ({
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const springConfig = { stiffness: 100, damping: 15 };
   const x = useMotionValue(0);
-  const animationFrameRef = useRef(null);
+  // const animationFrameRef = useRef(null);
 
   const rotate = useSpring(useTransform(x, [-100, 100], [-45, 45]), springConfig);
   const translateX = useSpring(useTransform(x, [-100, 100], [-50, 50]), springConfig);
 
-  const handleMouseMove = (event) => {
-    if (animationFrameRef.current) {
-      cancelAnimationFrame(animationFrameRef.current);
-    }
+  // const handleMouseMove = (event) => {
+  //   if (animationFrameRef.current) {
+  //     cancelAnimationFrame(animationFrameRef.current);
+  //   }
 
-    animationFrameRef.current = requestAnimationFrame(() => {
-      const halfWidth = event.target.offsetWidth / 2;
-      x.set(event.nativeEvent.offsetX - halfWidth);
-    });
-  };
+  //   animationFrameRef.current = requestAnimationFrame(() => {
+  //     const halfWidth = event.target.offsetWidth / 2;
+  //     x.set(event.nativeEvent.offsetX - halfWidth);
+  //   });
+  // };
 
   return (
     <>
@@ -96,3 +98,9 @@ export const AnimatedTooltip = ({
     </>
   );
 };
+
+
+AnimatedTooltip.propTypes = {
+   item  : PropTypes.object , 
+   applyTheme : PropTypes.func 
+}

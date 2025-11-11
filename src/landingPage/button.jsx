@@ -1,6 +1,5 @@
 'use client';
 import React, { useState } from 'react';
-import { Github } from 'lucide-react';
 import { Liquid } from '../components/uilayouts/liquid-gradient';
     const COLORS = {
     color1: '#E6F0FF', // very light blue (background)
@@ -55,7 +54,7 @@ const GitHubButton = () => {
           onMouseLeave={() => setIsHovered(false)}>
           <span className="flex items-center justify-center px-2 gap-1 rounded-3xl group-hover:text-yellow-400 text-white text-xl font-semibold tracking-wide whitespace-nowrap cursor-pointer">
             Get Started
-            <i class="bi bi-arrow-right-short text-xl  inline-block group-hover:fill-yellow-400 fill-white  shrink-0" ></i>
+            <i className="bi bi-arrow-right-short text-xl  inline-block group-hover:fill-yellow-400 fill-white  shrink-0" ></i>
 
           </span>
         </button>

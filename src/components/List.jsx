@@ -1,3 +1,7 @@
+import React from 'react'
+import PropTypes from "prop-types";
+
+
 import Checkbox from './Checkbox'
 import {  useState ,useContext} from 'react'
 import {todosContext} from './TodoList'
@@ -16,7 +20,7 @@ const List = ({id,content,modeEdit,check,mask})=>{
 
 
     const {attributes,listeners,setNodeRef,
-        transform,transition
+        transform
         }=useSortable({id})
 
     const style = {
@@ -49,10 +53,10 @@ const List = ({id,content,modeEdit,check,mask})=>{
             <InView>
             <li 
             ref={setNodeRef}    
-            class="glass applyRadius  bg-white/30  flex items-center  overflow-x-hidden  px-4 py-2 h-[60px] overflow-y-hidden group  md:hover:scale-[1.04] " 
+            className="glass applyRadius  bg-white/30  flex items-center  overflow-x-hidden  px-4 py-2 h-[60px] overflow-y-hidden group  md:hover:scale-[1.04] " 
             style={style}   >
-                <i {...attributes} {...listeners} class="bi bi-grip-vertical absolute left-1 group-hover:block hidden text-xl cursor-pointer "></i>
-                <input id={id} class={`
+                <i {...attributes} {...listeners} className="bi bi-grip-vertical absolute left-1 group-hover:block hidden text-xl cursor-pointer "></i>
+                <input id={id} className={`
                     w-[80%]   ms-2 font-medium text-[var(--color-text)] bg-transparent  outline-none decoration-[var(--color-text)] decoration-2 
                     ${mask ? "blurred" : ""}
                     ${check? "line-through" : ""}`} disabled={check || !modeEdit} value={todoContent} onChange={(e)=>setTodoContent(e.target.value)}></input>
@@ -70,7 +74,7 @@ const List = ({id,content,modeEdit,check,mask})=>{
                     </>
                     )}
 
-                    {mask && (<i class="bi bi-eye-slash text-2xl cursor-pointer hidden text-[var(--color-text)] group-hover:block" onClick={()=>MaskTodo(id)}></i>)}
+                    {mask && (<i className="bi bi-eye-slash text-2xl cursor-pointer hidden text-[var(--color-text)] group-hover:block" onClick={()=>MaskTodo(id)}></i>)}
 
                 </div>
                 
@@ -79,6 +83,14 @@ const List = ({id,content,modeEdit,check,mask})=>{
 
     )
 
+}
+
+List.propTypes = {
+    id : PropTypes.number , 
+    content : PropTypes.string , 
+    modeEdit : PropTypes.bool , 
+    check : PropTypes.bool , 
+    mask : PropTypes.bool
 }
 
 export default List 

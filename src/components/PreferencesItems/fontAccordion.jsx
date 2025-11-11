@@ -1,9 +1,9 @@
+import React from 'react';
+
 import { useMemo ,useContext} from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 
 import { Button } from "../ui/button";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
 
 import {
   Select,
@@ -58,7 +58,7 @@ export function FontAccordion() {
               className="bg-[var(--color-background)] h-full border-r border-black w-[40x] "
               style={{ borderRadius: "0px" }}
             >
-              <i class="bi bi-fonts text-xl"></i>
+              <i className="bi bi-fonts text-xl"></i>
             </Button>
             <div className="flex px-3 h-full flex-1 items-center  bg-white/50">
               <div className="flex flex-col gap-2">

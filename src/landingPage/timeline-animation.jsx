@@ -1,5 +1,7 @@
 import { motion, useInView } from "motion/react";
 import React from "react";
+import PropTypes from "prop-types";
+
 
 export const TimelineContent = ({
   children,
@@ -48,4 +50,16 @@ export const TimelineContent = ({
       {children}
     </MotionComponent>
   );
+};
+
+
+
+TimelineContent.propTypes = {
+  children: PropTypes.node,
+  animationNum: PropTypes.number,
+  timelineRef: PropTypes.object.isRequired,
+  className: PropTypes.string,
+  as: PropTypes.string,
+  customVariants: PropTypes.object,
+  once: PropTypes.bool,
 };

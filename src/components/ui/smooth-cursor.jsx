@@ -1,3 +1,6 @@
+import React from 'react'
+import PropTypes from "prop-types";
+
 import { useEffect, useRef, useState } from "react";
 import { motion, useSpring } from "motion/react"
 
@@ -164,7 +167,7 @@ export function SmoothCursor({
         translateX: "-50%",
         translateY: "-50%",
         rotate: rotation,
-        scale: scale,
+        scale: isMoving ?? scale,
         zIndex: 100,
         pointerEvents: "none",
         willChange: "transform",
@@ -179,4 +182,9 @@ export function SmoothCursor({
       {cursor}
     </motion.div>
   );
+}
+
+SmoothCursor.propTypes = {
+  cursor : PropTypes.node , 
+  springConfig : PropTypes.object
 }

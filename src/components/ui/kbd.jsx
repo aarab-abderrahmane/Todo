@@ -1,3 +1,7 @@
+import React  from "react";
+import PropTypes from "prop-types";
+
+
 import { cn } from "../../lib/utils"
 
 function Kbd({
@@ -30,3 +34,11 @@ function KbdGroup({
 }
 
 export { Kbd, KbdGroup }
+
+
+Kbd.propTypes = {
+  className : PropTypes.string
+}
+KbdGroup.propTypes = {
+  className : PropTypes.string
+}

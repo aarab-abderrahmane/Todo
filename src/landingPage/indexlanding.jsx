@@ -1,4 +1,5 @@
 "use client";
+import React from 'react'
 
 import { TimelineContent } from "./timeline-animation";
 import { Zap } from "lucide-react";
@@ -8,7 +9,7 @@ import GitHubButton from './button.jsx'
 
 import { BackgroundLines } from "../components/ui/background-lines";
 
-import {Link, useNavigate} from 'react-router'
+import {useNavigate} from 'react-router'
 
 function Index() {
   const heroRef = useRef(null);

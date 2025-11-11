@@ -1,3 +1,6 @@
+import React from "react"
+import PropTypes from "prop-types";
+
 import {
   Dialog,
   DialogClose,
@@ -6,11 +9,9 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "./ui/dialog"
 
-import { Input } from "./ui/input"
-import { Label } from "./ui/label"
+
 import { Button } from "./ui/button"
 import { Spinner } from "./ui/spinner"
 
@@ -70,4 +71,11 @@ export function AlertConfrim({showConfirm, setshowConfirm,confirmDelete}) {
       </form>
     </Dialog>
   )
+}
+
+AlertConfrim.propTypes = {
+  showConfirm : PropTypes.bool  ,
+  setshowConfirm : PropTypes.func , 
+  confirmDelete : PropTypes.func 
+
 }

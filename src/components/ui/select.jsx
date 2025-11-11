@@ -1,4 +1,6 @@
 import * as React from "react"
+import PropTypes from "prop-types";
+
 import * as SelectPrimitive from "@radix-ui/react-select"
 import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "lucide-react"
 
@@ -45,6 +47,12 @@ function SelectTrigger({
   );
 }
 
+SelectTrigger.propTypes = {
+  className: PropTypes.string,
+  size: PropTypes.string,
+  children: PropTypes.node           
+};
+
 function SelectContent({
   className,
   children,
@@ -77,6 +85,14 @@ function SelectContent({
   );
 }
 
+SelectContent.propTypes = {
+  className: PropTypes.string,
+  children: PropTypes.node,
+  position: PropTypes.string, 
+  align: PropTypes.string
+};
+
+
 function SelectLabel({
   className,
   ...props
@@ -88,6 +104,11 @@ function SelectLabel({
       {...props} />
   );
 }
+
+SelectLabel.propTypes = {
+  className : PropTypes.string
+}
+
 
 function SelectItem({
   className,
@@ -112,6 +133,12 @@ function SelectItem({
   );
 }
 
+SelectItem.propTypes = {
+  className : PropTypes.string,
+  children : PropTypes.node
+}
+
+
 function SelectSeparator({
   className,
   ...props
@@ -122,6 +149,10 @@ function SelectSeparator({
       className={cn("bg-border pointer-events-none -mx-1 my-1 h-px", className)}
       {...props} />
   );
+}
+
+SelectSeparator.propTypes = {
+  className : PropTypes.string 
 }
 
 function SelectScrollUpButton({
@@ -138,6 +169,10 @@ function SelectScrollUpButton({
   );
 }
 
+SelectScrollUpButton.propTypes = {
+  className : PropTypes.string 
+}
+
 function SelectScrollDownButton({
   className,
   ...props
@@ -150,6 +185,10 @@ function SelectScrollDownButton({
       <ChevronDownIcon className="size-4" />
     </SelectPrimitive.ScrollDownButton>
   );
+}
+
+SelectScrollDownButton.propTypes = {
+  className : PropTypes.string 
 }
 
 export {

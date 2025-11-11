@@ -1,3 +1,7 @@
+import React from 'react'
+import PropTypes from "prop-types";
+
+
 import { useEffect, useState } from "react";
 import { motion } from "motion/react"
 
@@ -87,3 +91,24 @@ export const SparklesText = ({
     </div>
   );
 }
+
+// Sparkle component prop types
+Sparkle.propTypes = {
+  id: PropTypes.string.isRequired,
+  x: PropTypes.string.isRequired,
+  y: PropTypes.string.isRequired,
+  color: PropTypes.string.isRequired,
+  delay: PropTypes.number.isRequired,
+  scale: PropTypes.number.isRequired,
+};
+
+// SparklesText component prop types
+SparklesText.propTypes = {
+  children: PropTypes.node.isRequired,
+  colors: PropTypes.shape({
+    first: PropTypes.string,
+    second: PropTypes.string,
+  }),
+  className: PropTypes.string,
+  sparklesCount: PropTypes.number,
+};

@@ -1,6 +1,8 @@
 import * as React from "react"
+import PropTypes from "prop-types";
+
+
 import * as DialogPrimitive from "@radix-ui/react-dialog"
-import { XIcon } from "lucide-react"
 
 import { cn } from "../../lib/utils"
 
@@ -44,6 +46,10 @@ function DialogOverlay({
   );
 }
 
+DialogOverlay.propTypes = {
+  className : PropTypes.string
+}
+
 function DialogContent({
   className,
   children,
@@ -82,6 +88,13 @@ function DialogContent({
   );
 }
 
+DialogContent.propTypes = {
+  className : PropTypes.string,
+  children : PropTypes.node , 
+  showCloseButton : PropTypes.bool ,
+  isInteractOutsite : PropTypes.bool , 
+}
+
 function DialogHeader({
   className,
   ...props
@@ -92,6 +105,10 @@ function DialogHeader({
       className={cn("flex flex-col gap-2 text-center sm:text-left", className)}
       {...props} />
   );
+}
+
+DialogHeader.propTypes = {
+  className : PropTypes.string
 }
 
 function DialogFooter({
@@ -106,6 +123,10 @@ function DialogFooter({
   );
 }
 
+DialogFooter.propTypes = {
+  className : PropTypes.string
+}
+
 function DialogTitle({
   className,
   ...props
@@ -118,6 +139,10 @@ function DialogTitle({
   );
 }
 
+DialogTitle.propTypes = {
+  className : PropTypes.string
+}
+
 function DialogDescription({
   className,
   ...props
@@ -128,6 +153,10 @@ function DialogDescription({
       className={cn("text-muted-foreground text-sm", className)}
       {...props} />
   );
+}
+
+DialogDescription.propTypes = {
+  className : PropTypes.string
 }
 
 export {

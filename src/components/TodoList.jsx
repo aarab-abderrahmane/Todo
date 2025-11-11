@@ -1,8 +1,10 @@
+import React from 'react'
+
 import List from "./List";
 import { createContext, useState,useEffect ,useMemo, useContext} from "react";
 import { SparklesText } from "./ui/sparkles-text";
 
-import { AlertCircleIcon, CheckCircle2Icon, PopcornIcon } from "lucide-react";
+import { AlertCircleIcon } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import {
   ContextMenu,
@@ -141,8 +143,8 @@ export  function TodoList() {
           />
             </ContextMenuTrigger>
               <ContextMenuContent className="p-6 !important" >
-                <ContextMenuItem className="flex cursor-pointer border-b border-[var(--color-text)]  p-2.5 " onSelect={()=>MaskTodo(td.id)} ><i class="bi bi-eye-fill"></i>Mask</ContextMenuItem>
-                <ContextMenuItem  className="text-red-900 font-bold bg-red-300 flex cursor-pointer p-2.5 " onSelect={()=>hanldeDelete(td.id)} ><i class="bi bi-trash2-fill"></i>Delete</ContextMenuItem>
+                <ContextMenuItem className="flex cursor-pointer border-b border-[var(--color-text)]  p-2.5 " onSelect={()=>MaskTodo(td.id)} ><i className="bi bi-eye-fill"></i>Mask</ContextMenuItem>
+                <ContextMenuItem  className="text-red-900 font-bold bg-red-300 flex cursor-pointer p-2.5 " onSelect={()=>hanldeDelete(td.id)} ><i className="bi bi-trash2-fill"></i>Delete</ContextMenuItem>
               </ContextMenuContent>
           </ContextMenu>
 
@@ -158,7 +160,7 @@ export  function TodoList() {
             <p className="pe-[10vw]">Please note the following :</p>
             <ul className="list-disc list-inside mt-2 text-sm">
               <li>The task list is empty.</li>
-              <li>You can add new tasks using the 'Add to list' button.</li>
+              <li>{"You can add new tasks using the 'Add to list' button."}</li>
               <li>
                 Tasks can be deleted by clicking on the task; it will be removed
                 immediately.
@@ -168,8 +170,7 @@ export  function TodoList() {
                 task, then save changes.
               </li>
               <li>
-                Tasks are stored in your browser's local storage; clearing
-                storage will remove them.
+                {"Tasks are stored in your browser's local storage; clearing storage will remove them."}
               </li>
             </ul>
           </AlertDescription>
@@ -243,7 +244,7 @@ export  function TodoList() {
           ) : (
             <h1 className="text-lg font-normal ">Add to list</h1>
           )}
-          <i class="bi bi-caret-right-fill ms-2"></i>
+          <i className="bi bi-caret-right-fill ms-2"></i>
         </button>
       </div>
 
@@ -251,7 +252,7 @@ export  function TodoList() {
       <div className="glass relative flex-1  applyRadius shadow-lg    max-h-[50vh] md:max-h-[80vh]  overflow-y-hidden md:hover:scale-[1.04] " >
         <div className="mb-4 sticky top-0 z-20 border-b-4 border-white/20">
           <h2 className="text-center text-xl lg:text-2xl font-bold text-[var(--color-text)]  py-4">
-            Todo List <i class="bi bi-clipboard-minus"></i>
+            Todo List <i className="bi bi-clipboard-minus"></i>
           </h2>
         </div>
         <div className="overflow-y-scroll overflow-x-hidden max-h-[calc(50vh-10px)] p-4 pb-8 drop-shadow-[0_4px_6px_rgba(255,255,255,0.5)]">

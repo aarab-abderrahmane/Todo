@@ -1,4 +1,8 @@
-'use client';;
+'use client';
+import React from 'react';
+import PropTypes from "prop-types";
+
+
 import { Children, createContext, useContext, useEffect, useRef, useState } from 'react';
 import { motion, useMotionValue } from 'motion/react';
 import { cn } from '../../lib/utils';
@@ -275,4 +279,50 @@ export {
   CarouselIndicator,
   CarouselItem,
   useCarousel,
+};
+
+
+
+CarouselProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+  initialIndex: PropTypes.number,
+  onIndexChange: PropTypes.func,
+  disableDrag: PropTypes.bool,
+};
+
+// Carousel
+Carousel.propTypes = {
+  children: PropTypes.node.isRequired,
+  className: PropTypes.string,
+  initialIndex: PropTypes.number,
+  index: PropTypes.number,
+  onIndexChange: PropTypes.func,
+  disableDrag: PropTypes.bool,
+};
+
+// CarouselNavigation
+CarouselNavigation.propTypes = {
+  className: PropTypes.string,
+  classNameButton: PropTypes.string,
+  alwaysShow: PropTypes.bool,
+};
+
+// CarouselIndicator
+CarouselIndicator.propTypes = {
+  className: PropTypes.string,
+  classNameButton: PropTypes.string,
+};
+
+// CarouselContent
+CarouselContent.propTypes = {
+  children: PropTypes.node.isRequired,
+  className: PropTypes.string,
+  transition: PropTypes.object,
+};
+
+// CarouselItem
+CarouselItem.propTypes = {
+  children: PropTypes.node.isRequired,
+  handleSelectBackground: PropTypes.func,
+  className: PropTypes.string,
 };

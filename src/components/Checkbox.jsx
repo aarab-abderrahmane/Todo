@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from "prop-types";
+
 import styled from 'styled-components';
 
 const Checkbox = ({id,check,handleCheck}) => {
@@ -187,3 +189,10 @@ const StyledWrapper = styled.div`
   }`;
 
 export default Checkbox;
+
+
+Checkbox.propTypes = {
+  id :PropTypes.number , 
+  check : PropTypes.bool ,
+  handleCheck : PropTypes.func
+}

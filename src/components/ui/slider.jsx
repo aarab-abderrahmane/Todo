@@ -1,4 +1,7 @@
 import * as React from "react"
+import PropTypes from "prop-types";
+
+
 import * as SliderPrimitive from "@radix-ui/react-slider"
 import { cn } from "../../lib/utils"
 
@@ -74,18 +77,18 @@ function Slider({
       {Array.from({ length: _values.length }, (_, index) => (
         <SliderPrimitive.Thumb
           key={index}
-          onPointerDown={(e) => {
+          onPointerDown={() => {
             setIsPressed(true)
             pointerActive.current = true
             lastInteractionWasTab.current = false
           }}
           onPointerMove={(e) => e.buttons > 0 && setIsDragging(true)}
-          onPointerUp={(e) => {
+          onPointerUp={() => {
             setIsPressed(false)
             setIsDragging(false)
             pointerActive.current = false
           }}
-          onPointerCancel={(e) => {
+          onPointerCancel={() => {
             setIsPressed(false)
             setIsDragging(false)
             pointerActive.current = false
@@ -117,4 +120,15 @@ function Slider({
   );
 }
 
+
 export { Slider }
+
+
+
+Slider.propTypes = {
+  className : PropTypes.string , 
+  defaultValue : PropTypes.number,
+  value : PropTypes.number, 
+  min : PropTypes.number , 
+  max : PropTypes.number 
+}

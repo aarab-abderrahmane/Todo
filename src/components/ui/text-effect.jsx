@@ -1,10 +1,13 @@
-'use client';;
+'use client';
+import React from 'react'
+import PropTypes from "prop-types";
+
+
 import { cn } from '../../lib/utils';
 import {
   AnimatePresence,
   motion
 } from 'motion/react';
-import React from 'react';
 
 const defaultStaggerTimes = {
   char: 0.03,
@@ -133,7 +136,7 @@ const hasTransition = variant => {
 const createVariantsWithTransition = (baseVariants, transition) => {
   if (!transition) return baseVariants;
 
-  const { exit: _, ...mainTransition } = transition;
+  const { ...mainTransition } = transition;
 
   return {
     ...baseVariants,
@@ -188,15 +191,14 @@ export function TextEffect({
 
   const baseDuration = 0.3 / speedSegment;
 
-  const customStagger = hasTransition(variants?.container?.visible ?? {})
-    ? (variants?.container?.visible).transition
-        ?.staggerChildren
+  const customStagger = hasTransition(variants?.container?.visible)
+  ? variants?.container?.visible?.transition?.staggerChildren
+  : undefined;
+
+  const customDelay = hasTransition(variants?.container?.visible)
+    ? variants?.container?.visible?.transition?.delayChildren
     : undefined;
 
-  const customDelay = hasTransition(variants?.container?.visible ?? {})
-    ? (variants?.container?.visible).transition
-        ?.delayChildren
-    : undefined;
 
   const computedVariants = {
     container: createVariantsWithTransition(variants?.container || baseVariants.container, {
@@ -240,3 +242,33 @@ export function TextEffect({
     </AnimatePresence>
   );
 }
+
+
+AnimationComponent.propTypes = {
+  segment: PropTypes.string.isRequired,
+  variants: PropTypes.object.isRequired,
+  per: PropTypes.oneOf(['line', 'word', 'char']).isRequired,
+  segmentWrapperClassName: PropTypes.string,
+};
+
+TextEffect.propTypes = {
+  children: PropTypes.string.isRequired,
+  per: PropTypes.string,
+  as: PropTypes.string,
+  variants: PropTypes.shape({
+    container: PropTypes.object,
+    item: PropTypes.object,
+  }),
+  className: PropTypes.string,
+  preset: PropTypes.string,
+  delay: PropTypes.number,
+  speedReveal: PropTypes.number,
+  speedSegment: PropTypes.number,
+  trigger: PropTypes.bool,
+  onAnimationComplete: PropTypes.func,
+  onAnimationStart: PropTypes.func,
+  segmentWrapperClassName: PropTypes.string,
+  containerTransition: PropTypes.object,
+  segmentTransition: PropTypes.object,
+  style: PropTypes.object,
+};

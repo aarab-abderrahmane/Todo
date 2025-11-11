@@ -1,3 +1,5 @@
+import React from 'react';
+
 import {
   Carousel,
   CarouselContent,
@@ -17,7 +19,7 @@ export function BackgrounAccordion(){
 
     const backgroundInfo = useMemo(()=>[
 
-        {id:0,content:<i class="bi bi-ban text-2xl"></i>,path:''},
+        {id:0,content:<i className="bi bi-ban text-2xl"></i>,path:''},
         { id: 1, content: "Asfalt Light", path: "/backgrounds/asfalt-light.png" },
         { id: 2, content: "Batthern", path: "/backgrounds/batthern.png" },
         { id: 3, content: "Church", path: "/backgrounds/church.png" },

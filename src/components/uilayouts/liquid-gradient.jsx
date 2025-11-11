@@ -1,4 +1,8 @@
 "use client";
+import React from 'react'
+import PropTypes from "prop-types";
+
+
 import { motion, AnimatePresence } from "motion/react";
 const svgOrder = ["svg1", "svg2", "svg3", "svg4", "svg3", "svg2", "svg1"];
 const createStopsArray = (svgStates, svgOrder, maxStops) => {
@@ -157,7 +161,16 @@ const GradientSvg = ({ className, isHovered, colors }) => {
     </svg>
   );
 };
-export const Liquid = ({ isHovered, colors, buttonType }) => {
+
+GradientSvg.propTypes = {
+  className : PropTypes.string , 
+  isHovered : PropTypes.bool , 
+  colors : PropTypes.object
+
+}
+
+
+export const Liquid = ({ isHovered, colors }) => {
   return (
     <>
       {Array.from({ length: 7 }).map((_, index) => (
@@ -188,3 +201,8 @@ export const Liquid = ({ isHovered, colors, buttonType }) => {
     </>
   );
 };
+
+Liquid.propTypes = {
+    isHovered : PropTypes.bool ,
+    colors : PropTypes.object ,
+}

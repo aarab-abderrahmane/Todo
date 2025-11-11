@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { useState, useEffect,useContext } from "react";
 import {PreferencesContext} from '../App'
 
@@ -30,7 +32,7 @@ export default function LiveClockDetailed() {
     glass applyRadius  flex flex-col  w-full  lg:h-[40vh] max-h-[400px] bg-white/40   shadow backdrop-blur-lg md:hover:scale-[1.03] overflow-hidden`}>
       <div className="text-[var(--color-text)] flex  gap-4 items-center p-4  border-b-4 border-white/20">
         <h1 className="text-2xl font-bold md:text-[2rem]">Clcok</h1>
-        <i class="bi bi-clock"></i>
+        <i className="bi bi-clock"></i>
     
       </div>
       <div className="flex flex-col-reverse md:flex-row flex-1  w-full  md:gap-[2rem] justify-center items-center h-60  ">

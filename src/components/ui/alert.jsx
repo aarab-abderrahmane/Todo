@@ -1,4 +1,6 @@
 import * as React from "react"
+import PropTypes from "prop-types";
+
 import { cva } from "class-variance-authority";
 
 import { cn } from "../../lib/utils"
@@ -33,6 +35,12 @@ function Alert({
   );
 }
 
+Alert.propTypes = {
+    className : PropTypes.string ,
+    variant : PropTypes.string 
+}
+
+
 function AlertTitle({
   className,
   ...props
@@ -43,6 +51,10 @@ function AlertTitle({
       className={cn("col-start-2 line-clamp-1 min-h-4 font-medium tracking-tight", className)}
       {...props} />
   );
+}
+
+AlertTitle.propTypes = {
+    className : PropTypes.string ,
 }
 
 function AlertDescription({
@@ -58,6 +70,10 @@ function AlertDescription({
       )}
       {...props} />
   );
+}
+
+AlertDescription.propTypes = {
+    className : PropTypes.string 
 }
 
 export { Alert, AlertTitle, AlertDescription }

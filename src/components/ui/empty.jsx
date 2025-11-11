@@ -1,3 +1,7 @@
+import React from 'react'
+import PropTypes from "prop-types";
+
+
 import { cva } from "class-variance-authority";
 
 import { cn } from "../../lib/utils"
@@ -108,3 +112,29 @@ export {
   EmptyContent,
   EmptyMedia,
 }
+
+
+Empty.propTypes = {
+  className: PropTypes.string,
+};
+
+EmptyHeader.propTypes = {
+  className: PropTypes.string,
+};
+
+EmptyMedia.propTypes = {
+  className: PropTypes.string,
+  variant: PropTypes.oneOf(["default", "icon"]),
+};
+
+EmptyTitle.propTypes = {
+  className: PropTypes.string,
+};
+
+EmptyDescription.propTypes = {
+  className: PropTypes.string,
+};
+
+EmptyContent.propTypes = {
+  className: PropTypes.string,
+};

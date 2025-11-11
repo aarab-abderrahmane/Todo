@@ -1,4 +1,6 @@
 import * as React from "react"
+import PropTypes from "prop-types";
+
 import * as SwitchPrimitive from "@radix-ui/react-switch"
 
 import { cn } from "../../lib/utils"
@@ -25,3 +27,8 @@ function Switch({
 }
 
 export { Switch }
+
+
+Switch.propTypes = {
+  className : PropTypes.string
+}

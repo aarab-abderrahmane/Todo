@@ -1,7 +1,10 @@
 "use client";
+import React from 'react'
+import PropTypes from "prop-types";
+
+
 import { cn } from "../../lib/utils";
 import { motion } from "motion/react";
-import React from "react";
 
 export const BackgroundLines = ({
   children,
@@ -16,6 +19,12 @@ export const BackgroundLines = ({
     </div>
   );
 };
+
+BackgroundLines.propTypes = {
+  children : PropTypes.node , 
+  className : PropTypes.string , 
+  svgOptions : PropTypes.bool
+}
 
 const pathVariants = {
   initial: { strokeDashoffset: 800, strokeDasharray: "50 800" },
@@ -127,3 +136,8 @@ const SVG = ({
     </motion.svg>
   );
 };
+
+SVG.propTypes = {
+  svgOptions : PropTypes.bool
+
+}

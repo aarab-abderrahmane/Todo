@@ -1,17 +1,11 @@
+import React, { useRef, useState, useContext } from "react";
+import PropTypes from "prop-types";
 import { cn } from "../../lib/utils";
 import { IconLayoutNavbarCollapse } from "@tabler/icons-react";
 import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from "motion/react";
+import { PreferencesContext } from '../../App';
 
-import { useRef, useState ,useContext} from "react";
-
-import {PreferencesContext} from '../../App'
-
-export const FloatingDock = ({
-  items,
-  dragMode,
-  desktopClassName,
-  mobileClassName
-}) => {
+export const FloatingDock = ({ items, desktopClassName, mobileClassName }) => {
   return (
     <>
       <FloatingDockDesktop items={items} className={desktopClassName} />
@@ -20,10 +14,13 @@ export const FloatingDock = ({
   );
 };
 
-const FloatingDockMobile = ({
-  items,
-  className
-}) => {
+FloatingDock.propTypes = {
+  items: PropTypes.array.isRequired,
+  desktopClassName: PropTypes.string,
+  mobileClassName: PropTypes.string,
+};
+
+const FloatingDockMobile = ({ items, className }) => {
   const [open, setOpen] = useState(false);
   return (
     <div className={cn("relative block md:hidden", className)}>
@@ -36,22 +33,14 @@ const FloatingDockMobile = ({
               <motion.div
                 key={item.title}
                 initial={{ opacity: 0, y: 10 }}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                exit={{
-                  opacity: 0,
-                  y: 10,
-                  transition: {
-                    delay: idx * 0.05,
-                  },
-                }}
-                transition={{ delay: (items.length - 1 - idx) * 0.05 }}>
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10, transition: { delay: idx * 0.05 } }}
+                transition={{ delay: (items.length - 1 - idx) * 0.05 }}
+              >
                 <a
                   href={item.href}
-                  key={item.title}
-                  className="flex h-10 w-6 items-center justify-center rounded-full bg-gray-50 dark:bg-neutral-900">
+                  className="flex h-10 w-6 items-center justify-center rounded-full bg-gray-50 dark:bg-neutral-900"
+                >
                   <div className="h-4 w-4">{item.icon}</div>
                 </a>
               </motion.div>
@@ -61,26 +50,30 @@ const FloatingDockMobile = ({
       </AnimatePresence>
       <button
         onClick={() => setOpen(!open)}
-        className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-50 dark:bg-neutral-800">
+        className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-50 dark:bg-neutral-800"
+      >
         <IconLayoutNavbarCollapse className="h-5 w-5 text-neutral-500 dark:text-neutral-400" />
       </button>
     </div>
   );
 };
 
-const FloatingDockDesktop = ({
-  items,
-  className
-}) => {
-  let mouseX = useMotionValue(Infinity);
+FloatingDockMobile.propTypes = {
+  items: PropTypes.array.isRequired,
+  className: PropTypes.string,
+};
+
+const FloatingDockDesktop = ({ items, className }) => {
+  const mouseX = useMotionValue(Infinity);
   return (
     <motion.div
       onMouseMove={(e) => mouseX.set(e.pageX)}
       onMouseLeave={() => mouseX.set(Infinity)}
       className={cn(
-        "applyRadius mx-auto hidden h-16 items-end gap-4  border border-[var(--color-text)] bg-[var(--color-button)]   px-4 pb-3 md:flex ",
+        "applyRadius mx-auto hidden h-16 items-end gap-4 border border-[var(--color-text)] bg-[var(--color-button)] px-4 pb-3 md:flex",
         className
-      )}>
+      )}
+    >
       {items.map((item) => (
         <IconContainer mouseX={mouseX} key={item.title} {...item} />
       ))}
@@ -88,82 +81,66 @@ const FloatingDockDesktop = ({
   );
 };
 
-function IconContainer({
-  mouseX,
-  title,
-  icon,
-  action
-}) {
-  let ref = useRef(null);
+FloatingDockDesktop.propTypes = {
+  items: PropTypes.array.isRequired,
+  className: PropTypes.string,
+};
 
-  let distance = useTransform(mouseX, (val) => {
-    let bounds = ref.current?.getBoundingClientRect() ?? { x: 0, width: 0 };
+function IconContainer({ mouseX, title, icon, action }) {
+  const ref = useRef(null);
+  const [hovered, setHovered] = useState(false);
+  const { dragMode } = useContext(PreferencesContext);
 
+  const distance = useTransform(mouseX, (val) => {
+    const bounds = ref.current?.getBoundingClientRect() ?? { x: 0, width: 0 };
     return val - bounds.x - bounds.width / 2;
   });
 
-  let widthTransform = useTransform(distance, [-150, 0, 150], [40, 60, 40]);
-  let heightTransform = useTransform(distance, [-150, 0, 150], [40, 60, 40]);
+  const widthTransform = useTransform(distance, [-150, 0, 150], [40, 60, 40]);
+  const heightTransform = useTransform(distance, [-150, 0, 150], [40, 60, 40]);
+  const widthTransformIcon = useTransform(distance, [-150, 0, 150], [20, 40, 20]);
+  const heightTransformIcon = useTransform(distance, [-150, 0, 150], [20, 40, 20]);
 
-
-  let widthTransformIcon = useTransform(distance, [-150, 0, 150], [20, 40, 20]);
-  let heightTransformIcon = useTransform(distance, [-150, 0, 150], [20, 40, 20]);
-
-  let width = useSpring(widthTransform, {
-    mass: 0.1,
-    stiffness: 150,
-    damping: 12,
-  });
-  let height = useSpring(heightTransform, {
-    mass: 0.1,
-    stiffness: 150,
-    damping: 12,
-  });
-
-  let widthIcon = useSpring(widthTransformIcon, {
-    mass: 0.1,
-    stiffness: 150,
-    damping: 12,
-  });
-  let heightIcon = useSpring(heightTransformIcon, {
-    mass: 0.1,
-    stiffness: 150,
-    damping: 12,
-  });
-
-  const [hovered, setHovered] = useState(false);
-
-  const {dragMode} = useContext(PreferencesContext)
-
-  console.log(dragMode)
+  const width = useSpring(widthTransform, { mass: 0.1, stiffness: 150, damping: 12 });
+  const height = useSpring(heightTransform, { mass: 0.1, stiffness: 150, damping: 12 });
+  const widthIcon = useSpring(widthTransformIcon, { mass: 0.1, stiffness: 150, damping: 12 });
+  const heightIcon = useSpring(heightTransformIcon, { mass: 0.1, stiffness: 150, damping: 12 });
 
   return (
-    <a  onClick={action}>
+    <a onClick={action}>
       <motion.div
         ref={ref}
         style={{ width, height }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         className={`
-        ${(dragMode.mode==="sections" && title.includes("Section Mode")) ? "bg-[var(--color-background)] " : "bg-white/80"}
-        relative flex aspect-square items-center justify-center rounded-full  border border-[var(--color-text)]  cursor-pointer`}>
+          ${(dragMode.mode === "sections" && title?.includes("Section Mode")) ? "bg-[var(--color-background)]" : "bg-white/80"}
+          relative flex aspect-square items-center justify-center rounded-full border border-[var(--color-text)] cursor-pointer
+        `}
+      >
         <AnimatePresence>
           {hovered && (
             <motion.div
               initial={{ opacity: 0, y: 10, x: "-50%" }}
               animate={{ opacity: 1, y: 0, x: "-50%" }}
               exit={{ opacity: 0, y: 2, x: "-50%" }}
-              className="absolute -bottom-10 left-1/2 w-fit rounded-md border border-gray-200 bg-gray-100 px-2 py-0.5 text-xs whitespace-pre text-neutral-700 ">
+              className="absolute -bottom-10 left-1/2 w-fit rounded-md border border-gray-200 bg-gray-100 px-2 py-0.5 text-xs whitespace-pre text-neutral-700"
+            >
               {title}
             </motion.div>
           )}
         </AnimatePresence>
-        <motion.div
-          style={{ width: widthIcon, height: heightIcon }}
-          className="flex items-center justify-center  ">
+        <motion.div style={{ width: widthIcon, height: heightIcon }} className="flex items-center justify-center">
           {icon}
         </motion.div>
       </motion.div>
     </a>
   );
 }
+
+IconContainer.propTypes = {
+  mouseX: PropTypes.object.isRequired,
+  title: PropTypes.string.isRequired,
+  icon: PropTypes.node.isRequired,
+  action: PropTypes.func,
+};

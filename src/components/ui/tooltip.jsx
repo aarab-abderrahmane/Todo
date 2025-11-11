@@ -1,4 +1,6 @@
 import * as React from "react"
+import PropTypes from "prop-types";
+
 import * as TooltipPrimitive from "@radix-ui/react-tooltip"
 
 import { cn } from "../../lib/utils"
@@ -56,3 +58,13 @@ function TooltipContent({
 
 export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider }
   
+
+TooltipContent.propTypes = {
+  children: PropTypes.node,
+  className: PropTypes.string,
+  sideOffset: PropTypes.number,
+};
+
+TooltipProvider.propTypes = {
+  delayDuration: PropTypes.number,
+};

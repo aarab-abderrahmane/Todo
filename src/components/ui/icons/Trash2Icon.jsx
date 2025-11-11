@@ -1,7 +1,9 @@
-"use client";;
+"use client";
+import PropTypes from "prop-types";
+
 import { cn } from "../../../lib/utils";
 import { motion, useAnimation, useReducedMotion } from "motion/react";
-import { forwardRef, useCallback, useImperativeHandle, useRef } from "react";
+import React, { forwardRef, useCallback, useImperativeHandle, useRef } from "react";
 
 const Trash2Icon = forwardRef((
     {
@@ -135,3 +137,11 @@ const Trash2Icon = forwardRef((
 
 Trash2Icon.displayName = "Trash2Icon";
 export { Trash2Icon };
+
+Trash2Icon.propTypes = {
+  onMouseEnter: PropTypes.func,
+  onMouseLeave: PropTypes.func,
+  className: PropTypes.string,
+  size: PropTypes.number,
+  duration: PropTypes.number,
+};

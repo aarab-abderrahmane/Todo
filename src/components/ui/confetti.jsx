@@ -7,6 +7,9 @@ import React, {
   useMemo,
   useRef,
 } from "react"
+import PropTypes from "prop-types";
+
+
 import confetti from "canvas-confetti"
 
 import { Button } from "./button"
@@ -73,6 +76,7 @@ const ConfettiComponent = forwardRef((props, ref) => {
   );
 })
 
+
 // Set display name immediately
 ConfettiComponent.displayName = "Confetti"
 
@@ -134,6 +138,22 @@ const ConfettiButtonComponent = ({
     </Button>
   );
 }
+
+
+
+ConfettiComponent.propTypes = {
+  options: PropTypes.object,
+  globalOptions: PropTypes.object,
+  manualstart: PropTypes.bool,
+  children: PropTypes.node,
+};
+
+ConfettiButtonComponent.propTypes = {
+  options: PropTypes.object,
+  setShowStepper: PropTypes.func.isRequired,
+  children: PropTypes.node,
+};
+
 
 ConfettiButtonComponent.displayName = "ConfettiButton"
 

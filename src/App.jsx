@@ -1,3 +1,7 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+
+
 import {TodoList}  from "./components/TodoList"
 import {useState,createContext,useEffect, useContext,useMemo} from 'react'
 import { SmoothCursor } from "./components/ui/smooth-cursor"
@@ -292,7 +296,7 @@ function App() {
     {
       title: "Cancel",
       icon: (
-        <i class="bi bi-stop-fill  text-[var(--color-text)] cursor-pointer text-xl"></i>
+        <i className="bi bi-stop-fill  text-[var(--color-text)] cursor-pointer text-xl"></i>
       ),
       action : ()=>setDragMode(prev=>({...prev , active:false}))
     },
@@ -300,7 +304,7 @@ function App() {
     {
       title: "Section Mode",
       icon: (
-        <i class="bi bi-vr text-[var(--color-text)] cursor-pointer text-xl "></i>
+        <i className="bi bi-vr text-[var(--color-text)] cursor-pointer text-xl "></i>
       ),
       action : ()=>setDragMode(prev=>({...prev , mode:prev.mode==="sections" ? "items" : "sections"}))
     },
@@ -308,7 +312,7 @@ function App() {
     {
       title: "Reset",
       icon: (
-        <i class="bi bi-arrow-clockwise  text-[var(--color-text)] cursor-pointer text-xl"></i>
+        <i className="bi bi-arrow-clockwise  text-[var(--color-text)] cursor-pointer text-xl"></i>
       ),
       action : ()=> {
         setLayout(defaultPreferences.customizeLayout)
@@ -375,13 +379,13 @@ function App() {
                     {dragMode.mode==="items" ? (
 
                             Layout.map((section,index) => section.some(item=>item.type==="todoList") ? (
-                                <div key={index}>
+                                <div key={`todo-${index}`}>
                                     <TodoList />
                                 </div>
                                   
                                 ) : (
                             
-                                <div className="  flex flex-col gap-3 z-10   max-w-[1000px] w-[90vw] xl:w-[50vw]  ">
+                                <div key={`section-${index}`} className="  flex flex-col gap-3 z-10   max-w-[1000px] w-[90vw] xl:w-[50vw]  ">
 
                                       <SortableContext
                                           items={section.map(item => item.id)}
@@ -418,7 +422,6 @@ function App() {
                                 key={i}
                                 id={i === 0 ? "left" : "right"}
                                 section={section}
-                                Layout={Layout}
                               />
                             ))}
                           </SortableContext>
@@ -446,6 +449,8 @@ export default App
 
 
 function SortableSection({ id, section }) {
+
+
   const { setNodeRef, attributes, listeners, transform, transition } = useSortable({ id });
   const {dragMode} = useContext(PreferencesContext);
   const style = {
@@ -505,6 +510,11 @@ function SortableSection({ id, section }) {
   );
 }
 
+SortableSection.propTypes = {
+  id: PropTypes.string.isRequired, 
+  section: PropTypes.array.isRequired, 
+};
+
 
 function ShowLatestLayout({ item , compar1 ,compar2 , condition }) {
   const { attributes, listeners, setNodeRef, transform } = useSortable({ id: item.id });
@@ -533,6 +543,13 @@ function ShowLatestLayout({ item , compar1 ,compar2 , condition }) {
 
 }
 
+ShowLatestLayout.propTypes = {
+  item : PropTypes.array,
+  compar1 : PropTypes.node ,
+  compar2 : PropTypes.node  ,
+  condition : PropTypes.string
+
+}
 
 function GlobalCalendar(){
 

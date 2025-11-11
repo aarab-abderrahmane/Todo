@@ -1,5 +1,9 @@
 "use client";;
 import React from "react";
+import PropTypes from "prop-types";
+
+
+
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { atomDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import {
@@ -10,7 +14,6 @@ import {
   Folder,
   Terminal,
   Code2,
-  Download,
   Maximize2,
   Settings,
 } from "lucide-react";
@@ -40,21 +43,21 @@ export const CodeBlock = ({
     }
   };
 
-  const downloadCode = () => {
-    const textToDownload = tabsExist ? tabs[activeTab].code : code;
-    const activeFilename = tabsExist ? tabs[activeTab].name : filename;
-    if (textToDownload) {
-      const blob = new Blob([textToDownload], { type: "text/plain" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = activeFilename;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }
-  };
+  // const downloadCode = () => {
+  //   const textToDownload = tabsExist ? tabs[activeTab].code : code;
+  //   const activeFilename = tabsExist ? tabs[activeTab].name : filename;
+  //   if (textToDownload) {
+  //     const blob = new Blob([textToDownload], { type: "text/plain" });
+  //     const url = URL.createObjectURL(blob);
+  //     const a = document.createElement("a");
+  //     a.href = url;
+  //     a.download = activeFilename;
+  //     document.body.appendChild(a);
+  //     a.click();
+  //     document.body.removeChild(a);
+  //     URL.revokeObjectURL(url);
+  //   }
+  // };
 
   const activeCode = tabsExist ? tabs[activeTab].code : code;
   const activeLanguage = tabsExist
@@ -302,4 +305,15 @@ export const CodeBlock = ({
       )}
     </div>
   );
+};
+
+CodeBlock.propTypes = {
+  language: PropTypes.string.isRequired,
+  filename: PropTypes.string,
+  code: PropTypes.string,
+  highlightLines: PropTypes.array,
+  tabs: PropTypes.array,
+  breadcrumb: PropTypes.array,
+  showStats: PropTypes.bool,
+  theme: PropTypes.string,
 };

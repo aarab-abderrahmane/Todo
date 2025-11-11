@@ -1,3 +1,7 @@
+import React from "react";
+import PropTypes from "prop-types";
+
+
 import { Button } from "./ui/button";
 import {
   Dialog,
@@ -7,7 +11,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "./ui/dialog";
 import { Label } from "./ui/label";
 
@@ -29,7 +32,6 @@ import { Switch } from "./ui/switch";
 
 import { Slider } from "./ui/slider";
 
-import { ChevronsUpDown } from "lucide-react";
 import {
   Collapsible,
   CollapsibleContent,
@@ -102,7 +104,7 @@ export function Preferences({ showPreferences, setShowPreferences }) {
 
       {/* Arrow Icon */}
       <div className="absolute right-3 group">
-          <i class="bi bi-arrow-clockwise text-[var(--color-text)] text-xl "></i>
+          <i className="bi bi-arrow-clockwise text-[var(--color-text)] text-xl "></i>
 
       </div>
 
@@ -241,7 +243,7 @@ export function Preferences({ showPreferences, setShowPreferences }) {
                               : ""
                           }  rounded-[min(var(--border-radius),2rem)] flex flex-col justify-center items-center gap-3 border-2 border-[var(--color-text)] hover:cursor-pointer `}
                         >
-                          <i class="bi bi-cursor-fill text-lg bg-white border-[var(--color-text)] flex items-center justify-center w-[40px] h-[40px] rounded-full border-2"></i>
+                          <i className="bi bi-cursor-fill text-lg bg-white border-[var(--color-text)] flex items-center justify-center w-[40px] h-[40px] rounded-full border-2"></i>
 
                           <p className="p-2">Smooth cursor</p>
                         </div>
@@ -261,7 +263,7 @@ export function Preferences({ showPreferences, setShowPreferences }) {
                               : ""
                           }  rounded-[min(var(--border-radius),2rem)]  flex flex-col justify-center items-center gap-3 border-2 border-[var(--color-text)]  hover:cursor-pointer `}
                         >
-                          <i class="bi bi-ban text-lg bg-white border-[var(--color-text)] flex items-center justify-center w-[40px] h-[40px] rounded-full border-2"></i>
+                          <i className="bi bi-ban text-lg bg-white border-[var(--color-text)] flex items-center justify-center w-[40px] h-[40px] rounded-full border-2"></i>
 
                           <p className="p-2  text-center">browser cursor</p>
                         </div>
@@ -304,7 +306,7 @@ export function Preferences({ showPreferences, setShowPreferences }) {
                             size="icon"
                             className="size-8 "
                           >
-                            <i class="bi bi-caret-down text-2xl mt-2 cursor-pointer"></i>
+                            <i className="bi bi-caret-down text-2xl mt-2 cursor-pointer"></i>
                             <span className="sr-only">Toggle</span>
                           </Button>
                         </CollapsibleTrigger>
@@ -377,7 +379,7 @@ export function Preferences({ showPreferences, setShowPreferences }) {
                             size="icon"
                             className="size-8 "
                           >
-                            <i class="bi bi-caret-down text-2xl mt-2 cursor-pointer"></i>
+                            <i className="bi bi-caret-down text-2xl mt-2 cursor-pointer"></i>
                             <span className="sr-only">Toggle</span>
                           </Button>
                         </CollapsibleTrigger>
@@ -438,4 +440,10 @@ export function Preferences({ showPreferences, setShowPreferences }) {
       </form>
     </Dialog>
   );
+}
+
+
+Preferences.propTypes = {
+  showPreferences : PropTypes.bool , 
+  setShowPreferences : PropTypes.func
 }

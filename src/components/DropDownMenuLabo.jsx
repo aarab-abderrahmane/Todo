@@ -1,3 +1,5 @@
+import React  from "react";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -6,7 +8,6 @@ import {
   DropdownMenuLabel,
   DropdownMenuPortal,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
@@ -21,7 +22,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "./ui/dialog";
 
 import { Button } from "./ui/button";
@@ -172,7 +172,7 @@ export default function DropdownMenuLabo() {
 
             <DropdownMenuItem className="p-3 flex justify-between" onSelect={()=>setShowPreferences(true)}>
             <div >
-                <i class="bi bi-transparency text-xl font-black me-2 text-[var(--color-text)]"></i>         
+                <i className="bi bi-transparency text-xl font-black me-2 text-[var(--color-text)]"></i>         
                 Preferences
             </div>
 
@@ -189,7 +189,7 @@ export default function DropdownMenuLabo() {
 
             <DropdownMenuItem disabled={dragMode.active } className="p-3 justify-between" onSelect={()=>setDragMode(prev=>({...prev, active:true, mode:'items'}))}>
               <div>
-                <i class="bi bi-columns-gap text-xl font-black me-2 text-[var(--color-text)]"></i>
+                <i className="bi bi-columns-gap text-xl font-black me-2 text-[var(--color-text)]"></i>
                 Customize Layout
               </div>
 
@@ -207,19 +207,19 @@ export default function DropdownMenuLabo() {
 
             <DropdownMenuSub   >
               <DropdownMenuSubTrigger  className="p-3 outline-none  p-3  focus:bg-[var(--color-background)] " >
-                <i class="bi bi-database-fill text-xl font-black text-[var(--color-text)]"></i>
+                <i className="bi bi-database-fill text-xl font-black text-[var(--color-text)]"></i>
                 Move Data
                 </DropdownMenuSubTrigger>
               <DropdownMenuPortal >
                 <DropdownMenuSubContent className="rounded-[min(var(--border-radius),1rem)] bg-[var(--color-secondary)] border border-[var(--color-text)]">
                   <DropdownMenuItem className="p-3"  onSelect={()=>setShowUploadData(true)}>
-                    <i class="bi bi-box-arrow-down text-xl font-black text-[var(--color-text)]" ></i>
+                    <i className="bi bi-box-arrow-down text-xl font-black text-[var(--color-text)]" ></i>
                       Import 
                   </DropdownMenuItem>
                   <DropdownMenuSeparator className='font-bold h-[1px] bg-[var(--color-text)]'/>
 
                   <DropdownMenuItem className="p-3" disabled={todos.length>0 ? false : true} onSelect={()=>setOpenDialog(true)}>
-                    <i class="bi bi-box-arrow-in-up text-xl font-black text-[var(--color-text)]"></i>
+                    <i className="bi bi-box-arrow-in-up text-xl font-black text-[var(--color-text)]"></i>
                       Export
                   </DropdownMenuItem>
                   
@@ -235,7 +235,7 @@ export default function DropdownMenuLabo() {
 
             }}>
               <div >
-                  <i class="bi bi-house text-xl font-black me-2 text-[var(--color-text)]"></i>         
+                  <i className="bi bi-house text-xl font-black me-2 text-[var(--color-text)]"></i>         
                   Home Page
               </div>
 
@@ -246,7 +246,7 @@ export default function DropdownMenuLabo() {
 
             <DropdownMenuItem className="text-red-500 p-3 font-bold focus:bg-red-200  justify-between " disabled={todos.length===0 ? true : false} onSelect={()=>setshowConfirm(true)}>
               <div>
-              <i class="bi bi-arrow-repeat text-xl font-black !important  pe-2  " ></i>
+              <i className="bi bi-arrow-repeat text-xl font-black !important  pe-2  " ></i>
                 Reset
               </div>
 
@@ -260,13 +260,13 @@ export default function DropdownMenuLabo() {
                 <h1 className="font-medium ms-2">About me :</h1>
                 <div className="text-red-500 p-3 font-bold  flex justify-center gap-6">
 
-                  <a href='https://github.com/aarab-abderrahmane' target="_blank" >
+                  <a href='https://github.com/aarab-abderrahmane' target="_blank" rel="noreferrer" >
                   <img className="size-6 " src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg" />
 
                   </a>
 
                               
-                  <a href='https://www.linkedin.com/in/aarab-abderrahmane-2b9509336/' target="_blank" >
+                  <a href='https://www.linkedin.com/in/aarab-abderrahmane-2b9509336/' target="_blank" rel="noreferrer" >
 
                   <img className="size-6" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linkedin/linkedin-original.svg" />
                   </a>

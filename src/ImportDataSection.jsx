@@ -1,7 +1,9 @@
+import React from 'react'
+import PropTypes from "prop-types";
+
 import {todosContext} from './components/TodoList'
 import { useContext , useState ,useEffect,useRef} from "react";
 import { toast } from "sonner" 
-import {ConfettiButton} from './components/ui/confetti'
 import { ArrowUpRightIcon } from "lucide-react"
 import {
   Empty,
@@ -54,6 +56,10 @@ function TitleEffect({children}){
         {children}
       </TextEffect>
   )
+}
+
+TitleEffect.propTypes = {
+  children : PropTypes.node 
 }
 
 export function ImportDataSection({setShowUploadData}) {
@@ -141,7 +147,7 @@ export function ImportDataSection({setShowUploadData}) {
       <Empty>
       <EmptyHeader>
         <EmptyMedia variant="icon">
-          <i class="bi bi-filetype-json text-3xl  text-[var(--color-text)] bg-[var(--color-background)] rounded-xl p-2 px-3 "></i>
+          <i className="bi bi-filetype-json text-3xl  text-[var(--color-text)] bg-[var(--color-background)] rounded-xl p-2 px-3 "></i>
         </EmptyMedia>
         <EmptyTitle>Restore Your Tasks from Backup</EmptyTitle>
         <EmptyDescription>
@@ -194,4 +200,8 @@ export function ImportDataSection({setShowUploadData}) {
 
     </div>
   );
+}
+
+ImportDataSection.propTypes = {
+   setShowUploadData : PropTypes.bool
 }
