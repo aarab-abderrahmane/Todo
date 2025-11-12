@@ -27,6 +27,7 @@ PlanPulse isn't just another todo app—it's a **productivity powerhouse** wrapp
 <div align="center">
 
 ![Demo](https://github.com/aarab-abderrahmane/PlanPulse/blob/main/public/Demo/demo1.gif?raw=true)
+<img src="[https://github.com/username/repo/blob/main/Demo/demo1.gif?raw=true](https://github.com/aarab-abderrahmane/PlanPulse/blob/main/public/Demo/demo1.gif?raw=true" alt="Demo" width="100%" height="auto">
 
 </div>
 
