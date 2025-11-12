@@ -26,9 +26,13 @@ import { FloatingDock } from "./components/ui/floating-dock";
 
 import {useFontList}  from './components/PreferencesItems/fontAccordion'
 
+// herobgText 
+import { HeroBackgroundText } from './components/HeroBackgroundText';
+
 function App() {
 
   //start 
+
 
   const defaultPreferences = useMemo(() => ({
       appVersion: "3.0.0",
@@ -345,13 +349,7 @@ function App() {
       <ToastContext.Provider>
 
             {!PreferencesSettings.general.hideTexts && (
-                  <div className="absolute z[-999] flex flex-col jutify-center hidden xl:block text-[var(--color-text)]  overflow-hidden">
-                    <h1 className=" text-[21vw] align-baseline inline-block  h-[50vh]  text-center w-full mt-[-70px]" 
-                    style={{fontWeight: "700",fontStyle: "normal",opacity: PreferencesSettings.general.opacityTexts / 100}}>Tuesday</h1>
-
-                    <h1 className="text-[21vw] align-baseline inline-block h-[50vh] text-center w-full"
-                     style={{fontWeight: "700",fontStyle: "normal",opacity: PreferencesSettings.general.opacityTexts / 100}}>Midnight</h1>
-                  </div>
+                <HeroBackgroundText/>
             )}
 
         
