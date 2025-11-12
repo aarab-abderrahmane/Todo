@@ -77,7 +77,7 @@ Choose from carefully crafted color schemes that transform your entire interface
 
 🔵 **Blue** • 🔴 **Red** • 🟡 **Yellow** • 🟢 **Green** • 🟣 **Purple** • 🟠 **Orange** • 🔵 **Teal** • 🩷 **Pink** • ⚪ **Gray**
 
-![Theme Showcase](./public/planpulse.vercel.app_1.png)
+![Theme Showcase](./public/Demo/demo1.gif)
 
 </div>
 
