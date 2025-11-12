@@ -26,7 +26,7 @@ PlanPulse isn't just another todo app—it's a **productivity powerhouse** wrapp
 
 <div align="center">
 
-![Demo Animation](./public/Demo/demo1.gif)
+![Demo Animation](https://github.com/aarab-abderrahmane/PlanPulse/blob/main/public/Demo/demo1.gif?raw=true)
 
 </div>
 
@@ -77,7 +77,7 @@ Choose from carefully crafted color schemes that transform your entire interface
 
 🔵 **Blue** • 🔴 **Red** • 🟡 **Yellow** • 🟢 **Green** • 🟣 **Purple** • 🟠 **Orange** • 🔵 **Teal** • 🩷 **Pink** • ⚪ **Gray**
 
-![Theme Showcase](https://github.com/aarab-abderrahmane/PlanPulse/blob/main/public/Demo/demo1.gif?raw=true)
+![Theme Showcase](https://github.com/aarab-abderrahmane/PlanPulse/blob/main/public/Demo/demo4.gif?raw=true)
 
 </div>
 
@@ -97,7 +97,7 @@ Choose from carefully crafted color schemes that transform your entire interface
 
 <div align="center">
 
-![Widget Demo](./public/Demo/demo2.gif)
+![Widget Demo](https://github.com/aarab-abderrahmane/PlanPulse/blob/main/public/Demo/demo2.gif?raw=true)
 
 </div>
 
